@@ -81,3 +81,6 @@ export const ImprintingSchema = v.pipe(
   PositiveValueSchema,
   v.brand("ImprintingSchema"),
 );
+
+export type Type = (typeof types)[number];
+export const types = ["wild", "dom", "bred"] as const;

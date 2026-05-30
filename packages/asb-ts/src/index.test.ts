@@ -1,11 +1,5 @@
-import * as v from "valibot";
 import { expect, test } from "vitest";
-import {
-  calcL,
-  getSpeciesList,
-  SettingsSchema,
-  searchSpecies,
-} from "./index.js";
+import { calcL, getSpeciesList, searchSpecies } from "./index.js";
 
 test.each([
   [
@@ -74,9 +68,8 @@ test.each([
     [26, 25, 24, 21, 25, 18, 139, ["Extinction"], "ASA"],
   ],
 ])("calcL - $name", (inputs, expected) => {
-  const settings = v.parse(SettingsSchema, {});
-  const speciesList = getSpeciesList(settings);
-  const s = searchSpecies(speciesList, inputs.name, settings);
+  const speciesList = getSpeciesList();
+  const s = searchSpecies(speciesList, inputs.name);
   if (!s) throw new Error("なんかへん");
   const r = calcL(speciesList, { ...inputs, bp: s.blueprintPath });
   if (!r) throw new Error("なんかへん");

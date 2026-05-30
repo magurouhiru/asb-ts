@@ -8,7 +8,6 @@ export * from "./asb/migration/name-dict/index.js";
 export * from "./asb/migration/variants/index.js";
 export * from "./asb/species.js";
 export * from "./asb/types/index.js";
-export * from "./asb/util.js";
 
 export function calcL(
   speciesList: Species[],

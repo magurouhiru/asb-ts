@@ -1,6 +1,6 @@
 import Fuse from "fuse.js";
 import * as v from "valibot";
-import { NameDicts } from "./migration/name-dict/index.js";
+import { DefaultNameDict, NameDicts } from "./migration/name-dict/index.js";
 import {
   AllModSpecies,
   type FullStatsRaw,
@@ -9,6 +9,7 @@ import {
 } from "./migration/values/index.js";
 import type { Variant } from "./migration/variants/index.js";
 import {
+  DefaultSettings,
   type Settings,
   type Species,
   type SpeciesIn,
@@ -30,20 +31,9 @@ const StatsRawIndexIncPerWildLevel = 1;
 // Index of the increase per dom level value in fullStatsRaw.
 const StatsRawIndexIncPerDomLevel = 2;
 
-const Health = 0;
-const Stamina = 1;
-const Torpidity = 2;
-const Oxygen = 3;
-const Food = 4;
-const Water = 5;
-const Temperature = 6;
-const Weight = 7;
-const MeleeDamageMultiplier = 8;
-const SpeedMultiplier = 9;
-const TemperatureFortitude = 10;
-const CraftingSpeedMultiplier = 11;
-
-export function getSpeciesList(settings: Settings): Species[] {
+export function getSpeciesList(
+  settings: Settings = DefaultSettings,
+): Species[] {
   const searchTarget = AllModSpecies.filter(
     (ms) => ms.mod === null || settings.mods.includes(ms.mod),
   );
@@ -57,6 +47,8 @@ export function getSpeciesList(settings: Settings): Species[] {
       stats: FullStatsRaw | null;
     }
   >();
+  const nameDict =
+    NameDicts.find((nd) => nd.lang === settings.lang)?.dict ?? DefaultNameDict;
   searchTarget.forEach((ms) => {
     ms.species.forEach((s) => {
       const value = tmpMap.get(s.blueprintPath);
@@ -65,7 +57,7 @@ export function getSpeciesList(settings: Settings): Species[] {
         value.mod = ms.mod;
         if (s.fullStatsRaw) value.stats = s.fullStatsRaw;
       } else {
-        const nameEntry = NameDicts.ja.find((n) => n.source === s.name);
+        const nameEntry = nameDict.find((n) => n.source === s.name);
         if (!nameEntry) return;
         tmpMap.set(s.blueprintPath, {
           name: `${nameEntry.translation}(${nameEntry.source})`,
@@ -96,7 +88,7 @@ export function getSpeciesList(settings: Settings): Species[] {
 export function searchSpecies(
   speciesList: Species[],
   name: string,
-  settings: Settings,
+  settings: Settings = DefaultSettings,
 ): Species | null {
   const fuse = new Fuse(
     speciesList.map((s) => s.name),
@@ -120,38 +112,38 @@ export function searchSpecies(
   return found[0] || null;
 }
 
-function toStats(fullStatsRaw: FullStatsRaw): Stats {
+function toStats([
+  health,
+  stamina,
+  torpidity,
+  oxygen,
+  food,
+  water,
+  temperature,
+  weight,
+  meleeDamageMultiplier,
+  speedMultiplier,
+  temperatureFortitude,
+  craftingSpeedMultiplier,
+]: FullStatsRaw): Stats {
   return v.parse(StatsSchema, {
-    health: fullStatsRaw[Health] ? toSpeciesStat(fullStatsRaw[Health]) : null,
-    stamina: fullStatsRaw[Stamina]
-      ? toSpeciesStat(fullStatsRaw[Stamina])
-      : null,
-    oxygen: fullStatsRaw[Oxygen] ? toSpeciesStat(fullStatsRaw[Oxygen]) : null,
-    food: fullStatsRaw[Food] ? toSpeciesStat(fullStatsRaw[Food]) : null,
-    water: fullStatsRaw[Water] ? toSpeciesStat(fullStatsRaw[Water]) : null,
-    temperature: fullStatsRaw[Temperature]
-      ? toSpeciesStat(fullStatsRaw[Temperature])
-      : null,
-    weight: fullStatsRaw[Weight] ? toSpeciesStat(fullStatsRaw[Weight]) : null,
-    meleeDamageMultiplier: fullStatsRaw[MeleeDamageMultiplier]
-      ? toSpeciesStat(fullStatsRaw[MeleeDamageMultiplier])
-      : null,
-    speedMultiplier: fullStatsRaw[SpeedMultiplier]
-      ? toSpeciesStat(fullStatsRaw[SpeedMultiplier])
-      : null,
-    temperatureFortitude: fullStatsRaw[TemperatureFortitude]
-      ? toSpeciesStat(fullStatsRaw[TemperatureFortitude])
-      : null,
-    craftingSpeedMultiplier: fullStatsRaw[CraftingSpeedMultiplier]
-      ? toSpeciesStat(fullStatsRaw[CraftingSpeedMultiplier])
-      : null,
-    torpidity: fullStatsRaw[Torpidity]
-      ? toSpeciesStat(fullStatsRaw[Torpidity])
-      : null,
+    health: toSpeciesStat(health),
+    stamina: toSpeciesStat(stamina),
+    oxygen: toSpeciesStat(oxygen),
+    food: toSpeciesStat(food),
+    water: toSpeciesStat(water),
+    temperature: toSpeciesStat(temperature),
+    weight: toSpeciesStat(weight),
+    meleeDamageMultiplier: toSpeciesStat(meleeDamageMultiplier),
+    speedMultiplier: toSpeciesStat(speedMultiplier),
+    temperatureFortitude: toSpeciesStat(temperatureFortitude),
+    craftingSpeedMultiplier: toSpeciesStat(craftingSpeedMultiplier),
+    torpidity: toSpeciesStat(torpidity),
   } satisfies StatsIn);
 }
 
-function toSpeciesStat(row: StatsRow): SpeciesStat {
+function toSpeciesStat(row: StatsRow | null): SpeciesStat | null {
+  if (!row) return null;
   return v.parse(SpeciesStatSchema, {
     baseValue: row[StatsRawIndexBase],
     incPerWildLevel: row[StatsRawIndexIncPerWildLevel],
