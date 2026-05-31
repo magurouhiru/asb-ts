@@ -54,6 +54,9 @@
 *   **TmM**: テイムボーナス（乗算）の調整値。サーバーやステータスごとに定義されるグローバルな値です。
     *   `asb`内での管理先: `values/ServerMultipliers.cs`（デフォルト値は1）
 
+※ 公式wikiの計算式にはない？認識だが、Ta、Tmが負の時はTaM、TmM(サーバーの設定値)は無視するらしい  
+ARKStatsExtractor/ARKBreedingStats/values/Values.cs:576行付近を参照
+
 **3. 最終個体値 (Final)**
 
 最終的な個体値は以下の計算式で求められます。
