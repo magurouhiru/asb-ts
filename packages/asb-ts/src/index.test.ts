@@ -95,7 +95,7 @@ test.each([
   [
     {
       type: "dom" as Type,
-      imprinting: 0,
+      imprinting: Math.random(), // dom であればインプリントは関係ないはず
       name: "ベロナサウルス",
       health: 2024.1,
       stamina: 1267.0,
@@ -106,6 +106,36 @@ test.each([
       torpidity: 3424.5,
     },
     [18, 29, 23, 13, 21, 22, 126, ["Extinction"], "ASA", 1],
+  ],
+  [
+    {
+      type: "dom" as Type,
+      imprinting: Math.random(), // dom であればインプリントは関係ないはず
+      name: "541539(ユウティラヌス)",
+      health: 10120.1,
+      stamina: 2058.0,
+      oxygen: 570.0,
+      food: 15300.0,
+      weight: 800.0,
+      meleeDamageMultiplier: 3.434,
+      torpidity: 21638.5,
+    },
+    [41, 39, 28, 41, 30, 37, 216, [], "ASA", 1],
+  ],
+  [
+    {
+      type: "bred" as Type,
+      imprinting: 0,
+      name: "イノパハデイノスクス)",
+      health: 11800.1,
+      stamina: 1740.0,
+      oxygen: 0.0,
+      food: 18300.0,
+      weight: 1284.0,
+      meleeDamageMultiplier: 4.14,
+      torpidity: 22329.5,
+    },
+    [54, 48, 0, 51, 57, 49, 259, [], "ASA", 1],
   ],
 ])("calcL - $name", (inputs, expected) => {
   const speciesList = getSpeciesList();
