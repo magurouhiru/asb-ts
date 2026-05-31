@@ -3,6 +3,7 @@ import { calculateLevelController } from "./asb/calculator.js";
 import {
   ImprintingSchema,
   type Levels,
+  type TameEffectiveness,
   type ValuesIn,
   ValuesSchema,
 } from "./asb/types/io.js";
@@ -28,7 +29,11 @@ export function calcL(
     meleeDamageMultiplier: number;
     torpidity: number;
   },
-): { species: Species; result: Levels } | null {
+): {
+  species: Species;
+  levels: Levels;
+  tameEffectiveness: TameEffectiveness;
+} | null {
   const s = speciesList.find((s) => s.blueprintPath === values.bp);
   if (!s) return null;
   const valuesParsed = v.safeParse(ValuesSchema, {
@@ -47,11 +52,11 @@ export function calcL(
   } satisfies ValuesIn);
   const imprintingParsed = v.safeParse(ImprintingSchema, values.imprinting);
   if (!valuesParsed.success || !imprintingParsed.success) return null;
-  const result = calculateLevelController(
+  const [levels, tameEffectiveness] = calculateLevelController(
     s,
     valuesParsed.output,
     imprintingParsed.output,
     values.type,
   );
-  return { species: s, result };
+  return { species: s, levels, tameEffectiveness };
 }

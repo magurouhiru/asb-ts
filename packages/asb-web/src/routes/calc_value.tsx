@@ -55,8 +55,6 @@ function CalcValueComponent() {
     mod: s.mod,
   }));
   const [values, setValues] = useState<Values | null>(null);
-  const [_imprinting, _setImprinting] = useState<number>(0);
-  const [_tameEffectiveness, _setTameEffectiveness] = useState<number>(0);
 
   const form = useAppForm({
     defaultValues: {
@@ -68,8 +66,8 @@ function CalcValueComponent() {
       Weight_wild: 0,
       MeleeDamageMultiplier_wild: 0,
       Torpidity_wild: 0,
-      imprinting: 0,
       tameEffectiveness: 0,
+      imprinting: 0,
       type: "wild" as Type,
     },
     validators: {
@@ -126,6 +124,38 @@ function CalcValueComponent() {
           e.stopPropagation();
         }}
       >
+        <form.AppField name="type">
+          {(field) => (
+            <field.ListBox
+              aria-label="type"
+              selectionMode="single"
+              defaultSelectedKeys={["wild"]}
+              onSelectionChange={(key) => {
+                if (key !== "all") {
+                  Types.forEach((t) => {
+                    if (key.has(t)) {
+                      field.setValue(t);
+                    }
+                  });
+                }
+              }}
+            >
+              <ListBoxItem id="wild" textValue="wild">
+                野生
+                <ListBox.ItemIndicator />
+              </ListBoxItem>
+              <ListBoxItem id="dom" textValue="dom">
+                テイム
+                <ListBox.ItemIndicator />
+              </ListBoxItem>
+              <ListBoxItem id="bred" textValue="bred">
+                ブリ
+                <ListBox.ItemIndicator />
+              </ListBoxItem>
+            </field.ListBox>
+          )}
+        </form.AppField>
+
         <form.AppField name="name">
           {(field) => (
             <field.Autocomplete
@@ -320,26 +350,6 @@ function CalcValueComponent() {
           )}
         </form.AppField>
 
-        <form.AppField name="imprinting">
-          {(field) => (
-            <field.NumberField
-              defaultValue={0}
-              minValue={0}
-              formatOptions={{ style: "percent" }}
-              onChange={(v) => field.setValue(v)}
-            >
-              <Label>刷り込み[%]</Label>
-              <div className="flex items-center gap-2">
-                <NumberField.Group>
-                  <NumberField.DecrementButton />
-                  <NumberField.Input />
-                  <NumberField.IncrementButton />
-                </NumberField.Group>
-              </div>
-            </field.NumberField>
-          )}
-        </form.AppField>
-
         <form.AppField name="tameEffectiveness">
           {(field) => (
             <field.NumberField
@@ -360,35 +370,23 @@ function CalcValueComponent() {
           )}
         </form.AppField>
 
-        <form.AppField name="type">
+        <form.AppField name="imprinting">
           {(field) => (
-            <field.ListBox
-              aria-label="type"
-              selectionMode="single"
-              defaultSelectedKeys={["wild"]}
-              onSelectionChange={(key) => {
-                if (key !== "all") {
-                  Types.forEach((t) => {
-                    if (key.has(t)) {
-                      field.setValue(t);
-                    }
-                  });
-                }
-              }}
+            <field.NumberField
+              defaultValue={0}
+              minValue={0}
+              formatOptions={{ style: "percent" }}
+              onChange={(v) => field.setValue(v)}
             >
-              <ListBoxItem id="wild" textValue="wild">
-                野生
-                <ListBox.ItemIndicator />
-              </ListBoxItem>
-              <ListBoxItem id="dom" textValue="dom">
-                テイム
-                <ListBox.ItemIndicator />
-              </ListBoxItem>
-              <ListBoxItem id="bred" textValue="bred">
-                ブリ
-                <ListBox.ItemIndicator />
-              </ListBoxItem>
-            </field.ListBox>
+              <Label>刷り込み[%]</Label>
+              <div className="flex items-center gap-2">
+                <NumberField.Group>
+                  <NumberField.DecrementButton />
+                  <NumberField.Input />
+                  <NumberField.IncrementButton />
+                </NumberField.Group>
+              </div>
+            </field.NumberField>
           )}
         </form.AppField>
       </form>

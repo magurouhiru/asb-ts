@@ -11,7 +11,18 @@ function HomeComponent() {
         <li>
           <Link
             to="/calc_level"
-            search={{ n: "", h: 0, s: 0, o: 0, f: 0, w: 0, m: 0, t: 0 }}
+            search={{
+              type: "wild",
+              n: "",
+              h: 0,
+              s: 0,
+              o: 0,
+              f: 0,
+              w: 0,
+              m: 0,
+              t: 0,
+              i: 0,
+            }}
           >
             個体値→レベル
           </Link>

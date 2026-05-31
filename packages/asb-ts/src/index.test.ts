@@ -83,23 +83,23 @@ test.each([
   if (!s) throw new Error("なんかへん");
   const r = calcL(speciesList, { ...inputs, bp: s.blueprintPath });
   if (!r) throw new Error("なんかへん");
-  const { species, result } = r;
+  const { species, levels } = r;
 
-  expect(result.health.wild).toBe(expected[0]);
-  expect(result.stamina.wild).toBe(expected[1]);
-  expect(result.oxygen.wild).toBe(expected[2]);
-  expect(result.food.wild).toBe(expected[3]);
-  expect(result.weight.wild).toBe(expected[4]);
-  expect(result.meleeDamageMultiplier.wild).toBe(expected[5]);
-  expect(result.torpidity.wild).toBe(expected[6]);
+  expect(levels.health.wild).toBe(expected[0]);
+  expect(levels.stamina.wild).toBe(expected[1]);
+  expect(levels.oxygen.wild).toBe(expected[2]);
+  expect(levels.food.wild).toBe(expected[3]);
+  expect(levels.weight.wild).toBe(expected[4]);
+  expect(levels.meleeDamageMultiplier.wild).toBe(expected[5]);
+  expect(levels.torpidity.wild).toBe(expected[6]);
 
-  expect(result.health.error).toBe(null);
-  expect(result.stamina.error).toBe(null);
-  expect(result.oxygen.error).toBe(null);
-  expect(result.food.error).toBe(null);
-  expect(result.weight.error).toBe(null);
-  expect(result.meleeDamageMultiplier.error).toBe(null);
-  expect(result.torpidity.error).toBe(null);
+  expect(levels.health.error).toBe(null);
+  expect(levels.stamina.error).toBe(null);
+  expect(levels.oxygen.error).toBe(null);
+  expect(levels.food.error).toBe(null);
+  expect(levels.weight.error).toBe(null);
+  expect(levels.meleeDamageMultiplier.error).toBe(null);
+  expect(levels.torpidity.error).toBe(null);
 
   expect(species.variants).toStrictEqual(expected[7]);
   expect(species.mod).toBe(expected[8]);

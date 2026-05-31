@@ -298,10 +298,13 @@ export function calculateLevelController(
   imprinting: Imprinting,
   type: Type,
   settings: Settings = DefaultSettings,
-): Levels {
+): [Levels, TameEffectiveness] {
   switch (type) {
     case "wild": {
-      return calculateLevelWild(species.stats, values, settings);
+      return [
+        calculateLevelWild(species.stats, values, settings),
+        0 as TameEffectiveness,
+      ];
     }
     case "dom": {
       return calculateLevelDom(species, values, settings);
@@ -369,27 +372,29 @@ function calculateLevelDom(
   species: Species,
   values: Values,
   settings: Settings,
-): Levels {
+): [Levels, TameEffectiveness] {
   let bufError = Number.MAX_SAFE_INTEGER;
   let bufLevels: Levels | null = null;
-  for (let te = 0; te <= 1; te += 0.01) {
+  let bufTe: TameEffectiveness | null = null;
+  for (let te = 0; te <= 100; te += 1) {
     const tmp = calculateLevelDomCore(
       species,
-      te as TameEffectiveness,
+      (te / 100) as TameEffectiveness,
       values,
       0 as Imprinting, // テイム後のレベル計算ではインプリントは考慮しない。
       settings,
     );
     const error = sumError(tmp);
     if (error === 0) {
-      return tmp;
+      return [tmp, (te / 100) as TameEffectiveness];
     } else if (error < bufError) {
       bufError = error;
       bufLevels = tmp;
+      bufTe = (te / 100) as TameEffectiveness;
     }
   }
-  if (!bufLevels) throw new Error("calculateLevelDomがなんかへん");
-  return bufLevels;
+  if (!bufLevels || !bufTe) throw new Error("calculateLevelDomがなんかへん");
+  return [bufLevels, bufTe];
 }
 
 function calculateLevelBred(
@@ -397,30 +402,25 @@ function calculateLevelBred(
   values: Values,
   settings: Settings,
   imprinting: Imprinting,
-): Levels {
-  return calculateLevelDomCore(
-    species,
-    1 as TameEffectiveness, // ブリはテイム効果1で計算する。
-    values,
-    imprinting,
-    settings,
-  );
+): [Levels, TameEffectiveness] {
+  const te = 1 as TameEffectiveness; // ブリードはテイム効果1で計算する。
+  return [calculateLevelDomCore(species, te, values, imprinting, settings), te];
 }
 
 function sumError(levels: Levels): number {
   return (
-    Math.abs(levels.health.error ?? 0) +
-    Math.abs(levels.stamina.error ?? 0) +
-    Math.abs(levels.oxygen.error ?? 0) +
-    Math.abs(levels.food.error ?? 0) +
-    Math.abs(levels.water.error ?? 0) +
-    Math.abs(levels.temperature.error ?? 0) +
-    Math.abs(levels.weight.error ?? 0) +
-    Math.abs(levels.meleeDamageMultiplier.error ?? 0) +
-    Math.abs(levels.speedMultiplier.error ?? 0) +
-    Math.abs(levels.temperatureFortitude.error ?? 0) +
-    Math.abs(levels.craftingSpeedMultiplier.error ?? 0) +
-    Math.abs(levels.torpidity.error ?? 0)
+    (levels.health.error ?? 0) +
+    (levels.stamina.error ?? 0) +
+    (levels.oxygen.error ?? 0) +
+    (levels.food.error ?? 0) +
+    (levels.water.error ?? 0) +
+    (levels.temperature.error ?? 0) +
+    (levels.weight.error ?? 0) +
+    (levels.meleeDamageMultiplier.error ?? 0) +
+    (levels.speedMultiplier.error ?? 0) +
+    (levels.temperatureFortitude.error ?? 0) +
+    (levels.craftingSpeedMultiplier.error ?? 0) +
+    (levels.torpidity.error ?? 0)
   );
 }
 
@@ -551,8 +551,8 @@ function cLw(
     if (tmpVw === value) {
       return { wild: level, error: null };
     } else if (tmpVw > value) {
-      const bufDiff = value - bufVw;
-      const tmpDiff = tmpVw - value;
+      const bufDiff = calculateError(value, bufVw, stat.baseValue);
+      const tmpDiff = calculateError(value, tmpVw, stat.baseValue);
       if (bufDiff < tmpDiff) {
         return { wild: level - 1, error: bufDiff };
       } else {
@@ -593,8 +593,8 @@ function cLpt(
     if (tmpVpt === value) {
       return { wild: level, error: null };
     } else if (tmpVpt > value) {
-      const bufDiff = value - bufVpt;
-      const tmpDiff = tmpVpt - value;
+      const bufDiff = calculateError(value, bufVpt, stat.baseValue);
+      const tmpDiff = calculateError(value, tmpVpt, stat.baseValue);
       if (bufDiff < tmpDiff) {
         return { wild: level - 1, error: bufDiff };
       } else {
@@ -604,4 +604,14 @@ function cLpt(
     bufVpt = tmpVpt;
   }
   throw new Error("value is too high");
+}
+
+// 誤差はいったんbaseValueで割って正規化する。これも誤差の比較のためだけの値なので、厳密に計算する必要はない。
+// もしうまく計算できなかったら、incPerWildLevelで割る方法を試す。
+function calculateError(
+  except: number,
+  actual: number,
+  baseValue: number,
+): number {
+  return Math.abs(except - actual) / baseValue;
 }
