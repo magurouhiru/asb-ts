@@ -534,6 +534,8 @@ function calculateLevelDomCore(
   } satisfies LevelsIn);
 }
 
+const MAX_LEVEL = 500; // とりあえずレベル500まで計算する。これ以上は現実的に存在しないと思うので。
+
 function cLw(
   stat: SpeciesStat | null,
   value: number,
@@ -543,7 +545,7 @@ function cLw(
   if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
     return { wild: 0, error: null };
   let bufVw = 0;
-  for (let level = 0; level <= 255; level++) {
+  for (let level = 0; level <= MAX_LEVEL; level++) {
     const tmpVw = round(
       cVw(stat, { wild: level }, statMultiplierItem),
       precision,
@@ -577,7 +579,7 @@ function cLpt(
   if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
     return { wild: 0, error: null };
   let bufVpt = 0;
-  for (let level = 0; level <= 255; level++) {
+  for (let level = 0; level <= MAX_LEVEL; level++) {
     const tmpVpt = round(
       cVpt(
         te,
