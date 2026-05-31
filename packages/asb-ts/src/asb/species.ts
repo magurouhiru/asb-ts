@@ -5,6 +5,7 @@ import {
   AllModSpecies,
   type FullStatsRaw,
   type ModName,
+  type StatImprintMult,
   type StatsRow,
 } from "./migration/values/index.js";
 import type { Variant } from "./migration/variants/index.js";
@@ -17,6 +18,9 @@ import {
   type SpeciesStat,
   type SpeciesStatIn,
   SpeciesStatSchema,
+  type StatImprintMultiplier,
+  type StatImprintMultiplierIn,
+  StatImprintMultiplierSchema,
   type Stats,
   type StatsIn,
   StatsSchema,
@@ -51,6 +55,8 @@ export function getSpeciesList(
       variants: Variant[];
       mod: ModName | null;
       stats: FullStatsRaw | null;
+      statImprintMults: StatImprintMult | null;
+      tamedBaseHealthMultiplier: number | null;
     }
   >();
   const nameDict =
@@ -62,6 +68,9 @@ export function getSpeciesList(
         if (s.variants && s.variants.length > 0) value.variants = s.variants;
         value.mod = ms.mod;
         if (s.fullStatsRaw) value.stats = s.fullStatsRaw;
+        if (s.statImprintMult) value.statImprintMults = s.statImprintMult;
+        if (s.TamedBaseHealthMultiplier)
+          value.tamedBaseHealthMultiplier = s.TamedBaseHealthMultiplier;
       } else {
         const nameEntry = nameDict.find((n) => n.source === s.name);
         if (!nameEntry) return;
@@ -71,6 +80,8 @@ export function getSpeciesList(
           variants: s.variants ?? [],
           mod: ms.mod,
           stats: s.fullStatsRaw ?? null,
+          statImprintMults: s.statImprintMult ?? null,
+          tamedBaseHealthMultiplier: s.TamedBaseHealthMultiplier ?? null,
         });
       }
     });
@@ -84,6 +95,10 @@ export function getSpeciesList(
       const result = v.safeParse(SpeciesSchema, {
         ...s,
         stats: toStats(s.stats),
+        statImprintMultiplier: s.statImprintMults
+          ? toStatImprintMultiplier(s.statImprintMults)
+          : undefined,
+        tamedBaseHealthMultiplier: s.tamedBaseHealthMultiplier ?? undefined,
       } satisfies SpeciesIn);
       return result.success ? result.output : null;
     })
@@ -157,4 +172,34 @@ function toSpeciesStat(row: StatsRow | null): SpeciesStat | null {
     additiveBonus: row[StatsRawIndexAdditiveBonus],
     multiplicativeBonus: row[StatsRawIndexMultiplicativeBonus],
   } satisfies SpeciesStatIn);
+}
+
+function toStatImprintMultiplier([
+  health,
+  stamina,
+  torpidity,
+  oxygen,
+  food,
+  water,
+  temperature,
+  weight,
+  meleeDamageMultiplier,
+  speedMultiplier,
+  temperatureFortitude,
+  craftingSpeedMultiplier,
+]: StatImprintMult): StatImprintMultiplier {
+  return v.parse(StatImprintMultiplierSchema, {
+    health,
+    stamina,
+    oxygen,
+    food,
+    water,
+    temperature,
+    weight,
+    meleeDamageMultiplier,
+    speedMultiplier,
+    temperatureFortitude,
+    craftingSpeedMultiplier,
+    torpidity,
+  } satisfies StatImprintMultiplierIn);
 }

@@ -69,6 +69,40 @@ export const StatsSchema = v.object({
   ),
 });
 
+export type StatImprintMultDetail = v.InferOutput<
+  typeof StatImprintMultDetailSchema
+>;
+export type StatImprintMultDetailIn = v.InferInput<
+  typeof StatImprintMultDetailSchema
+>;
+export const StatImprintMultDetailSchema = v.pipe(
+  v.number(),
+  v.brand("StatImprintMultDetailSchema"),
+);
+
+export type StatImprintMultiplier = v.InferOutput<
+  typeof StatImprintMultiplierSchema
+>;
+export type StatImprintMultiplierIn = v.InferInput<
+  typeof StatImprintMultiplierSchema
+>;
+export const StatImprintMultiplierSchema = v.object({
+  health: StatImprintMultDetailSchema,
+  stamina: StatImprintMultDetailSchema,
+  oxygen: StatImprintMultDetailSchema,
+  food: StatImprintMultDetailSchema,
+
+  water: StatImprintMultDetailSchema,
+  temperature: StatImprintMultDetailSchema,
+  weight: StatImprintMultDetailSchema,
+  meleeDamageMultiplier: StatImprintMultDetailSchema,
+
+  speedMultiplier: StatImprintMultDetailSchema,
+  temperatureFortitude: StatImprintMultDetailSchema,
+  craftingSpeedMultiplier: StatImprintMultDetailSchema,
+  torpidity: StatImprintMultDetailSchema,
+});
+
 export type BlueprintPath = v.InferOutput<typeof BlueprintPathSchema>;
 export type BlueprintPathIn = v.InferInput<typeof BlueprintPathSchema>;
 export const BlueprintPathSchema = v.pipe(
@@ -96,5 +130,6 @@ export const SpeciesSchema = v.object({
   variants: v.array(VariantSchema),
   mod: v.nullable(ModNameSchema),
   stats: StatsSchema,
-  tamedBaseHealthMultiplier: v.optional(v.number()),
+  statImprintMultiplier: v.optional(StatImprintMultiplierSchema),
+  tamedBaseHealthMultiplier: v.optional(TamedBaseHealthMultiplierSchema),
 });

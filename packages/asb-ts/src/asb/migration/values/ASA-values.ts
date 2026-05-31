@@ -21,6 +21,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Bison",
@@ -97,6 +98,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Ceratosaurus Ghost",
@@ -117,6 +119,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Chalk Elemental",
@@ -174,6 +177,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Deinosuchus",
@@ -272,6 +276,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Pyromane",
@@ -350,6 +355,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Grand Tortugar",
@@ -487,6 +493,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Nunatak (Alpha)",
@@ -507,6 +514,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Nunatak (Beta)",
@@ -527,6 +535,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Fire Wyvern",
@@ -546,6 +555,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Fire Wyvern",
@@ -565,6 +575,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Ice Wyvern",
@@ -584,6 +595,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Iceworm Male",
@@ -702,6 +714,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Deinonychus",
@@ -1138,6 +1151,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Yi Ling",
@@ -1157,6 +1171,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     blueprintPath:
@@ -2905,6 +2920,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Malwyn",
@@ -3045,6 +3061,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Alpha Ossidon",
@@ -3125,6 +3142,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Lost Cryolophosaurus",
@@ -3165,6 +3183,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Lost Malwyn",
@@ -3765,6 +3784,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Revenant Raptor",
@@ -3845,6 +3866,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Revenant Ossidon",
@@ -4005,6 +4027,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Lost Queen",
@@ -4190,6 +4213,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Revenant Dilophosaur",
@@ -4246,6 +4270,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Revenant Yutyrannus",
@@ -4302,6 +4328,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Allosaurus",
@@ -4342,6 +4369,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Gigantopithecus",
@@ -4409,6 +4437,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Lost Ossidon",
@@ -4476,6 +4505,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Chalicotherium",
@@ -4536,6 +4566,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Dilophosaur",
@@ -6068,6 +6099,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Lightning Paraceratherium",
@@ -6168,6 +6201,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Lightning Spino",
@@ -6268,6 +6302,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Cave Minotaur",
@@ -6328,6 +6363,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     name: "Scorpion",
@@ -6638,6 +6674,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
   },
   {
     blueprintPath:
@@ -7237,6 +7274,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     blueprintPath:

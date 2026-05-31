@@ -137,6 +137,21 @@ test.each([
     },
     [54, 48, 0, 51, 57, 49, 259, [], "ASA", 1],
   ],
+  [
+    {
+      type: "bred" as Type,
+      imprinting: 1,
+      name: "{9ルカロドントサウルス",
+      health: 31948.8,
+      stamina: 598.1,
+      oxygen: 160.9,
+      food: 5268.0,
+      weight: 1310.4,
+      meleeDamageMultiplier: 2.5,
+      torpidity: 96624.0,
+    },
+    [29, 41, 29, 39, 34, 35, 207, [], "ASA", 1],
+  ],
 ])("calcL - $name", (inputs, expected) => {
   const speciesList = getSpeciesList();
   const s = searchSpecies(speciesList, inputs.name);

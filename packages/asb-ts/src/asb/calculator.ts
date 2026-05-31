@@ -9,6 +9,8 @@ import {
   type Settings,
   type Species,
   type SpeciesStat,
+  type StatImprintMultDetailIn,
+  type StatImprintMultiplier,
   type StatMultiplierItem,
   type Stats,
   type TameEffectiveness,
@@ -17,6 +19,22 @@ import {
   type ValuesIn,
   ValuesSchema,
 } from "./types/index.js";
+
+// Default values for the stat imprint multipliers in ASE
+const DEFAULT_STAT_IMPRINT_MULTIPLIER = {
+  health: 0.2,
+  stamina: 0,
+  torpidity: 0.2,
+  oxygen: 0,
+  food: 0.2,
+  water: 0.2,
+  temperature: 0,
+  weight: 0.2,
+  meleeDamageMultiplier: 0.2,
+  speedMultiplier: 0.2,
+  temperatureFortitude: 0,
+  craftingSpeedMultiplier: 0,
+} as const as StatImprintMultiplier;
 
 export function calculateValueController(
   species: Species,
@@ -123,7 +141,7 @@ function calculateValueWild(
 }
 
 function calculateValueDom(
-  { stats, tamedBaseHealthMultiplier }: Species,
+  { stats, tamedBaseHealthMultiplier, statImprintMultiplier }: Species,
   levels: Levels,
   imprinting: Imprinting,
   tameEffectiveness: TameEffectiveness,
@@ -136,6 +154,7 @@ function calculateValueDom(
         stats.health,
         levels.health,
         imprinting,
+        statImprintMultiplier?.health ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.health,
         settings.statMultipliers.health,
         settings,
         tamedBaseHealthMultiplier,
@@ -147,6 +166,8 @@ function calculateValueDom(
         stats.stamina,
         levels.stamina,
         imprinting,
+        statImprintMultiplier?.stamina ??
+          DEFAULT_STAT_IMPRINT_MULTIPLIER.stamina,
         settings.statMultipliers.stamina,
         settings,
       ),
@@ -157,6 +178,7 @@ function calculateValueDom(
         stats.oxygen,
         levels.oxygen,
         imprinting,
+        statImprintMultiplier?.oxygen ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.oxygen,
         settings.statMultipliers.oxygen,
         settings,
       ),
@@ -167,6 +189,7 @@ function calculateValueDom(
         stats.food,
         levels.food,
         imprinting,
+        statImprintMultiplier?.food ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.food,
         settings.statMultipliers.food,
         settings,
       ),
@@ -177,6 +200,7 @@ function calculateValueDom(
         stats.water,
         levels.water,
         imprinting,
+        statImprintMultiplier?.water ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.water,
         settings.statMultipliers.water,
         settings,
       ),
@@ -187,6 +211,8 @@ function calculateValueDom(
         stats.temperature,
         levels.temperature,
         imprinting,
+        statImprintMultiplier?.temperature ??
+          DEFAULT_STAT_IMPRINT_MULTIPLIER.temperature,
         settings.statMultipliers.temperature,
         settings,
       ),
@@ -197,6 +223,7 @@ function calculateValueDom(
         stats.weight,
         levels.weight,
         imprinting,
+        statImprintMultiplier?.weight ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.weight,
         settings.statMultipliers.weight,
         settings,
       ),
@@ -207,6 +234,8 @@ function calculateValueDom(
         stats.meleeDamageMultiplier,
         levels.meleeDamageMultiplier,
         imprinting,
+        statImprintMultiplier?.meleeDamageMultiplier ??
+          DEFAULT_STAT_IMPRINT_MULTIPLIER.meleeDamageMultiplier,
         settings.statMultipliers.meleeDamageMultiplier,
         settings,
       ),
@@ -218,6 +247,8 @@ function calculateValueDom(
         stats.speedMultiplier,
         levels.speedMultiplier,
         imprinting,
+        statImprintMultiplier?.speedMultiplier ??
+          DEFAULT_STAT_IMPRINT_MULTIPLIER.speedMultiplier,
         settings.statMultipliers.speedMultiplier,
         settings,
       ),
@@ -228,6 +259,8 @@ function calculateValueDom(
         stats.temperatureFortitude,
         levels.temperatureFortitude,
         imprinting,
+        statImprintMultiplier?.temperatureFortitude ??
+          DEFAULT_STAT_IMPRINT_MULTIPLIER.temperatureFortitude,
         settings.statMultipliers.temperatureFortitude,
         settings,
       ),
@@ -238,6 +271,8 @@ function calculateValueDom(
         stats.craftingSpeedMultiplier,
         levels.craftingSpeedMultiplier,
         imprinting,
+        statImprintMultiplier?.craftingSpeedMultiplier ??
+          DEFAULT_STAT_IMPRINT_MULTIPLIER.craftingSpeedMultiplier,
         settings.statMultipliers.craftingSpeedMultiplier,
         settings,
       ),
@@ -248,6 +283,8 @@ function calculateValueDom(
         stats.torpidity,
         levels.torpidity,
         imprinting,
+        statImprintMultiplier?.torpidity ??
+          DEFAULT_STAT_IMPRINT_MULTIPLIER.torpidity,
         settings.statMultipliers.torpidity,
         settings,
       ),
@@ -279,13 +316,14 @@ function cVpt(
   stat: SpeciesStat | null,
   level: LevelDetailIn,
   imprinting: Imprinting,
+  statImprintMultiplier: StatImprintMultDetailIn,
   statMultiplierItem: StatMultiplierItem,
   { IBM }: Settings,
   tbhm: number | undefined = 1,
 ): number {
   if (!stat) return 0;
   const vw = cVw(stat, level, statMultiplierItem);
-  const tmp1 = vw * tbhm * (1 + imprinting * 0.2 * IBM);
+  const tmp1 = vw * tbhm * (1 + imprinting * statImprintMultiplier * IBM);
   // テイム時の加算ボーナスがマイナスの時はTaM(サーバーの設定)を掛けない。
   // 公式の計算式にはないけどARKStatsExtractor/ARKBreedingStats/values/Values.cs:576行付近にコメントとして記述してある
   const addBounus =
@@ -436,7 +474,7 @@ function sumError(levels: Levels): number {
 }
 
 function calculateLevelDomCore(
-  { stats, tamedBaseHealthMultiplier }: Species,
+  { stats, tamedBaseHealthMultiplier, statImprintMultiplier }: Species,
   te: TameEffectiveness,
   values: Values,
   imprinting: Imprinting,
@@ -448,6 +486,7 @@ function calculateLevelDomCore(
       stats.health,
       values.health,
       imprinting,
+      statImprintMultiplier?.health ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.health,
       settings.statMultipliers.health,
       settings,
       tamedBaseHealthMultiplier,
@@ -457,6 +496,7 @@ function calculateLevelDomCore(
       stats.stamina,
       values.stamina,
       imprinting,
+      statImprintMultiplier?.stamina ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.stamina,
       settings.statMultipliers.stamina,
       settings,
     ),
@@ -465,6 +505,7 @@ function calculateLevelDomCore(
       stats.oxygen,
       values.oxygen,
       imprinting,
+      statImprintMultiplier?.oxygen ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.oxygen,
       settings.statMultipliers.oxygen,
       settings,
     ),
@@ -473,6 +514,7 @@ function calculateLevelDomCore(
       stats.food,
       values.food,
       imprinting,
+      statImprintMultiplier?.food ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.food,
       settings.statMultipliers.food,
       settings,
     ),
@@ -481,6 +523,7 @@ function calculateLevelDomCore(
       stats.water,
       values.water,
       imprinting,
+      statImprintMultiplier?.water ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.water,
       settings.statMultipliers.water,
       settings,
     ),
@@ -489,6 +532,8 @@ function calculateLevelDomCore(
       stats.temperature,
       values.temperature,
       imprinting,
+      statImprintMultiplier?.temperature ??
+        DEFAULT_STAT_IMPRINT_MULTIPLIER.temperature,
       settings.statMultipliers.temperature,
       settings,
     ),
@@ -497,6 +542,7 @@ function calculateLevelDomCore(
       stats.weight,
       values.weight,
       imprinting,
+      statImprintMultiplier?.weight ?? DEFAULT_STAT_IMPRINT_MULTIPLIER.weight,
       settings.statMultipliers.weight,
       settings,
     ),
@@ -505,6 +551,8 @@ function calculateLevelDomCore(
       stats.meleeDamageMultiplier,
       values.meleeDamageMultiplier,
       imprinting,
+      statImprintMultiplier?.meleeDamageMultiplier ??
+        DEFAULT_STAT_IMPRINT_MULTIPLIER.meleeDamageMultiplier,
       settings.statMultipliers.meleeDamageMultiplier,
       settings,
       undefined,
@@ -515,6 +563,8 @@ function calculateLevelDomCore(
       stats.speedMultiplier,
       values.speedMultiplier,
       imprinting,
+      statImprintMultiplier?.speedMultiplier ??
+        DEFAULT_STAT_IMPRINT_MULTIPLIER.speedMultiplier,
       settings.statMultipliers.speedMultiplier,
       settings,
     ),
@@ -523,6 +573,8 @@ function calculateLevelDomCore(
       stats.temperatureFortitude,
       values.temperatureFortitude,
       imprinting,
+      statImprintMultiplier?.temperatureFortitude ??
+        DEFAULT_STAT_IMPRINT_MULTIPLIER.temperatureFortitude,
       settings.statMultipliers.temperatureFortitude,
       settings,
     ),
@@ -531,6 +583,8 @@ function calculateLevelDomCore(
       stats.craftingSpeedMultiplier,
       values.craftingSpeedMultiplier,
       imprinting,
+      statImprintMultiplier?.craftingSpeedMultiplier ??
+        DEFAULT_STAT_IMPRINT_MULTIPLIER.craftingSpeedMultiplier,
       settings.statMultipliers.craftingSpeedMultiplier,
       settings,
     ),
@@ -539,6 +593,8 @@ function calculateLevelDomCore(
       stats.torpidity,
       values.torpidity,
       imprinting,
+      statImprintMultiplier?.torpidity ??
+        DEFAULT_STAT_IMPRINT_MULTIPLIER.torpidity,
       settings.statMultipliers.torpidity,
       settings,
     ),
@@ -582,6 +638,7 @@ function cLpt(
   stat: SpeciesStat | null,
   value: number,
   imprinting: Imprinting,
+  statImprintMultiplier: StatImprintMultDetailIn,
   statMultiplierItem: StatMultiplierItem,
   settings: Settings,
   tbhm: number | undefined = 1,
@@ -597,6 +654,7 @@ function cLpt(
         stat,
         { wild: level },
         imprinting,
+        statImprintMultiplier,
         statMultiplierItem,
         settings,
         tbhm,

@@ -95,6 +95,25 @@ export const MutationMultSchema = v.tuple([
   v.number(),
 ]);
 
+export type StatImprintMult = v.InferOutput<typeof StatImprintMultSchema>;
+export type StatImprintMultIn = v.InferInput<typeof StatImprintMultSchema>;
+export const StatImprintMultSchema = v.tuple([
+  v.number(),
+  v.number(),
+  v.number(),
+  v.number(),
+
+  v.number(),
+  v.number(),
+  v.number(),
+  v.number(),
+
+  v.number(),
+  v.number(),
+  v.number(),
+  v.number(),
+]);
+
 export type ValueSpecies = v.InferOutput<typeof ValueSpeciesSchema>;
 export type ValueSpeciesIn = v.InferInput<typeof ValueSpeciesSchema>;
 export const ValueSpeciesSchema = v.pipe(
@@ -103,6 +122,7 @@ export const ValueSpeciesSchema = v.pipe(
     blueprintPath: v.string(),
     variants: v.nullish(v.array(v.string())),
     fullStatsRaw: v.nullish(FullStatsRawSchema),
+    statImprintMult: v.nullish(StatImprintMultSchema),
     mutationMult: v.nullish(MutationMultSchema),
     TamedBaseHealthMultiplier: v.nullish(v.number()),
   }),

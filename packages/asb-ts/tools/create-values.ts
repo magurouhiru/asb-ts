@@ -75,8 +75,12 @@ function createConstTs(values: ValueSpecies[], outputPath: string) {
       if (v.variants) field.push(`variants:${JSON.stringify(v.variants)}`);
       if (v.fullStatsRaw)
         field.push(`fullStatsRaw: ${JSON.stringify(v.fullStatsRaw)}`);
+      if (v.statImprintMult)
+        field.push(`statImprintMult: ${JSON.stringify(v.statImprintMult)}`);
       if (v.mutationMult)
         field.push(`mutationMult: ${JSON.stringify(v.mutationMult)}`);
+      if (v.TamedBaseHealthMultiplier)
+        field.push(`TamedBaseHealthMultiplier: ${v.TamedBaseHealthMultiplier}`);
 
       return `{${field.join(",")}},`;
     })
