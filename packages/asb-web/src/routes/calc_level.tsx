@@ -386,7 +386,7 @@ function CalcLevelComponent() {
         <form.AppField name="imprinting">
           {(field) => (
             <field.NumberField
-              defaultValue={0}
+              defaultValue={field.state.value}
               minValue={0}
               formatOptions={{ style: "percent" }}
               onChange={(v) => field.setValue(v)}
@@ -404,7 +404,7 @@ function CalcLevelComponent() {
         </form.AppField>
 
         <div>
-          <Label>刷り込み[%]</Label>
+          <Label>テイム効果[%]</Label>
           <output>{`${Math.round(tameEffectiveness * 100)} %`}</output>
         </div>
       </form>
