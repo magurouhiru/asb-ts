@@ -228,6 +228,10 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
+              formatOptions={{
+                maximumFractionDigits: 1,
+                minimumFractionDigits: 1,
+              }}
               onChange={(v) => field.setValue(v)}
             >
               <Label>❤体力</Label>
@@ -250,6 +254,10 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
+              formatOptions={{
+                maximumFractionDigits: 1,
+                minimumFractionDigits: 1,
+              }}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🏃スタミナ</Label>
@@ -272,6 +280,10 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
+              formatOptions={{
+                maximumFractionDigits: 1,
+                minimumFractionDigits: 1,
+              }}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🏊酸素量</Label>
@@ -294,6 +306,10 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
+              formatOptions={{
+                maximumFractionDigits: 1,
+                minimumFractionDigits: 1,
+              }}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🍰食料</Label>
@@ -316,6 +332,10 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
+              formatOptions={{
+                maximumFractionDigits: 1,
+                minimumFractionDigits: 1,
+              }}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🏋️‍♂️重量</Label>
@@ -338,7 +358,11 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
-              formatOptions={{ style: "percent" }}
+              formatOptions={{
+                maximumFractionDigits: 1,
+                minimumFractionDigits: 1,
+                style: "percent",
+              }}
               onChange={(v) => field.setValue(v)}
             >
               <Label>🤺近接攻撃力[%]</Label>
@@ -363,6 +387,10 @@ function CalcLevelComponent() {
             <field.NumberField
               defaultValue={field.state.value}
               minValue={0}
+              formatOptions={{
+                maximumFractionDigits: 1,
+                minimumFractionDigits: 1,
+              }}
               onChange={(v) => field.setValue(v)}
             >
               <Label>😵‍💫気絶値</Label>

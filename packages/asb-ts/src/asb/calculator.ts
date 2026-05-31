@@ -398,7 +398,7 @@ function calculateLevelDom(
     const error = sumError(tmp);
     if (error === 0) {
       return [tmp, (te / 100) as TameEffectiveness];
-    } else if (error < bufError) {
+    } else if (error <= bufError) {
       bufError = error;
       bufLevels = tmp;
       bufTe = (te / 100) as TameEffectiveness;
