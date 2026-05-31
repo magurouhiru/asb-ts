@@ -3,7 +3,6 @@
 import type { NameDict } from "./types.js";
 
 export const NAME_DICT: NameDict = [
-  { source: "Maeguana", translation: "メイグアナ" },
   { source: "Mek", translation: "MEK" },
   { source: "R-Allosaurus", translation: "Rアロサウルス" },
   { source: "R-Equus", translation: "Rエクウス" },
