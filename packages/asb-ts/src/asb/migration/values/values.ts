@@ -22,6 +22,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rockwell",
@@ -42,6 +43,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rockwell",
@@ -62,6 +64,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "RockwellTentacle",
@@ -82,6 +85,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "RockwellTentacle",
@@ -102,6 +106,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "RockwellTentacle",
@@ -122,6 +127,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Basilisk",
@@ -142,6 +148,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.5,
   },
   {
     name: "Basilisk Ghost",
@@ -162,6 +169,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.5,
   },
   {
     name: "Alpha Basilisk",
@@ -182,6 +190,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.5,
   },
   {
     name: "Ravager",
@@ -202,6 +211,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Nameless",
@@ -222,6 +232,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Nameless",
@@ -242,6 +253,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Nameless",
@@ -262,6 +274,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Karkinos",
@@ -282,6 +295,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Alpha Karkinos",
@@ -302,6 +316,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Lamprey",
@@ -322,6 +337,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Featherlight",
@@ -342,6 +358,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Shinehorn",
@@ -362,6 +379,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Glowtail",
@@ -382,6 +400,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Bulbdog Ghost",
@@ -402,6 +421,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Bulbdog",
@@ -422,6 +442,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Glowbug",
@@ -442,6 +463,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Roll Rat",
@@ -462,6 +484,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Surface Reaper King Ghost",
@@ -482,6 +505,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Alpha Surface Reaper King",
@@ -502,6 +526,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Reaper Queen",
@@ -522,6 +547,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Subterranean Reaper King",
@@ -542,6 +568,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Surface Reaper King",
@@ -562,6 +589,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Elemental Reaper King",
@@ -582,6 +610,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Surface Reaper King",
@@ -602,6 +631,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Reaper King",
@@ -622,6 +652,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Seeker",
@@ -642,6 +673,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Seeker",
@@ -662,6 +694,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rock Drake",
@@ -682,6 +715,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Attack Drone",
@@ -702,6 +737,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Attack Drone",
@@ -722,6 +759,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Attack Drone",
@@ -742,6 +781,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Attack Drone",
@@ -762,6 +803,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Attack Drone",
@@ -782,6 +825,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Overseer",
@@ -802,6 +847,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Overseer",
@@ -822,6 +868,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Overseer",
@@ -842,6 +889,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -862,6 +910,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -882,6 +931,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -902,6 +952,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -922,6 +973,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -942,6 +994,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -962,6 +1015,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -982,6 +1036,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -1002,6 +1057,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -1022,6 +1078,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Defense Unit",
@@ -1042,6 +1099,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Defense Unit",
@@ -1062,6 +1120,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Defense Unit",
@@ -1082,6 +1141,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Defense Unit",
@@ -1102,6 +1162,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Defense Unit",
@@ -1122,6 +1183,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Arthropluera",
@@ -1142,6 +1204,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Carnotaurus",
@@ -1162,6 +1225,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Chalicotherium",
@@ -1182,6 +1246,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Deathworm",
@@ -1202,6 +1267,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Dilophosaur",
@@ -1222,6 +1288,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Dimorphodon",
@@ -1242,6 +1309,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Giganotosaurus",
@@ -1262,6 +1330,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Reaper King",
@@ -1282,6 +1351,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Paraceratherium",
@@ -1302,6 +1372,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Pteranodon",
@@ -1322,6 +1393,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Corrupted Raptor",
@@ -1342,6 +1415,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Enraged Corrupted Rex",
@@ -1362,6 +1436,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Rex",
@@ -1382,6 +1457,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Rock Drake",
@@ -1402,6 +1478,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Spino",
@@ -1422,6 +1500,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Stegosaurus",
@@ -1442,6 +1521,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Enraged Triceratops",
@@ -1462,6 +1542,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Triceratops",
@@ -1482,6 +1563,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Wyvern",
@@ -1502,6 +1584,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Desert Titan",
@@ -1522,6 +1606,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0, 0.2, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Desert Titan Flock",
@@ -1542,6 +1628,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Enforcer",
@@ -1562,6 +1649,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Forest Titan",
@@ -1582,6 +1670,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0, 0.2, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Forest Wyvern",
@@ -1602,6 +1692,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gacha",
@@ -1622,6 +1714,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       [1, 0.01, 0.01, 0, 0],
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "GachaClaus",
@@ -1642,6 +1735,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       [1, 0.01, 0.01, 0, 0],
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gasbags",
@@ -1662,6 +1756,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Managarmr",
@@ -1682,6 +1777,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ice Titan",
@@ -1702,6 +1798,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupt Tumor",
@@ -1722,6 +1819,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gamma King Titan",
@@ -1742,6 +1840,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Alpha King Titan",
@@ -1762,6 +1861,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Beta King Titan",
@@ -1782,6 +1882,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corruptling",
@@ -1802,6 +1903,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mega Mek",
@@ -1822,6 +1924,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mek",
@@ -1842,6 +1945,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Snow Owl Ghost",
@@ -1862,6 +1966,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Snow Owl",
@@ -1882,6 +1987,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Scout",
@@ -1902,6 +2008,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       [25001, 300, 0, 0, 0],
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Velonasaur",
@@ -1922,6 +2030,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Defense Unit",
@@ -1942,6 +2051,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Fenrisúlfr",
@@ -1962,6 +2072,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Fenrisúlfr",
@@ -1982,6 +2093,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Fenrisúlfr",
@@ -2002,6 +2114,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Fenrisúlfr",
@@ -2022,6 +2135,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Fenrir",
@@ -2042,6 +2156,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Andrewsarchus",
@@ -2062,6 +2177,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Beyla Spawn",
@@ -2082,6 +2198,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Beyla",
@@ -2102,6 +2219,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Desmodus",
@@ -2122,6 +2240,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Fenrir",
@@ -2142,6 +2262,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Fjordhawk",
@@ -2162,6 +2283,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 2,
   },
   {
     name: "Fenrir",
@@ -2182,6 +2304,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Hati",
@@ -2202,6 +2325,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sköll",
@@ -2222,6 +2346,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -2242,6 +2367,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -2262,6 +2388,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -2282,6 +2409,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -2302,6 +2430,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -2322,6 +2451,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -2342,6 +2472,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -2362,6 +2493,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -2382,6 +2514,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -2402,6 +2535,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rubble Bear",
@@ -2422,6 +2556,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Steinbjörn",
@@ -2442,6 +2577,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Parasaur",
@@ -2462,6 +2598,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Paraceratherium",
@@ -2482,6 +2619,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Raptor",
@@ -2502,6 +2640,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Spino",
@@ -2522,6 +2661,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Tapejara",
@@ -2542,6 +2682,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Rock Elemental",
@@ -2562,6 +2704,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Sabertooth Salmon",
@@ -2582,6 +2725,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Sabertooth Salmon",
@@ -2602,6 +2746,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Basilosaurus",
@@ -2622,6 +2767,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Ichthyosaurus",
@@ -2642,6 +2788,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Dunkleosteus",
@@ -2662,6 +2809,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Megalodon",
@@ -2682,6 +2830,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Mosasaurus",
@@ -2702,6 +2851,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Argentavis",
@@ -2722,6 +2872,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Otter",
@@ -2742,6 +2894,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Sabertooth",
@@ -2762,6 +2915,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Woolly Rhino",
@@ -2782,6 +2936,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Yutyrannus",
@@ -2802,6 +2957,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Corrupted Dinotar",
@@ -2822,6 +2978,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Attack Drone",
@@ -2842,6 +2999,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Dinotar",
@@ -2862,6 +3020,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Dinotar",
@@ -2882,6 +3041,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Dinotar",
@@ -2902,6 +3062,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Dinotar",
@@ -2922,6 +3083,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Dinotar",
@@ -2942,6 +3104,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Dinotar",
@@ -2962,6 +3125,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Allosaurus",
@@ -2982,6 +3146,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Ankylosaurus",
@@ -3002,6 +3167,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Dragon",
@@ -3022,6 +3188,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Rex",
@@ -3042,6 +3209,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Triceratops",
@@ -3062,6 +3230,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Bloodstalker",
@@ -3082,6 +3251,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Avatar",
@@ -3101,6 +3271,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Avatar",
@@ -3120,6 +3291,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Avatar",
@@ -3139,6 +3311,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Avatar",
@@ -3159,6 +3332,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Avatar",
@@ -3179,6 +3353,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Magmasaur",
@@ -3199,6 +3374,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Moeder, Master of the Ocean",
@@ -3219,6 +3395,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Moeder, Master of the Ocean",
@@ -3239,6 +3416,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Moeder, Master of the Ocean",
@@ -3259,6 +3437,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Eel Minion",
@@ -3279,6 +3458,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Eel Minion",
@@ -3299,6 +3479,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Eel Minion",
@@ -3319,6 +3500,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megachelon",
@@ -3339,6 +3521,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Daeodon",
@@ -3359,6 +3542,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Polar Bear",
@@ -3379,6 +3563,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Direwolf",
@@ -3399,6 +3584,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Procoptodon",
@@ -3419,6 +3605,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Sabertooth",
@@ -3439,6 +3626,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Baryonyx",
@@ -3459,6 +3647,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Titanoboa",
@@ -3479,6 +3668,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Raptor",
@@ -3499,6 +3689,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Terror Bird",
@@ -3519,6 +3710,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Beelzebufo",
@@ -3539,6 +3731,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Shinehorn",
@@ -3559,6 +3752,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Bulbdog",
@@ -3579,6 +3773,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Seeker",
@@ -3599,6 +3794,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Anglerfish",
@@ -3619,6 +3815,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Electrophorus",
@@ -3639,6 +3836,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megachelon",
@@ -3659,6 +3857,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Liopleurodon",
@@ -3679,6 +3878,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Manta",
@@ -3699,6 +3899,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Parakeet Fish School",
@@ -3719,6 +3920,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Ichthyosaurus",
@@ -3739,6 +3941,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Dunkleosteus",
@@ -3759,6 +3962,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Megalodon",
@@ -3779,6 +3983,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Plesiosaur",
@@ -3799,6 +4004,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pteranodon",
@@ -3819,6 +4025,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sabertooth Salmon",
@@ -3839,6 +4046,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Carbonemys",
@@ -3859,6 +4067,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Carnotaurus",
@@ -3879,6 +4088,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Parasaur",
@@ -3899,6 +4109,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Raptor",
@@ -3919,6 +4130,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pulmonoscorpius",
@@ -3939,6 +4151,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Allosaurus",
@@ -3959,6 +4172,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Rex",
@@ -3979,6 +4193,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Castoroides",
@@ -3999,6 +4214,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Yeti",
@@ -4019,6 +4235,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Chalicotherium",
@@ -4039,6 +4256,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Daeodon",
@@ -4059,6 +4277,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Polar Bear",
@@ -4079,6 +4298,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Direwolf",
@@ -4099,6 +4319,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -4119,6 +4340,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rock Elemental",
@@ -4139,6 +4361,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Managarmr",
@@ -4159,6 +4382,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mammoth",
@@ -4179,6 +4403,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megatherium",
@@ -4199,6 +4424,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Snow Owl",
@@ -4219,6 +4445,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ferox",
@@ -4239,6 +4466,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Argentavis",
@@ -4259,6 +4487,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Woolly Rhino",
@@ -4279,6 +4508,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Sabertooth",
@@ -4299,6 +4529,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Yutyrannus",
@@ -4319,6 +4550,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Therizinosaur",
@@ -4339,6 +4571,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Baryonyx",
@@ -4359,6 +4592,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Giant Queen Bee",
@@ -4379,6 +4613,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Titanoboa",
@@ -4399,6 +4634,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Bloodstalker",
@@ -4419,6 +4655,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Paraceratherium",
@@ -4439,6 +4676,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Raptor",
@@ -4459,6 +4697,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Spino",
@@ -4479,6 +4718,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Tapejara",
@@ -4499,6 +4739,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Dilophosaur",
@@ -4519,6 +4760,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dodo",
@@ -4539,6 +4781,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dodo",
@@ -4559,6 +4802,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Iguanodon",
@@ -4579,6 +4823,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Kaprosuchus",
@@ -4599,6 +4844,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mantis",
@@ -4619,6 +4865,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Lymantria",
@@ -4639,6 +4886,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pachyrhinosaurus",
@@ -4659,6 +4907,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sarco",
@@ -4679,6 +4928,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -4699,6 +4949,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Araneo",
@@ -4719,6 +4970,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Terror Bird",
@@ -4739,6 +4991,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Beelzebufo",
@@ -4759,6 +5012,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Poison Wyvern",
@@ -4779,6 +5033,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Giganotosaurus",
@@ -4799,6 +5054,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Parasaur",
@@ -4819,6 +5075,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Quetzal",
@@ -4839,6 +5096,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Raptor",
@@ -4859,6 +5117,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Rex",
@@ -4879,6 +5138,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Stegosaurus",
@@ -4899,6 +5159,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Triceratops",
@@ -4919,6 +5180,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Deathworm",
@@ -4939,6 +5201,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Attack Drone",
@@ -4959,6 +5222,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Defense Unit",
@@ -4979,6 +5243,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Bulbdog",
@@ -4999,6 +5264,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Seeker",
@@ -5019,6 +5285,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rock Drake",
@@ -5039,6 +5306,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Lightning Wyvern",
@@ -5059,6 +5327,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Arthropluera",
@@ -5079,6 +5348,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Onyc",
@@ -5099,6 +5369,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Carnotaurus",
@@ -5119,6 +5390,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ravager",
@@ -5139,6 +5411,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Magmasaur",
@@ -5159,6 +5432,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Kentrosaurus",
@@ -5179,6 +5453,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megalania",
@@ -5199,6 +5474,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megalosaurus",
@@ -5219,6 +5495,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Phoenix",
@@ -5239,6 +5516,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Purlovia",
@@ -5259,6 +5537,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pulmonoscorpius",
@@ -5279,6 +5558,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Thorny Dragon",
@@ -5299,6 +5579,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Allosaurus",
@@ -5319,6 +5600,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Ankylosaurus",
@@ -5339,6 +5621,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Rock Elemental",
@@ -5359,6 +5642,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Rex",
@@ -5379,6 +5663,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Triceratops",
@@ -5399,6 +5684,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Fire Wyvern",
@@ -5419,6 +5705,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Fire Wyvern",
@@ -5439,6 +5726,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Carnotaurus",
@@ -5459,6 +5747,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Direwolf",
@@ -5479,6 +5768,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Mammoth",
@@ -5499,6 +5789,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mammoth",
@@ -5519,6 +5810,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Ferox",
@@ -5539,6 +5831,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Sabertooth",
@@ -5559,6 +5852,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Brute X-Yutyrannus",
@@ -5579,6 +5873,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Yutyrannus",
@@ -5599,6 +5894,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Brute Megaloceros",
@@ -5619,6 +5915,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Megaloceros",
@@ -5639,6 +5936,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Baryonyx",
@@ -5659,6 +5957,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Bloodstalker",
@@ -5679,6 +5978,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute X-Raptor",
@@ -5699,6 +5999,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Raptor",
@@ -5719,6 +6020,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Brute X-Spino",
@@ -5739,6 +6041,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Dimetrodon",
@@ -5759,6 +6062,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Sarco",
@@ -5779,6 +6083,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sarco",
@@ -5799,6 +6104,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Araneo",
@@ -5819,6 +6125,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Malfunctioned Tek Giganotosaurus",
@@ -5839,6 +6146,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Rex",
@@ -5859,6 +6167,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Malfunctioned Tek Rex",
@@ -5879,6 +6188,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Seeker",
@@ -5899,6 +6209,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Astrocetus",
@@ -5919,6 +6230,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.85,
   },
   {
     name: "Brute Basilosaurus",
@@ -5939,6 +6251,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Electrophorus",
@@ -5959,6 +6272,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Leedsichthys",
@@ -5979,6 +6293,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Liopleurodon",
@@ -5999,6 +6314,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute X-Megalodon",
@@ -6019,6 +6335,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute X-Mosasaurus",
@@ -6039,6 +6356,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Brute Plesiosaur",
@@ -6059,6 +6377,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Tusoteuthis",
@@ -6079,6 +6398,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Basilisk",
@@ -6099,6 +6419,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Carnotaurus",
@@ -6119,6 +6440,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute Magmasaur",
@@ -6139,6 +6461,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Raptor",
@@ -6159,6 +6482,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pulmonoscorpius",
@@ -6179,6 +6503,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brute X-Allosaurus",
@@ -6199,6 +6524,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Brute X-Rock Elemental",
@@ -6219,6 +6545,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Brute X-Rex",
@@ -6239,6 +6566,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Bloodstalker",
@@ -6259,6 +6587,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Doedicurus",
@@ -6279,6 +6608,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gallimimus",
@@ -6299,6 +6629,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Kaprosuchus",
@@ -6319,6 +6650,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Manta",
@@ -6339,6 +6671,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ichthyosaurus",
@@ -6359,6 +6692,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Sabertooth",
@@ -6379,6 +6713,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Woolly Rhino",
@@ -6399,6 +6734,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Carnotaurus",
@@ -6419,6 +6755,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Daeodon",
@@ -6439,6 +6776,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Polar Bear",
@@ -6459,6 +6797,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Direwolf",
@@ -6479,6 +6818,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rock Elemental",
@@ -6499,6 +6839,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Microraptor",
@@ -6519,6 +6860,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Purlovia",
@@ -6539,6 +6881,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Argentavis",
@@ -6559,6 +6902,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Sabertooth",
@@ -6579,6 +6924,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Yutyrannus",
@@ -6599,6 +6945,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Titanoboa",
@@ -6619,6 +6966,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Raptor",
@@ -6639,6 +6987,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Spino",
@@ -6659,6 +7008,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Dilophosaur",
@@ -6679,6 +7029,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Kaprosuchus",
@@ -6699,6 +7050,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sarco",
@@ -6719,6 +7071,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Araneo",
@@ -6739,6 +7092,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Parasaur",
@@ -6759,6 +7113,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Quetzal",
@@ -6779,6 +7134,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Raptor",
@@ -6799,6 +7155,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Rex",
@@ -6819,6 +7176,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Stegosaurus",
@@ -6839,6 +7197,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Triceratops",
@@ -6859,6 +7218,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Seeker",
@@ -6879,6 +7239,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Cnidaria",
@@ -6899,6 +7260,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Electrophorus",
@@ -6919,6 +7281,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Leedsichthys",
@@ -6939,6 +7302,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Liopleurodon",
@@ -6959,6 +7323,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Manta",
@@ -6979,6 +7344,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Golden Striped Megalodon",
@@ -6999,6 +7365,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Megalodon",
@@ -7019,6 +7386,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Golden Striped Brute Megalodon",
@@ -7039,6 +7407,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Mosasaurus",
@@ -7059,6 +7428,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Plesiosaur",
@@ -7079,6 +7449,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tusoteuthis",
@@ -7099,6 +7470,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Argentavis",
@@ -7119,6 +7491,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Arthropluera",
@@ -7139,6 +7513,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Basilisk",
@@ -7159,6 +7534,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.5,
   },
   {
     name: "Onyc",
@@ -7179,6 +7555,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Magmasaur",
@@ -7199,6 +7576,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dimorphodon",
@@ -7219,6 +7597,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Kentrosaurus",
@@ -7239,6 +7618,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Purlovia",
@@ -7259,6 +7639,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Raptor",
@@ -7279,6 +7660,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pulmonoscorpius",
@@ -7299,6 +7681,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Thorny Dragon",
@@ -7319,6 +7702,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Allosaurus",
@@ -7339,6 +7723,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Rex",
@@ -7359,6 +7744,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "X-Triceratops",
@@ -7379,6 +7765,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Alpha X-Triceratops",
@@ -7399,6 +7786,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Dodo",
@@ -7419,6 +7807,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Bulbdog",
@@ -7439,6 +7828,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ferox",
@@ -7459,6 +7849,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ferox",
@@ -7479,6 +7870,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Astrocetus",
@@ -7499,6 +7891,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.85,
   },
   {
     name: "Insect Swarm",
@@ -7519,6 +7912,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Parakeet Fish School",
@@ -7539,6 +7933,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Master Controller",
@@ -7559,6 +7954,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Master Controller",
@@ -7579,6 +7975,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Master Controller",
@@ -7599,6 +7996,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Allosaurus",
@@ -7619,6 +8017,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Carnotaurus",
@@ -7639,6 +8038,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Daeodon",
@@ -7659,6 +8059,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Dilophosaur",
@@ -7679,6 +8080,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Dire Bear",
@@ -7699,6 +8101,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Direwolf",
@@ -7719,6 +8122,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Equus",
@@ -7739,6 +8143,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Gasbags",
@@ -7759,6 +8164,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Giganotosaurus",
@@ -7779,6 +8185,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Megatherium",
@@ -7799,6 +8206,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Snow Owl",
@@ -7819,6 +8227,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Parasaur",
@@ -7839,6 +8248,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Procoptodon",
@@ -7859,6 +8269,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Quetzal",
@@ -7879,6 +8290,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.8245,
   },
   {
     name: "R-Brontosaurus",
@@ -7899,6 +8312,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.873,
   },
   {
     name: "R-Velonasaur",
@@ -7919,6 +8333,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Thylacoleo",
@@ -7939,6 +8354,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Carbonemys",
@@ -7959,6 +8375,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.873,
   },
   {
     name: "R-Reaper Queen",
@@ -7979,6 +8396,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Reaper King",
@@ -7999,6 +8417,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Reaper King",
@@ -8019,6 +8438,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Noglin",
@@ -8039,6 +8459,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Survivor",
@@ -8059,6 +8480,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Survivor",
@@ -8079,6 +8501,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Survivor",
@@ -8099,6 +8522,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Survivor",
@@ -8119,6 +8543,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Exo-Mek",
@@ -8139,6 +8564,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Exo-Mek",
@@ -8159,6 +8585,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Shadowmane",
@@ -8179,6 +8606,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Shadowmane",
@@ -8199,6 +8627,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Macrophage",
@@ -8219,6 +8648,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Maewing",
@@ -8239,6 +8669,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Astrodelphis",
@@ -8259,6 +8691,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Allosaurus",
@@ -8279,6 +8713,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Argentavis",
@@ -8299,6 +8734,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Arthropluera",
@@ -8319,6 +8756,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Baryonyx",
@@ -8339,6 +8777,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Basilisk",
@@ -8359,6 +8798,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.5,
   },
   {
     name: "Onyc",
@@ -8379,6 +8819,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Titanoboa",
@@ -8399,6 +8840,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Bloodstalker",
@@ -8419,6 +8861,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Carnotaurus",
@@ -8439,6 +8882,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Ravager",
@@ -8459,6 +8903,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Magmasaur",
@@ -8479,6 +8924,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Karkinos",
@@ -8499,6 +8945,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Daeodon",
@@ -8519,6 +8966,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Dilophosaur",
@@ -8539,6 +8987,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Dire Bear",
@@ -8559,6 +9008,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Dire Bear",
@@ -8579,6 +9029,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Direwolf",
@@ -8599,6 +9050,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Managarmr",
@@ -8619,6 +9071,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Kaprosuchus",
@@ -8639,6 +9092,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Shadowmane",
@@ -8659,6 +9113,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mantis",
@@ -8679,6 +9134,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Megatherium",
@@ -8699,6 +9155,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Microraptor",
@@ -8719,6 +9176,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Snow Owl",
@@ -8739,6 +9197,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Paraceratherium",
@@ -8759,6 +9218,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pteranodon",
@@ -8779,6 +9239,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Purlovia",
@@ -8799,6 +9261,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Quetzal",
@@ -8819,6 +9282,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.8245,
   },
   {
     name: "Rex",
@@ -8839,6 +9304,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rock Drake",
@@ -8859,6 +9325,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rock Elemental",
@@ -8879,6 +9347,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sabertooth",
@@ -8899,6 +9368,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sarco",
@@ -8919,6 +9389,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Brontosaurus",
@@ -8939,6 +9410,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.873,
   },
   {
     name: "Ferox",
@@ -8959,6 +9431,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Araneo",
@@ -8979,6 +9452,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Velonasaur",
@@ -8999,6 +9473,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Thorny Dragon",
@@ -9019,6 +9494,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Spino",
@@ -9039,6 +9515,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Stegosaurus",
@@ -9059,6 +9536,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Terror Bird",
@@ -9079,6 +9557,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Therizinosaur",
@@ -9099,6 +9578,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Thylacoleo",
@@ -9119,6 +9599,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Triceratops",
@@ -9139,6 +9620,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Reaper King",
@@ -9159,6 +9641,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Yutyrannus",
@@ -9179,6 +9662,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Summoner",
@@ -9199,6 +9683,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tek Stryder",
@@ -9219,6 +9704,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Voidwyrm",
@@ -9239,6 +9725,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gigantopithecus",
@@ -9259,6 +9747,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dilophosaur",
@@ -9279,6 +9768,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Polar Bear",
@@ -9299,6 +9789,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Direwolf",
@@ -9319,6 +9810,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Bulbdog",
@@ -9339,6 +9831,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Shadowmane",
@@ -9359,6 +9852,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Shadowmane",
@@ -9379,6 +9873,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megalosaurus",
@@ -9399,6 +9894,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Maewing",
@@ -9419,6 +9915,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Paraceratherium",
@@ -9439,6 +9937,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "X-Raptor",
@@ -9459,6 +9958,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Rex",
@@ -9479,6 +9979,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Brute Ferox",
@@ -9499,6 +10000,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Velonasaur",
@@ -9519,6 +10021,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "R-Velonasaur",
@@ -9539,6 +10042,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Thorny Dragon",
@@ -9559,6 +10063,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Thylacoleo",
@@ -9579,6 +10084,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Rockwell Prime",
@@ -9599,6 +10105,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rockwell Node",
@@ -9619,6 +10126,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Survivor",
@@ -9639,6 +10147,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Summoner",
@@ -9659,6 +10168,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rockwell Prime",
@@ -9679,6 +10189,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rockwell Node",
@@ -9699,6 +10210,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Survivor",
@@ -9719,6 +10231,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Summoner",
@@ -9739,6 +10252,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rockwell Prime",
@@ -9759,6 +10273,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rockwell Node",
@@ -9779,6 +10294,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Survivor",
@@ -9799,6 +10315,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Summoner",
@@ -9819,6 +10336,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Exo-Mek",
@@ -9839,6 +10357,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rockwell Prime",
@@ -9859,6 +10378,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rockwell Node",
@@ -9879,6 +10399,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Summoner",
@@ -9899,6 +10420,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Achatina",
@@ -9919,6 +10441,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Allosaurus",
@@ -9939,6 +10462,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ankylosaurus",
@@ -9959,6 +10483,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Titanomyrma Drone",
@@ -9979,6 +10504,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Archaeopteryx",
@@ -9999,6 +10525,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Argentavis",
@@ -10019,6 +10546,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Arthropluera",
@@ -10039,6 +10567,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Baryonyx",
@@ -10059,6 +10588,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Basilisk",
@@ -10079,6 +10609,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Onyc",
@@ -10099,6 +10630,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Castoroides",
@@ -10119,6 +10651,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Giant Bee",
@@ -10139,6 +10672,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Giant Queen Bee",
@@ -10159,6 +10693,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gigantopithecus",
@@ -10179,6 +10714,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Titanoboa",
@@ -10199,6 +10735,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Bloodstalker",
@@ -10219,6 +10756,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Noglin",
@@ -10239,6 +10777,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Carnotaurus",
@@ -10259,6 +10798,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Carnotaurus",
@@ -10279,6 +10819,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ravager",
@@ -10299,6 +10840,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Chalicotherium",
@@ -10319,6 +10861,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Magmasaur",
@@ -10339,6 +10882,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Compy",
@@ -10359,6 +10903,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Karkinos",
@@ -10379,6 +10924,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Blood Crystal Wyvern",
@@ -10399,6 +10945,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ember Crystal Wyvern",
@@ -10419,6 +10966,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tropical Crystal Wyvern",
@@ -10439,6 +10987,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Daeodon",
@@ -10459,6 +11008,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Deathworm",
@@ -10479,6 +11029,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Deinonychus",
@@ -10499,6 +11050,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dilophosaur",
@@ -10519,6 +11071,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dimetrodon",
@@ -10539,6 +11092,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dimorphodon",
@@ -10559,6 +11113,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Diplocaulus",
@@ -10579,6 +11134,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Diplodocus",
@@ -10599,6 +11155,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dire Bear",
@@ -10619,6 +11176,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Direwolf",
@@ -10639,6 +11197,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "DodoRex",
@@ -10659,6 +11218,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dodo",
@@ -10679,6 +11239,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Doedicurus",
@@ -10699,6 +11260,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Meganeura",
@@ -10719,6 +11281,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dung Beetle",
@@ -10739,6 +11302,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Attack Drone",
@@ -10759,6 +11323,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Defense Unit",
@@ -10779,6 +11344,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Enforcer",
@@ -10799,6 +11365,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Equus",
@@ -10819,6 +11386,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Titanomyrma Soldier",
@@ -10839,6 +11407,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gacha",
@@ -10859,6 +11428,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gallimimus",
@@ -10879,6 +11449,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gasbags",
@@ -10899,6 +11470,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megachelon",
@@ -10919,6 +11491,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Giganotosaurus",
@@ -10939,6 +11512,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Griffin",
@@ -10959,6 +11533,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Hesperornis",
@@ -10979,6 +11554,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Hyaenodon",
@@ -10999,6 +11575,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Managarmr",
@@ -11019,6 +11596,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ichthyornis",
@@ -11039,6 +11617,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Iguanodon",
@@ -11059,6 +11638,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Insect Swarm",
@@ -11079,6 +11659,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Jerboa",
@@ -11099,6 +11680,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Oil Jug Bug",
@@ -11119,6 +11701,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Water Jug Bug",
@@ -11139,6 +11722,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Kairuku",
@@ -11159,6 +11743,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Kaprosuchus",
@@ -11179,6 +11764,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Kentrosaurus",
@@ -11199,6 +11785,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Featherlight",
@@ -11219,6 +11806,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Shinehorn",
@@ -11239,6 +11827,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Glowtail",
@@ -11259,6 +11848,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Bulbdog",
@@ -11279,6 +11869,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Leech",
@@ -11299,6 +11890,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Glowbug",
@@ -11319,6 +11911,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Shadowmane",
@@ -11339,6 +11932,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Lystrosaurus",
@@ -11359,6 +11953,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Macrophage",
@@ -11379,6 +11974,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mammoth",
@@ -11399,6 +11995,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mantis",
@@ -11419,6 +12016,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megalania",
@@ -11439,6 +12037,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megalosaurus",
@@ -11459,6 +12058,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megatherium",
@@ -11479,6 +12079,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mek",
@@ -11499,6 +12100,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Microraptor",
@@ -11519,6 +12121,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Maewing",
@@ -11539,6 +12142,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Roll Rat",
@@ -11559,6 +12163,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mesopithecus",
@@ -11579,6 +12184,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Moschops",
@@ -11599,6 +12205,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Lymantria",
@@ -11619,6 +12226,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Otter",
@@ -11639,6 +12247,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Oviraptor",
@@ -11659,6 +12268,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Snow Owl",
@@ -11679,6 +12289,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pachy",
@@ -11699,6 +12310,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pachyrhinosaurus",
@@ -11719,6 +12331,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Parasaur",
@@ -11739,6 +12352,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Paraceratherium",
@@ -11759,6 +12373,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pegomastax",
@@ -11779,6 +12394,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pelagornis",
@@ -11799,6 +12415,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Phiomia",
@@ -11819,6 +12436,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Phoenix",
@@ -11839,6 +12457,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Procoptodon",
@@ -11859,6 +12478,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pteranodon",
@@ -11879,6 +12499,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Seeker",
@@ -11899,6 +12520,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Purlovia",
@@ -11919,6 +12541,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Quetzal",
@@ -11939,6 +12562,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ice Wyvern",
@@ -11959,6 +12583,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Raptor",
@@ -11979,6 +12604,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Raptor",
@@ -11999,6 +12625,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rex",
@@ -12019,6 +12646,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Rex",
@@ -12039,6 +12667,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Woolly Rhino",
@@ -12059,6 +12688,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rock Drake",
@@ -12079,6 +12709,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rock Elemental",
@@ -12099,6 +12730,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sabertooth",
@@ -12119,6 +12751,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sarco",
@@ -12139,6 +12772,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brontosaurus",
@@ -12159,6 +12793,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pulmonoscorpius",
@@ -12179,6 +12814,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Scout",
@@ -12199,6 +12835,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ferox",
@@ -12219,6 +12856,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ferox",
@@ -12239,6 +12877,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ovis",
@@ -12259,6 +12898,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Astrodelphis",
@@ -12279,6 +12919,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Astrocetus",
@@ -12299,6 +12940,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Araneo",
@@ -12319,6 +12961,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Velonasaur",
@@ -12339,6 +12982,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Thorny Dragon",
@@ -12359,6 +13003,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Spino",
@@ -12379,6 +13024,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megaloceros",
@@ -12399,6 +13045,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Stegosaurus",
@@ -12419,6 +13066,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Summoner",
@@ -12439,6 +13087,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tapejara",
@@ -12459,6 +13108,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tek Stryder",
@@ -12479,6 +13129,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Voidwyrm",
@@ -12499,6 +13150,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Terror Bird",
@@ -12519,6 +13171,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Therizinosaur",
@@ -12539,6 +13192,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Thylacoleo",
@@ -12559,6 +13213,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Titanosaur",
@@ -12579,6 +13234,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Beelzebufo",
@@ -12599,6 +13255,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Triceratops",
@@ -12619,6 +13276,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Triceratops",
@@ -12639,6 +13297,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Trilobite",
@@ -12659,6 +13318,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Troodon",
@@ -12679,6 +13339,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tropeognathus",
@@ -12699,6 +13360,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Carbonemys",
@@ -12719,6 +13381,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Vulture",
@@ -12739,6 +13402,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Fire Wyvern",
@@ -12759,6 +13423,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Forest Wyvern",
@@ -12779,6 +13444,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Lightning Wyvern",
@@ -12799,6 +13465,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Poison Wyvern",
@@ -12819,6 +13486,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Yutyrannus",
@@ -12839,6 +13507,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Zomdodo",
@@ -12859,6 +13528,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Zomdodo",
@@ -12879,6 +13549,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Zomdodo",
@@ -12899,6 +13570,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Zomdodo",
@@ -12919,6 +13591,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Morellatops",
@@ -12939,6 +13612,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Allosaurus",
@@ -12959,6 +13633,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Bloodstalker",
@@ -12979,6 +13654,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Ravager",
@@ -12999,6 +13675,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Karkinos",
@@ -13019,6 +13696,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Dimorphodon",
@@ -13039,6 +13717,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -13059,6 +13738,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Enforcer",
@@ -13079,6 +13759,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -13099,6 +13780,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Kaprosuchus",
@@ -13119,6 +13801,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Shadowmane",
@@ -13139,6 +13822,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Mantis",
@@ -13159,6 +13843,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Lymantria",
@@ -13179,6 +13864,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Raptor",
@@ -13199,6 +13885,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Ferox",
@@ -13219,6 +13906,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Astrodelphis",
@@ -13239,6 +13927,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -13259,6 +13948,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Velonasaur",
@@ -13279,6 +13969,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Stegosaurus",
@@ -13299,6 +13990,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Triceratops",
@@ -13319,6 +14011,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Argentavis",
@@ -13339,6 +14032,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Onyc",
@@ -13359,6 +14054,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Raptor",
@@ -13379,6 +14075,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Stegosaurus",
@@ -13399,6 +14096,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Triceratops",
@@ -13419,6 +14117,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Attack Drone",
@@ -13439,6 +14138,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Defense Unit",
@@ -13459,6 +14160,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Enforcer",
@@ -13479,6 +14181,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Mek Knight",
@@ -13499,6 +14202,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Parasaur",
@@ -13519,6 +14223,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pteranodon",
@@ -13539,6 +14244,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Rex",
@@ -13559,6 +14265,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Malfunctioned Tek Stryder",
@@ -13579,6 +14286,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Allosaurus",
@@ -13599,6 +14307,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "VR Argentavis",
@@ -13619,6 +14328,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Argentavis",
@@ -13639,6 +14350,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Arthropluera",
@@ -13659,6 +14372,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Onyc",
@@ -13679,6 +14393,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gigantopithecus",
@@ -13699,6 +14414,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Carnotaurus",
@@ -13719,6 +14435,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Chalicotherium",
@@ -13739,6 +14456,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Chalicotherium",
@@ -13759,6 +14477,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Defense Unit",
@@ -13779,6 +14498,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Experimental Giganotosaurus",
@@ -13799,6 +14519,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "VR Kaprosuchus",
@@ -13819,6 +14540,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Kaprosuchus",
@@ -13839,6 +14561,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Megatherium",
@@ -13859,6 +14582,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Megatherium",
@@ -13879,6 +14603,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "VR Lymantria",
@@ -13899,6 +14624,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Pachy",
@@ -13919,6 +14646,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pachyrhinosaurus",
@@ -13939,6 +14667,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Parasaur",
@@ -13959,6 +14688,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "R-Parasaur",
@@ -13979,6 +14709,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.97,
   },
   {
     name: "Paraceratherium",
@@ -13999,6 +14730,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Raptor",
@@ -14019,6 +14751,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Raptor",
@@ -14039,6 +14772,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Rex",
@@ -14059,6 +14793,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rex",
@@ -14079,6 +14814,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Pulmonoscorpius",
@@ -14099,6 +14835,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Araneo",
@@ -14119,6 +14856,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Spino",
@@ -14139,6 +14877,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Tapejara",
@@ -14159,6 +14898,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tapejara",
@@ -14179,6 +14920,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Terror Bird",
@@ -14199,6 +14942,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Terror Bird",
@@ -14219,6 +14963,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Therizinosaur",
@@ -14239,6 +14984,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Yutyrannus",
@@ -14259,6 +15005,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Onyc",
@@ -14279,6 +15026,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Titanoboa",
@@ -14299,6 +15047,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Carnotaurus",
@@ -14319,6 +15068,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Dilophosaur",
@@ -14339,6 +15089,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Kaprosuchus",
@@ -14359,6 +15110,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Mantis",
@@ -14379,6 +15131,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Megalania",
@@ -14399,6 +15152,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Lymantria",
@@ -14419,6 +15173,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Raptor",
@@ -14439,6 +15195,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Pulmonoscorpius",
@@ -14459,6 +15216,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Araneo",
@@ -14479,6 +15237,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Macro-Summoner",
@@ -14499,6 +15258,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Summoner",
@@ -14519,6 +15279,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "VR Tapejara",
@@ -14539,6 +15300,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Survivor",
@@ -14559,6 +15322,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Attack Drone",
@@ -14579,6 +15343,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Attack Drone",
@@ -14599,6 +15365,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Attack Drone",
@@ -14619,6 +15387,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Attack Drone",
@@ -14639,6 +15409,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Astrodelphis",
@@ -14659,6 +15431,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Astrodelphis",
@@ -14679,6 +15453,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Astrocetus",
@@ -14699,6 +15475,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Master Controller",
@@ -14719,6 +15496,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Master Controller",
@@ -14739,6 +15517,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Corrupted Master Controller",
@@ -14759,6 +15538,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Enforcer",
@@ -14779,6 +15559,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Maewing",
@@ -14799,6 +15581,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Astrodelphis",
@@ -14819,6 +15603,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Scout",
@@ -14839,6 +15625,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       [25001, 300, 0, 0, 0],
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dinopithecus King",
@@ -14859,6 +15647,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dinopithecus King",
@@ -14879,6 +15668,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dinopithecus King",
@@ -14899,6 +15689,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Amargasaurus",
@@ -14919,6 +15710,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dinopithecus",
@@ -14939,6 +15731,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sinomacrops",
@@ -14959,6 +15752,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Amargasaurus",
@@ -14979,6 +15774,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dinopithecus",
@@ -14999,6 +15795,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sinomacrops",
@@ -15019,6 +15816,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ice Wyvern",
@@ -15039,6 +15838,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -15059,6 +15860,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -15079,6 +15881,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -15099,6 +15902,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Griffin",
@@ -15119,6 +15923,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dire Bear",
@@ -15139,6 +15945,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megaloceros",
@@ -15159,6 +15966,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Direwolf",
@@ -15179,6 +15987,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Manticore",
@@ -15199,6 +16008,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Manticore",
@@ -15219,6 +16029,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Manticore",
@@ -15239,6 +16050,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dire Polar Bear",
@@ -15259,6 +16071,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ice Wyvern",
@@ -15279,6 +16092,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Fire Wyvern",
@@ -15299,6 +16114,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Iceworm Male",
@@ -15319,6 +16136,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Iceworm Queen",
@@ -15339,6 +16157,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Lava Elemental",
@@ -15359,6 +16178,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -15379,6 +16199,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -15399,6 +16220,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -15419,6 +16241,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -15439,6 +16262,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -15459,6 +16283,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -15479,6 +16304,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Manticore",
@@ -15499,6 +16325,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Manticore",
@@ -15519,6 +16346,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Manticore",
@@ -15539,6 +16367,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Iceworm Male",
@@ -15559,6 +16388,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dire Polar Bear",
@@ -15579,6 +16409,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Chalk Golem",
@@ -15599,6 +16430,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ice Golem",
@@ -15619,6 +16451,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -15639,6 +16472,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Achatina",
@@ -15658,6 +16492,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Achatina",
@@ -15678,6 +16513,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Allosaurus",
@@ -15697,6 +16533,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ammonite",
@@ -15716,6 +16553,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Anglerfish",
@@ -15735,6 +16573,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Anglerfish",
@@ -15755,6 +16594,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Ankylosaurus",
@@ -15774,6 +16614,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Ankylosaurus",
@@ -15794,6 +16635,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Titanomyrma Drone",
@@ -15813,6 +16655,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Titanomyrma Soldier",
@@ -15832,6 +16675,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Archaeopteryx",
@@ -15851,6 +16695,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Argentavis",
@@ -15870,6 +16715,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Arthropluera",
@@ -15889,6 +16736,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Arthropluera",
@@ -15909,6 +16757,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Baryonyx",
@@ -15928,6 +16777,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Baryonyx",
@@ -15948,6 +16798,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Basilosaurus",
@@ -15967,6 +16818,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Onyc",
@@ -15986,6 +16838,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Castoroides",
@@ -16005,6 +16858,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Giant Bee",
@@ -16024,6 +16878,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Giant Queen Bee",
@@ -16043,6 +16898,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gigantopithecus",
@@ -16062,6 +16918,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Gigantopithecus",
@@ -16082,6 +16939,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Gigantopithecus",
@@ -16102,6 +16960,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gigantopithecus",
@@ -16122,6 +16981,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gigantopithecus",
@@ -16142,6 +17002,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Yeti",
@@ -16161,6 +17022,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Titanoboa",
@@ -16180,6 +17042,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Titanoboa",
@@ -16200,6 +17063,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Carcharodontosaurus",
@@ -16219,6 +17083,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Skeletal Carnotaurus",
@@ -16239,6 +17104,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Carnotaurus",
@@ -16258,6 +17124,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Carnotaurus",
@@ -16278,6 +17145,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Alpha Carnotaurus",
@@ -16298,6 +17166,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Chalicotherium",
@@ -16317,6 +17186,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Cnidaria",
@@ -16336,6 +17206,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Cnidaria",
@@ -16356,6 +17227,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Coelacanth",
@@ -16375,6 +17247,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Coelacanth",
@@ -16395,6 +17268,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Coelacanth",
@@ -16415,6 +17289,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Coelacanth",
@@ -16435,6 +17310,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Coelacanth",
@@ -16455,6 +17331,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Coelacanth",
@@ -16475,6 +17352,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Coelacanth",
@@ -16495,6 +17373,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Compy",
@@ -16514,6 +17393,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Blood Crystal Wyvern",
@@ -16534,6 +17414,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ember Crystal Wyvern",
@@ -16554,6 +17436,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Alpha Blood Crystal Wyvern",
@@ -16574,6 +17458,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tropical Crystal Wyvern",
@@ -16594,6 +17480,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Daeodon",
@@ -16613,6 +17501,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dilophosaur",
@@ -16632,6 +17521,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dimetrodon",
@@ -16651,6 +17541,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Dimetrodon",
@@ -16671,6 +17562,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Dimorphodon",
@@ -16690,6 +17582,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Dimorphodon",
@@ -16710,6 +17603,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Dimorphodon",
@@ -16730,6 +17624,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dimorphodon",
@@ -16750,6 +17645,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dimorphodon",
@@ -16770,6 +17666,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Diplocaulus",
@@ -16789,6 +17686,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Diplocaulus",
@@ -16809,6 +17707,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Diplodocus",
@@ -16828,6 +17727,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Diplodocus",
@@ -16848,6 +17748,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Dire Bear",
@@ -16867,6 +17768,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Dire Bear",
@@ -16887,6 +17789,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Polar Bear",
@@ -16906,6 +17809,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Direwolf",
@@ -16925,6 +17829,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Direwolf Ghost",
@@ -16945,6 +17850,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dodo",
@@ -16964,6 +17870,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Dodo",
@@ -16984,6 +17891,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Party Dodo",
@@ -17003,6 +17911,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Bunny Dodo",
@@ -17022,6 +17931,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Super Turkey",
@@ -17041,6 +17951,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Zomdodo",
@@ -17060,6 +17971,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "DodoRex",
@@ -17080,6 +17992,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "DodoRex",
@@ -17100,6 +18013,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "DodoRex",
@@ -17120,6 +18034,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Doedicurus",
@@ -17139,6 +18054,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Aberrant Doedicurus",
@@ -17159,6 +18075,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.864,
   },
   {
     name: "Ichthyosaurus",
@@ -17178,6 +18095,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -17198,6 +18116,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -17218,6 +18137,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dragon",
@@ -17238,6 +18158,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Meganeura",
@@ -17257,6 +18178,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Meganeura",
@@ -17277,6 +18199,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Dung Beetle",
@@ -17296,6 +18219,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Dung Beetle",
@@ -17316,6 +18240,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dunkleosteus",
@@ -17335,6 +18260,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Electrophorus",
@@ -17354,6 +18280,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Electrophorus",
@@ -17374,6 +18301,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Equus",
@@ -17393,6 +18321,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Equus",
@@ -17413,6 +18342,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Unicorn",
@@ -17432,6 +18362,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Eurypterid",
@@ -17451,6 +18382,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Gallimimus",
@@ -17470,6 +18402,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tek Giganotosaurus",
@@ -17489,6 +18422,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Skeletal Giganotosaurus",
@@ -17509,6 +18443,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Giganotosaurus",
@@ -17528,6 +18463,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Giganotosaurus",
@@ -17548,6 +18484,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -17568,6 +18505,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -17588,6 +18526,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -17608,6 +18547,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -17628,6 +18568,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -17648,6 +18589,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megapithecus",
@@ -17668,6 +18610,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Griffin",
@@ -17688,6 +18631,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Hesperornis",
@@ -17707,6 +18652,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Hyaenodon",
@@ -17726,6 +18672,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ice Golem",
@@ -17745,6 +18692,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Ichthyornis",
@@ -17764,6 +18712,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 2,
   },
   {
     name: "Iguanodon",
@@ -17783,6 +18732,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Iguanodon",
@@ -17803,6 +18753,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Kairuku",
@@ -17822,6 +18773,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Kaprosuchus",
@@ -17841,6 +18793,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Kentrosaurus",
@@ -17860,6 +18813,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Leech",
@@ -17879,6 +18833,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Diseased Leech",
@@ -17898,6 +18853,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Alpha Leedsichthys",
@@ -17918,6 +18874,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Leedsichthys",
@@ -17937,6 +18894,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Liopleurodon",
@@ -17956,6 +18914,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Lystrosaurus",
@@ -17975,6 +18934,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Lystrosaurus",
@@ -17995,6 +18955,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Mammoth",
@@ -18014,6 +18975,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Manta",
@@ -18033,6 +18995,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Manta",
@@ -18053,6 +19016,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Megalania",
@@ -18072,6 +19036,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Megalania",
@@ -18092,6 +19057,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Alpha Megalodon",
@@ -18112,6 +19078,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megalodon",
@@ -18131,6 +19098,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megalosaurus",
@@ -18150,6 +19118,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Megalosaurus",
@@ -18170,6 +19139,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Megalosaurus",
@@ -18190,6 +19160,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Megatherium",
@@ -18209,6 +19180,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Microraptor",
@@ -18228,6 +19200,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mesopithecus",
@@ -18247,6 +19220,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mesopithecus",
@@ -18267,6 +19241,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mesopithecus",
@@ -18287,6 +19262,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mesopithecus",
@@ -18307,6 +19283,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mosasaurus",
@@ -18326,6 +19303,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mosasaurus",
@@ -18346,6 +19324,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Alpha Mosasaur",
@@ -18366,6 +19345,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Alpha Mosasaur",
@@ -18386,6 +19366,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Moschops",
@@ -18405,6 +19386,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Moschops",
@@ -18425,6 +19407,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Otter",
@@ -18444,6 +19427,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Otter",
@@ -18464,6 +19448,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Bunny Oviraptor",
@@ -18483,6 +19468,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Oviraptor",
@@ -18502,6 +19488,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pachy",
@@ -18521,6 +19508,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pachyrhinosaurus",
@@ -18540,6 +19528,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tek Parasaur",
@@ -18559,6 +19548,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Parasaur",
@@ -18578,6 +19568,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Parasaur",
@@ -18598,6 +19589,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Paraceratherium",
@@ -18617,6 +19609,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Paraceratherium",
@@ -18637,6 +19630,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Pegomastax",
@@ -18656,6 +19650,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pelagornis",
@@ -18675,6 +19670,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Phiomia",
@@ -18694,6 +19691,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Piranha",
@@ -18713,6 +19711,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Piranha",
@@ -18733,6 +19732,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Piranha",
@@ -18753,6 +19753,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Piranha",
@@ -18773,6 +19774,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Plesiosaur",
@@ -18792,6 +19794,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Procoptodon",
@@ -18811,6 +19814,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Pteranodon",
@@ -18830,6 +19834,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Pteranodon",
@@ -18850,6 +19856,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Pteranodon",
@@ -18870,6 +19878,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Pteranodon",
@@ -18890,6 +19900,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Purlovia",
@@ -18909,6 +19921,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Purlovia",
@@ -18929,6 +19942,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Polar Purlovia",
@@ -18948,6 +19962,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tek Quetzal",
@@ -18967,6 +19982,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.85,
   },
   {
     name: "Skeletal Quetzal",
@@ -18987,6 +20004,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Quetzal",
@@ -19006,6 +20024,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 0.85,
   },
   {
     name: "Tek Raptor",
@@ -19025,6 +20045,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Skeletal Raptor",
@@ -19045,6 +20066,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Alpha Raptor",
@@ -19065,6 +20087,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Raptor",
@@ -19084,6 +20107,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Raptor",
@@ -19104,6 +20128,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Deinonychus",
@@ -19124,6 +20149,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tek Rex",
@@ -19143,6 +20169,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Skeletal Rex",
@@ -19163,6 +20190,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rex Ghost",
@@ -19183,6 +20211,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Alpha T-Rex",
@@ -19203,6 +20232,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rex",
@@ -19222,6 +20252,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rhyniognatha",
@@ -19241,6 +20272,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sabertooth",
@@ -19260,6 +20293,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Salmon",
@@ -19280,6 +20314,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Sabertooth Salmon",
@@ -19299,6 +20334,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sabertooth Salmon",
@@ -19319,6 +20355,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sabertooth Salmon",
@@ -19339,6 +20376,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Sarco",
@@ -19358,6 +20396,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Sarco",
@@ -19378,6 +20417,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Skeletal Bronto",
@@ -19398,6 +20438,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Brontosaurus",
@@ -19417,6 +20458,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Pulmonoscorpius",
@@ -19436,6 +20478,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Pulmonoscorpius",
@@ -19456,6 +20499,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Ovis",
@@ -19475,6 +20519,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Ovis",
@@ -19495,6 +20540,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -19515,6 +20561,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -19535,6 +20582,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -19555,6 +20603,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -19575,6 +20624,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -19595,6 +20645,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Broodmother Lysrix",
@@ -19615,6 +20666,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Araneo",
@@ -19634,6 +20686,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Araneo",
@@ -19654,6 +20707,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Araneo",
@@ -19674,6 +20728,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Araneo",
@@ -19694,6 +20749,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Araneo",
@@ -19714,6 +20770,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Spino",
@@ -19733,6 +20790,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Spino",
@@ -19753,6 +20811,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Megaloceros",
@@ -19772,6 +20831,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tek Stegosaurus",
@@ -19791,6 +20851,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Skeletal Stego",
@@ -19811,6 +20872,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Stegosaurus",
@@ -19830,6 +20892,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Stegosaurus",
@@ -19850,6 +20913,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Tapejara",
@@ -19869,6 +20933,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Terror Bird",
@@ -19888,6 +20954,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Therizinosaur",
@@ -19907,6 +20974,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Thylacoleo",
@@ -19926,6 +20994,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Titanosaur",
@@ -19945,6 +21014,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1.8,
   },
   {
     name: "Beelzebufo",
@@ -19964,6 +21034,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Beelzebufo",
@@ -19984,6 +21055,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Tek Triceratops",
@@ -20003,6 +21075,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Skeletal Trike",
@@ -20023,6 +21096,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Triceratops",
@@ -20042,6 +21116,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Triceratops",
@@ -20062,6 +21137,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Trilobite",
@@ -20081,6 +21157,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Aberrant Trilobite",
@@ -20101,6 +21178,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.96,
   },
   {
     name: "Troodon",
@@ -20120,6 +21198,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tropeognathus",
@@ -20140,6 +21219,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Carbonemys",
@@ -20159,6 +21240,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.9,
   },
   {
     name: "Aberrant Carbonemys",
@@ -20179,6 +21261,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 0.864,
   },
   {
     name: "Alpha Tusoteuthis",
@@ -20199,6 +21282,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tusoteuthis",
@@ -20218,6 +21302,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Tusoteuthis",
@@ -20238,6 +21323,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Woolly Rhino",
@@ -20257,6 +21343,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Yutyrannus",
@@ -20276,6 +21363,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Morellatops",
@@ -20296,6 +21384,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Deathworm",
@@ -20316,6 +21405,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Alpha Deathworm",
@@ -20336,6 +21426,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Dodo Wyvern",
@@ -20356,6 +21447,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Skeletal Jerboa",
@@ -20376,6 +21468,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Jerboa",
@@ -20396,6 +21489,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Oil Jug Bug",
@@ -20416,6 +21510,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Water Jug Bug",
@@ -20436,6 +21531,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Manticore",
@@ -20456,6 +21552,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Manticore",
@@ -20476,6 +21573,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Manticore",
@@ -20496,6 +21594,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Deathworm",
@@ -20516,6 +21615,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rock Elemental",
@@ -20536,6 +21636,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mantis Ghost",
@@ -20556,6 +21657,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Mantis",
@@ -20576,6 +21678,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Lymantria",
@@ -20596,6 +21699,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Phoenix",
@@ -20616,6 +21721,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rock Elemental",
@@ -20636,6 +21742,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Rubble Golem",
@@ -20656,6 +21763,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Thorny Dragon",
@@ -20676,6 +21784,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Vulture",
@@ -20696,6 +21805,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Bone Fire Wyvern",
@@ -20716,6 +21826,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Alpha Fire Wyvern",
@@ -20736,6 +21848,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Fire Wyvern",
@@ -20756,6 +21870,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Lightning Wyvern",
@@ -20776,6 +21892,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Poison Wyvern",
@@ -20796,6 +21914,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Zombie Fire Wyvern",
@@ -20816,6 +21936,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Zombie Lightning Wyvern",
@@ -20836,6 +21958,8 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
   {
     name: "Zombie Poison Wyvern",
@@ -20856,5 +21980,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
     ],
+    statImprintMult: [0.2, 0, 0.2, 0, 0.2, 0.2, 0, 0.2, 0.2, 0, 0, 0],
+    TamedBaseHealthMultiplier: 1,
   },
 ] as const;

@@ -33,27 +33,6 @@ export const StatMultiplierSchema = v.object({
   torpidity: StatMultiplierItemSchema,
 });
 
-export type StatImprintMultipliers = v.InferOutput<
-  typeof StatImprintMultipliersSchema
->;
-export type StatImprintMultipliersIn = v.InferInput<
-  typeof StatImprintMultipliersSchema
->;
-export const StatImprintMultipliersSchema = v.object({
-  health: v.number(),
-  stamina: v.number(),
-  oxygen: v.number(),
-  food: v.number(),
-  water: v.number(),
-  temperature: v.number(),
-  weight: v.number(),
-  meleeDamageMultiplier: v.number(),
-  speedMultiplier: v.number(),
-  temperatureFortitude: v.number(),
-  craftingSpeedMultiplier: v.number(),
-  torpidity: v.number(),
-});
-
 export type Lang = (typeof Langs)[number];
 export const Langs = ["ja"] as const;
 
@@ -61,7 +40,6 @@ export type Settings = v.InferOutput<typeof SettingsSchema>;
 export type SettingsIn = v.InferInput<typeof SettingsSchema>;
 export const SettingsSchema = v.object({
   statMultipliers: StatMultiplierSchema,
-  StatImprintMultipliers: StatImprintMultipliersSchema,
   IBM: v.number(),
   variants: v.array(VariantSchema),
   variantsUnselected: v.array(VariantSchema),
@@ -84,20 +62,6 @@ export const DefaultSettings: Settings = {
     temperatureFortitude: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
     craftingSpeedMultiplier: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
     torpidity: { TaM: 1, TmM: 1, IdM: 1, IwM: 1 },
-  },
-  StatImprintMultipliers: {
-    health: 0.2,
-    stamina: 0,
-    oxygen: 0.2,
-    food: 0,
-    water: 0.2,
-    temperature: 0.2,
-    weight: 0,
-    meleeDamageMultiplier: 0.2,
-    speedMultiplier: 0.2,
-    temperatureFortitude: 0.2,
-    craftingSpeedMultiplier: 0,
-    torpidity: 0,
   },
   IBM: 1,
   variants: [],
