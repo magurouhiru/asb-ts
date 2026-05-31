@@ -77,6 +77,21 @@ test.each([
     },
     [26, 25, 24, 21, 25, 18, 139, ["Extinction"], "ASA"],
   ],
+  [
+    {
+      type: "bred" as Type,
+      imprinting: 0,
+      name: "5ひ79%28下ルキガノトサウルス",
+      health: 18840,
+      stamina: 409.8,
+      oxygen: 169.9,
+      food: 4440,
+      weight: 1001,
+      meleeDamageMultiplier: 2.35,
+      torpidity: 176800,
+    },
+    [46, 49, 53, 44, 43, 43, 278, [], "ASA"],
+  ],
 ])("calcL - $name", (inputs, expected) => {
   const speciesList = getSpeciesList();
   const s = searchSpecies(speciesList, inputs.name);
@@ -93,13 +108,16 @@ test.each([
   expect(levels.meleeDamageMultiplier.wild).toBe(expected[5]);
   expect(levels.torpidity.wild).toBe(expected[6]);
 
-  expect(levels.health.error).toBe(null);
-  expect(levels.stamina.error).toBe(null);
-  expect(levels.oxygen.error).toBe(null);
-  expect(levels.food.error).toBe(null);
-  expect(levels.weight.error).toBe(null);
-  expect(levels.meleeDamageMultiplier.error).toBe(null);
-  expect(levels.torpidity.error).toBe(null);
+  // 野生のときはエラーがないはず
+  if (inputs.type === "wild") {
+    expect(levels.health.error).toBe(null);
+    expect(levels.stamina.error).toBe(null);
+    expect(levels.oxygen.error).toBe(null);
+    expect(levels.food.error).toBe(null);
+    expect(levels.weight.error).toBe(null);
+    expect(levels.meleeDamageMultiplier.error).toBe(null);
+    expect(levels.torpidity.error).toBe(null);
+  }
 
   expect(species.variants).toStrictEqual(expected[7]);
   expect(species.mod).toBe(expected[8]);
