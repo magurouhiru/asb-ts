@@ -173,14 +173,15 @@ function calculateLevelDom(
   let bufLevels: Levels | null = null;
   let bufTe: TameEffectiveness | null = null;
   for (let te = 0; te <= 100; te += 1) {
-    const tmp = calculateLevelDomCore(te as TameEffectiveness, ip);
+    const teParsent = te / 100;
+    const tmp = calculateLevelDomCore(teParsent as TameEffectiveness, ip);
     const error = sumError(tmp);
     if (error === 0) {
-      return [tmp, (te / 100) as TameEffectiveness];
+      return [tmp, teParsent as TameEffectiveness];
     } else if (error <= bufError) {
       bufError = error;
       bufLevels = tmp;
-      bufTe = (te / 100) as TameEffectiveness;
+      bufTe = teParsent as TameEffectiveness;
     }
   }
   if (!bufLevels || !bufTe) throw new Error("calculateLevelDomがなんかへん");
