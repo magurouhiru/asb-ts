@@ -14,7 +14,7 @@ import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   calculateValueController,
-  DefaultSettings,
+  DEFAULT_SETTINGS,
   getSpeciesList,
   ImprintingSchema,
   type LevelsIn,
@@ -46,7 +46,7 @@ const { useAppForm } = createFormHook({
 
 function CalcValueComponent() {
   const { contains } = useFilter({ sensitivity: "base" });
-  const defaultSettings = DefaultSettings;
+  const defaultSettings = DEFAULT_SETTINGS;
   const speciesList = getSpeciesList(defaultSettings);
   const items = speciesList.map((s) => ({
     id: s.blueprintPath as Key,
@@ -103,14 +103,14 @@ function CalcValueComponent() {
           !parsedTameEffectiveness.success
         )
           return;
-        const result = calculateValueController(
-          s,
-          parsed.output,
-          parsedImprinting.output,
-          parsedTameEffectiveness.output,
-          value.type as Type,
-          defaultSettings,
-        );
+        const result = calculateValueController({
+          type: value.type as Type,
+          levels: parsed.output,
+          tameEffectiveness: parsedTameEffectiveness.output,
+          imprinting: parsedImprinting.output,
+          species: s,
+          settings: defaultSettings,
+        });
         setValues(result);
       },
     },

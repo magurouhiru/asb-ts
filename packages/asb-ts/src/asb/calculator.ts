@@ -11,6 +11,7 @@ import {
   LevelsSchema,
   type Settings,
   type Species,
+  type SpeciesStat,
   type StatMultiplierItem,
   type Stats,
   type TameEffectiveness,
@@ -22,7 +23,7 @@ import { type StatsName, StatsNames } from "./types/stats-name.js";
 // テイム後のレベル計算では刷り込みボーナスなしで計算する。
 const DOM_IMP = 0 as Imprinting;
 
-// ブリはテイム効果なしで計算する。
+// ブリはテイム効果1で計算する。
 const BRED_TE = 1 as TameEffectiveness;
 
 export function calculateValueController(ip: CalculateValueInputPack): Values {
@@ -150,7 +151,7 @@ export function calculateLevelController(
       return [calculateLevelWild(ip), 0 as TameEffectiveness];
     }
     case "dom": {
-      return calculateLevelDom(ip);
+      return calculateLevelDom({ ...ip, imprinting: DOM_IMP });
     }
     case "bred": {
       return calculateLevelBred(ip);
@@ -176,9 +177,7 @@ function calculateLevelDom(
     const teParsent = te / 100;
     const tmp = calculateLevelDomCore(teParsent as TameEffectiveness, ip);
     const error = sumError(tmp);
-    if (error === 0) {
-      return [tmp, teParsent as TameEffectiveness];
-    } else if (error <= bufError) {
+    if (error <= bufError) {
       bufError = error;
       bufLevels = tmp;
       bufTe = teParsent as TameEffectiveness;
@@ -241,8 +240,8 @@ function cLw(sn: StatsName, ip: CalculateLevelInputPack): LevelDetailIn {
     if (tmpVw === value) {
       return { wild: level, error: null };
     } else if (tmpVw > value) {
-      const bufDiff = calculateError(value, bufVw, stat.baseValue);
-      const tmpDiff = calculateError(value, tmpVw, stat.baseValue);
+      const bufDiff = calculateError(value, bufVw, stat);
+      const tmpDiff = calculateError(value, tmpVw, stat);
       if (bufDiff < tmpDiff) {
         return { wild: level - 1, error: bufDiff };
       } else {
@@ -275,8 +274,8 @@ function cLpt(
     if (tmpVpt === value) {
       return { wild: level, error: null };
     } else if (tmpVpt > value) {
-      const bufDiff = calculateError(value, bufVpt, stat.baseValue);
-      const tmpDiff = calculateError(value, tmpVpt, stat.baseValue);
+      const bufDiff = calculateError(value, bufVpt, stat);
+      const tmpDiff = calculateError(value, tmpVpt, stat);
       if (bufDiff < tmpDiff) {
         return { wild: level - 1, error: bufDiff };
       } else {
@@ -285,17 +284,18 @@ function cLpt(
     }
     bufVpt = tmpVpt;
   }
-  throw new Error("value is too high");
+  throw new Error(
+    `error in cLpt: species name: ${ip.species.name}, stats name: ${sn}`,
+    { cause: ip },
+  );
 }
 
-// 誤差はいったんbaseValueで割って正規化する。これも誤差の比較のためだけの値なので、厳密に計算する必要はない。
-// もしうまく計算できなかったら、incPerWildLevelで割る方法を試す。
 function calculateError(
   except: number,
   actual: number,
-  baseValue: number,
+  stat: SpeciesStat,
 ): number {
-  return Math.abs(except - actual) / baseValue;
+  return Math.abs(except - actual) / stat.baseValue;
 }
 
 function toLevels(

@@ -214,6 +214,7 @@ test.each([
   );
   if (!r) throw new Error("なんかへん");
   const { species, levels, tameEffectiveness } = r;
+  console.log("tameEffectiveness", tameEffectiveness);
 
   expect(levels.health.wild).toBe(expected[0]);
   expect(levels.stamina.wild).toBe(expected[1]);
