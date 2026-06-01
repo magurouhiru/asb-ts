@@ -103,7 +103,7 @@ export function searchSpecies(
   speciesList: Species[],
   name: string,
   settings: Settings,
-): Species | null {
+): Species {
   const fuse = new Fuse(
     speciesList.map((s) => s.name),
     {
@@ -111,7 +111,8 @@ export function searchSpecies(
     },
   );
   const hit = fuse.search(name).at(0)?.item;
-  if (!hit) return null;
+  if (!hit) throw new Error(`Species not found: ${name}`);
+
   const found = speciesList
     .filter((s) => s.name === hit)
     .sort((a, b) => a.variants.length - b.variants.length)
@@ -123,7 +124,9 @@ export function searchSpecies(
       return 0;
     });
 
-  return found[0] || null;
+  const result = found[0];
+  if (!result) throw new Error(`Species not found: ${name}`);
+  return result;
 }
 
 function toStats([

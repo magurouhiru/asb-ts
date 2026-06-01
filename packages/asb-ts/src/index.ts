@@ -3,6 +3,7 @@ import {
   calculateLevelController,
   calculateValueController,
 } from "./asb/calculator.js";
+import { searchSpecies } from "./asb/species.js";
 import {
   type CalculateLevelInputPack,
   CalculateLevelInputPackSchema,
@@ -11,6 +12,7 @@ import {
   DEFAULT_SETTINGS,
   type Levels,
   type Settings,
+  SettingsSchema,
   type Species,
   type TameEffectiveness,
   type Type,
@@ -20,15 +22,29 @@ import {
 export * from "./asb/types/index.js";
 
 export function createSettings(settings?: Partial<Settings>): Settings {
-  return { ...DEFAULT_SETTINGS, ...settings };
+  return v.parse(SettingsSchema, { ...DEFAULT_SETTINGS, ...settings });
 }
 
-export { createSpeciesList, searchSpecies } from "./asb/species.js";
+export { createSpeciesList } from "./asb/species.js";
+
+export function searchBP(
+  speciesList: Species[],
+  name: string,
+  settings: Settings,
+): string {
+  return searchSpecies(speciesList, name, settings).blueprintPath;
+}
 
 /**
  * レベル→個体値の算出に必要な情報をまとめたもの
  */
 export interface InputForCalculateValue {
+  /** 個体を識別するkey
+   * Species.blueprintPath←これ
+   * もとは生物ごとの設定ファイルのpathだけど、重複がないのでkeyとして使う
+   * */
+  bp: string;
+
   /** 個体のタイプ(wild:野生の個体, dom:野生をテイムした個体, bred:ブリーディングした個体) */
   type: Type;
 
@@ -87,13 +103,17 @@ export interface InputForCalculateValue {
   /** 刷り込みボーナス(0~1) type が "bred" の場合にのみ有効 */
   imp: number;
 
-  species: Species;
+  speciesList: Species[];
   settings: Settings;
 }
 
 function toCalculateValueInputPack(
   input: InputForCalculateValue,
 ): CalculateValueInputPack {
+  const found = input.speciesList.find((s) => s.blueprintPath === input.bp);
+  if (!found) {
+    throw new Error(`species not found for bp: ${input.bp}`);
+  }
   return v.parse(CalculateValueInputPackSchema, {
     type: input.type,
     levels: {
@@ -118,7 +138,7 @@ function toCalculateValueInputPack(
     },
     te: input.te,
     imprinting: input.imp,
-    species: input.species,
+    species: found,
     settings: input.settings,
   });
 }
@@ -131,6 +151,12 @@ export function calculateValue(input: InputForCalculateValue): Values {
  * 個体値→レベルの算出に必要な情報をまとめたもの
  */
 export interface InputForCalculateLevel {
+  /** 個体を識別するkey
+   * Species.blueprintPath←これ
+   * もとは生物ごとの設定ファイルのpathだけど、重複がないのでkeyとして使う
+   * */
+  bp: string;
+
   /** 個体のタイプ(wild:野生の個体, dom:野生をテイムした個体, bred:ブリーディングした個体) */
   type: Type;
 
@@ -150,17 +176,20 @@ export interface InputForCalculateLevel {
 
   /** 気絶値の値 */
   t_v: number;
-
   /** 刷り込みボーナス(0~1) type が "bred" の場合にのみ有効 */
   imp: number;
 
-  species: Species;
+  speciesList: Species[];
   settings: Settings;
 }
 
 function toCalculateLevelInputPack(
   input: InputForCalculateLevel,
 ): CalculateLevelInputPack {
+  const found = input.speciesList.find((s) => s.blueprintPath === input.bp);
+  if (!found) {
+    throw new Error(`species not found for bp: ${input.bp}`);
+  }
   return v.parse(CalculateLevelInputPackSchema, {
     type: input.type,
     values: {
@@ -180,7 +209,7 @@ function toCalculateLevelInputPack(
       torpidity: input.t_v,
     } satisfies Values,
     imprinting: input.imp,
-    species: input.species,
+    species: found,
     settings: input.settings,
   });
 }
