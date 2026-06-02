@@ -7,24 +7,29 @@ import {
   DEFAULT_TBHM,
   type Imprinting,
   type LevelDetail,
+  LevelDetailSchema,
   type Levels,
   LevelsSchema,
-  MAX_TE,
-  MIN_TE,
+  type Meta,
   type Settings,
   type Species,
-  type SpeciesStat,
   type StatMultiplierItem,
   type Stats,
+  type StatsMeta,
+  type StatsName,
+  StatsNames,
   type TameEffectiveness,
   TameEffectivenessSchema,
+  TE_MAX,
   type Values,
   ValuesSchema,
 } from "./types/index.js";
-import { type StatsName, StatsNames } from "./types/stats-name.js";
 
-export function calculateValueController(ip: CalculateValueInputPack): Values {
+export function calculateValueController(
+  ip: CalculateValueInputPack,
+): [Values, Meta] {
   let result: { [k: string]: number } | null = null;
+  const meta: Meta = { hasError: false, statsMeta: {} };
   switch (ip.type) {
     case "wild": {
       result = calculateValueWild(ip);
@@ -36,13 +41,15 @@ export function calculateValueController(ip: CalculateValueInputPack): Values {
       break;
     }
   }
-  return v.parse(
+
+  const values = v.parse(
     v.message(
       ValuesSchema,
       `error in calculateValueController: result: ${JSON.stringify(result)}, ip: ${JSON.stringify(ip)}`,
     ),
     result,
   );
+  return [values, meta];
 }
 
 function calculateValueWild(
@@ -142,21 +149,22 @@ function cVpt(
 
 export function calculateLevelController(
   ip: CalculateLevelInputPack,
-): [Levels, TameEffectiveness] {
+): [Levels, TameEffectiveness, Meta] {
   let levels: { [k: string]: LevelDetail } | null = null;
   let te = NaN;
+  let meta: Meta | null = null;
   switch (ip.type) {
     case "wild": {
-      levels = calculateLevelWild(ip);
+      [levels, meta] = calculateLevelWild(ip);
       te = 0;
       break;
     }
     case "dom": {
-      [levels, te] = calculateLevelDom(ip);
+      [levels, te, meta] = calculateLevelDom(ip);
       break;
     }
     case "bred": {
-      levels = calculateLevelBred(ip);
+      [levels, meta] = calculateLevelBred(ip);
       te = BRED_TE;
       break;
     }
@@ -177,135 +185,139 @@ export function calculateLevelController(
       ),
       te,
     ),
+    meta,
   ];
 }
 
 function calculateLevelWild(
   ip: Extract<CalculateLevelInputPack, { type: "wild" }>,
-): { [k: string]: LevelDetail } {
-  return Object.fromEntries(StatsNames.map((sn) => [sn, cLw(sn, ip)]));
+): [{ [k: string]: LevelDetail }, Meta] {
+  const meta: Meta = { hasError: false, statsMeta: {} };
+  const result = StatsNames.map((sn) => {
+    const [ld, smd] = cLw(sn, ip);
+    return { sn, ld, smd };
+  });
+  const levels = Object.fromEntries(result.map(({ sn, ld }) => [sn, ld]));
+  result.forEach(({ sn, smd }) => {
+    if (!smd) return;
+    else meta.statsMeta[sn] = smd;
+  });
+  return [levels, meta];
 }
 
+const TARGET_TE_LIST_SIZE = 100;
+const TARGET_TE_LIST = Array.from(
+  { length: TE_MAX * TARGET_TE_LIST_SIZE + 1 },
+  (_, i) => v.parse(TameEffectivenessSchema, i / TARGET_TE_LIST_SIZE),
+);
 function calculateLevelDom(
   ip: Extract<CalculateLevelInputPack, { type: "dom" }>,
-): [{ [k: string]: LevelDetail }, number] {
-  let bufError = Number.MAX_SAFE_INTEGER;
-  let bufLevels: { [k: string]: LevelDetail } | null = null;
-  let bufTe: number | null = null;
-  for (let te = MIN_TE * 100; te <= MAX_TE * 100; te += 1) {
-    const teParsent = te / 100;
-    const tmp = calculateLevelDomCore(teParsent, ip);
-    const error = Object.values(tmp).reduce(
-      (acc, v) => acc + (v.error ?? 0),
+): [{ [k: string]: LevelDetail }, TameEffectiveness, Meta] {
+  let buffDiff = Number.MAX_SAFE_INTEGER;
+  let buffLevels: { [k: string]: LevelDetail } | null = null;
+  let buffTe: TameEffectiveness | null = null;
+  let buffMeta: Meta | null = null;
+  for (const te of TARGET_TE_LIST) {
+    const [tmpLevels, tmpMeta] = calculateLevelDomCore(te, ip, {
+      hasError: false,
+      statsMeta: {},
+    });
+    const tmpSumDiff = StatsNames.reduce(
+      (acc, sn) =>
+        acc +
+        Math.abs(tmpMeta.statsMeta[sn]?.valueDiff ?? 0) /
+          (ip.species.stats[sn]?.baseValue ?? 1),
       0,
     );
-    if (error <= bufError) {
-      bufError = error;
-      bufLevels = tmp;
-      bufTe = teParsent;
+    if (tmpSumDiff <= buffDiff) {
+      buffDiff = tmpSumDiff;
+      buffLevels = tmpLevels;
+      buffTe = te;
+      buffMeta = tmpMeta;
     }
   }
-  if (!bufLevels || !bufTe) throw new Error("calculateLevelDomがなんかへん");
-  return [bufLevels, bufTe];
+  if (!buffLevels || !buffTe || !buffMeta)
+    throw new Error("calculateLevelDomがなんかへん");
+  return [buffLevels, buffTe, buffMeta];
 }
 
 function calculateLevelBred(
   ip: Extract<CalculateLevelInputPack, { type: "bred" }>,
-): { [k: string]: LevelDetail } {
-  return calculateLevelDomCore(BRED_TE, ip);
+): [{ [k: string]: LevelDetail }, Meta] {
+  const meta: Meta = { hasError: false, statsMeta: {} };
+  return calculateLevelDomCore(BRED_TE, ip, meta);
 }
 
 function calculateLevelDomCore(
-  te: number,
+  te: TameEffectiveness,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
-): { [k: string]: LevelDetail } {
-  return Object.fromEntries(StatsNames.map((sn) => [sn, cLpt(sn, te, ip)]));
+  meta: Meta,
+): [{ [k: string]: LevelDetail }, Meta] {
+  const result = StatsNames.map((sn) => {
+    const [ld, smd] = cLpt(sn, te, ip);
+    return { sn, ld, smd };
+  });
+  const levels = Object.fromEntries(result.map(({ sn, ld }) => [sn, ld]));
+  result.forEach(({ sn, smd }) => {
+    if (smd) meta.statsMeta[sn] = smd;
+  });
+  return [levels, meta];
 }
 
-const MAX_LEVEL = 500; // とりあえずレベル500まで計算する。これ以上は現実的に存在しないと思うので。
+const TARGET_LEVEL_DETAIL_LIST_SIZE = 500; // とりあえずレベル500まで計算する。これ以上は現実的に存在しないと思うので。
+const TARGET_LEVEL_DETAIL_LIST = Array.from(
+  { length: TARGET_LEVEL_DETAIL_LIST_SIZE + 1 },
+  (_, i) => v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: 0 }),
+);
+const LEVEL_DETAIL_0 = { wild: 0, mut: 0, dom: 0 } satisfies LevelDetail;
 
 function cLw(
   sn: StatsName,
   ip: Extract<CalculateLevelInputPack, { type: "wild" }>,
-): LevelDetail {
+): [LevelDetail, StatsMeta[StatsName]] {
   const stat = ip.species.stats[sn];
   const value = ip.values[sn];
   if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
-    return { wild: 0, error: null };
-  let bufVw = 0;
-  for (let level = 0; level <= MAX_LEVEL; level++) {
+    return [LEVEL_DETAIL_0, undefined];
+  let buffLd: LevelDetail | null = null;
+  let buffDiff = Number.MAX_SAFE_INTEGER;
+  for (const ld of TARGET_LEVEL_DETAIL_LIST) {
     const tmpVw = round(
-      cVw(
-        { wild: level },
-        ip.species.stats[sn],
-        ip.settings.statMultipliers[sn],
-      ),
+      cVw(ld, ip.species.stats[sn], ip.settings.statMultipliers[sn]),
       sn,
     );
-    if (tmpVw === value) {
-      return { wild: level, error: null };
-    } else if (tmpVw > value) {
-      const bufDiff = calculateError(value, bufVw, stat);
-      const tmpDiff = calculateError(value, tmpVw, stat);
-      if (bufDiff < tmpDiff) {
-        return { wild: level - 1, error: bufDiff };
-      } else {
-        return { wild: level, error: tmpDiff };
-      }
+    const tmpDiff = tmpVw - value;
+    if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
+      buffLd = ld;
+      buffDiff = tmpDiff;
     }
-    bufVw = tmpVw;
   }
-  throw new Error(
-    `error in cLw: species name: ${ip.species.name}, stats name: ${sn}`,
-    { cause: ip },
-  );
+  if (!buffLd) throw Error();
+  return [buffLd, buffDiff === 0 ? undefined : { valueDiff: buffDiff }];
 }
 
 function cLpt(
   sn: StatsName,
-  te: number,
+  te: TameEffectiveness,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
-): LevelDetail {
+): [LevelDetail, StatsMeta[StatsName]] {
   const stat = ip.species.stats[sn];
   const value = ip.values[sn];
   if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
-    return { wild: 0, error: null };
-  let bufVpt = 0;
-  for (let level = 0; level <= MAX_LEVEL; level++) {
+    return [LEVEL_DETAIL_0, undefined];
+  let buffLd: LevelDetail | null = null;
+  let buffDiff = Number.MAX_SAFE_INTEGER;
+  for (const ld of TARGET_LEVEL_DETAIL_LIST) {
     const tmpVpt = round(
-      cVpt(
-        sn,
-        { wild: level },
-        te as TameEffectiveness,
-        ip.imprinting,
-        ip.species,
-        ip.settings,
-      ),
+      cVpt(sn, ld, te, ip.imprinting, ip.species, ip.settings),
       sn,
     );
-    if (tmpVpt === value) {
-      return { wild: level, error: null };
-    } else if (tmpVpt > value) {
-      const bufDiff = calculateError(value, bufVpt, stat);
-      const tmpDiff = calculateError(value, tmpVpt, stat);
-      if (bufDiff < tmpDiff) {
-        return { wild: level - 1, error: bufDiff };
-      } else {
-        return { wild: level, error: tmpDiff };
-      }
+    const tmpDiff = tmpVpt - value;
+    if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
+      buffLd = ld;
+      buffDiff = tmpDiff;
     }
-    bufVpt = tmpVpt;
   }
-  throw new Error(
-    `error in cLpt: species name: ${ip.species.name}, stats name: ${sn}`,
-    { cause: ip },
-  );
-}
-
-function calculateError(
-  except: number,
-  actual: number,
-  stat: SpeciesStat,
-): number {
-  return Math.abs(except - actual) / stat.baseValue;
+  if (!buffLd) throw new Error();
+  return [buffLd, { valueDiff: buffDiff }];
 }

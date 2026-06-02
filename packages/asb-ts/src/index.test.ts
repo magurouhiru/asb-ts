@@ -13,7 +13,7 @@ describe("calculateLevel", () => {
     [
       {
         type: "wild" as Type,
-        imprinting: 0,
+        imprinting: Math.random(), // bred 以外であればインプリントは関係ないはず
         name: "ハキリノサウルス",
         health: 825.0,
         stamina: 300.0,
@@ -28,7 +28,7 @@ describe("calculateLevel", () => {
     [
       {
         type: "wild" as Type,
-        imprinting: 0,
+        imprinting: Math.random(), // bred 以外であればインプリントは関係ないはず
         name: "カブロスクス",
         health: 1000.0,
         stamina: 840.0,
@@ -43,7 +43,7 @@ describe("calculateLevel", () => {
     [
       {
         type: "wild" as Type,
-        imprinting: 0,
+        imprinting: Math.random(), // bred 以外であればインプリントは関係ないはず
         name: "ティラノサウルス",
         health: 5720.0,
         stamina: 1554.0,
@@ -58,7 +58,7 @@ describe("calculateLevel", () => {
     [
       {
         type: "wild" as Type,
-        imprinting: 0,
+        imprinting: Math.random(), // bred 以外であればインプリントは関係ないはず
         name: "マナガルム",
         health: 2310.0,
         stamina: 480.0,
@@ -73,7 +73,7 @@ describe("calculateLevel", () => {
     [
       {
         type: "wild" as Type,
-        imprinting: 0,
+        imprinting: Math.random(), // bred 以外であればインプリントは関係ないはず
         name: "雪フクロウ",
         health: 2015.0,
         stamina: 1225.0,
@@ -103,7 +103,7 @@ describe("calculateLevel", () => {
     [
       {
         type: "dom" as Type,
-        imprinting: Math.random(), // dom であればインプリントは関係ないはず
+        imprinting: Math.random(), // bred 以外であればインプリントは関係ないはず
         name: "ベロナサウルス",
         health: 2024.1,
         stamina: 1267.0,
@@ -118,7 +118,7 @@ describe("calculateLevel", () => {
     [
       {
         type: "dom" as Type,
-        imprinting: Math.random(), // dom であればインプリントは関係ないはず
+        imprinting: Math.random(), // bred 以外であればインプリントは関係ないはず
         name: "541539(ユウティラヌス)",
         health: 10120.1,
         stamina: 2058.0,
@@ -193,7 +193,7 @@ describe("calculateLevel", () => {
     [
       {
         type: "dom" as Type,
-        imprinting: Math.random(), // dom であればインプリントは関係ないはず
+        imprinting: Math.random(), // bred 以外であればインプリントは関係ないはず
         name: "69り44川47(アロサウルス)",
         health: 4536.1,
         stamina: 1500.0,
@@ -219,19 +219,21 @@ describe("calculateLevel", () => {
     const bp = searchBP(speciesList, inputs.name, settings);
 
     // 4. calculateLevel にぶち込む
-    const [levels, tameEffectiveness] = calculateLevel({
+    const { levels, te, meta } = calculateLevel({
       bp,
       type: inputs.type,
-      h_v: inputs.health,
-      s_v: inputs.stamina,
-      o_v: inputs.oxygen,
-      f_v: inputs.food,
-      w_v: inputs.weight,
-      m_v: inputs.meleeDamageMultiplier,
-      t_v: inputs.torpidity,
       imp: inputs.imprinting,
       speciesList: speciesList,
       settings,
+      values: {
+        health: inputs.health,
+        stamina: inputs.stamina,
+        oxygen: inputs.oxygen,
+        food: inputs.food,
+        weight: inputs.weight,
+        meleeDamageMultiplier: inputs.meleeDamageMultiplier,
+        torpidity: inputs.torpidity,
+      },
     });
 
     expect(levels.health.wild).toBe(expected[0]);
@@ -244,13 +246,13 @@ describe("calculateLevel", () => {
 
     // 野生のときはエラーがないはず
     if (inputs.type === "wild") {
-      expect(levels.health.error).toBe(null);
-      expect(levels.stamina.error).toBe(null);
-      expect(levels.oxygen.error).toBe(null);
-      expect(levels.food.error).toBe(null);
-      expect(levels.weight.error).toBe(null);
-      expect(levels.meleeDamageMultiplier.error).toBe(null);
-      expect(levels.torpidity.error).toBe(null);
+      expect(meta.statsMeta.health?.valueDiff).toBe(undefined);
+      expect(meta.statsMeta.stamina?.valueDiff).toBe(undefined);
+      expect(meta.statsMeta.oxygen?.valueDiff).toBe(undefined);
+      expect(meta.statsMeta.food?.valueDiff).toBe(undefined);
+      expect(meta.statsMeta.weight?.valueDiff).toBe(undefined);
+      expect(meta.statsMeta.meleeDamageMultiplier?.valueDiff).toBe(undefined);
+      expect(meta.statsMeta.torpidity?.valueDiff).toBe(undefined);
     }
 
     const species = speciesList.find((s) => s.blueprintPath === bp);
@@ -260,7 +262,7 @@ describe("calculateLevel", () => {
     expect(species.mod).toBe(expected[8]);
 
     if (inputs.type === "dom") {
-      expect(tameEffectiveness).toBe(expected[9]);
+      expect(te).toBe(expected[9]);
     }
   });
 });

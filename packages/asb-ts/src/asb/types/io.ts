@@ -2,15 +2,23 @@ import * as v from "valibot";
 import { PositiveValueSchema } from "./common.js";
 import { SettingsSchema } from "./settings.js";
 import { SpeciesSchema } from "./species.js";
-import { StatsNames } from "./stats-name.js";
+import { type StatsName, StatsNames } from "./stats-name.js";
+
+export const LevelSchema = v.message(
+  v.pipe(v.number(""), v.integer(), v.minValue(0)),
+  (issue) =>
+    `Level には0 以上の整数を指定してください。入力値 ${issue.input} は${issue.message}`,
+);
 
 export type LevelDetail = v.InferOutput<typeof LevelDetailSchema>;
-export const LevelDetailSchema = v.object({
-  wild: PositiveValueSchema,
-  mut: v.nullish(PositiveValueSchema),
-  dom: v.nullish(PositiveValueSchema),
-  error: v.nullish(PositiveValueSchema),
-});
+export const LevelDetailSchema = v.message(
+  v.object({
+    wild: LevelSchema,
+    mut: LevelSchema,
+    dom: LevelSchema,
+  }),
+  (issue) => (issue.type === "object" ? `Levelは` : issue.message),
+);
 
 export type Levels = v.InferOutput<typeof LevelsSchema>;
 export const LevelsSchema = v.object(
@@ -26,50 +34,50 @@ export type Type = (typeof Types)[number];
 export const Types = ["wild", "dom", "bred"] as const;
 
 export type TameEffectiveness = v.InferOutput<typeof TameEffectivenessSchema>;
-export const MIN_TE = 0;
-export const MAX_TE = 1;
+export const TE_MIN = 0;
+export const TE_MAX = 1;
 export const TameEffectivenessSchema = v.pipe(
   v.number(),
-  v.minValue(MIN_TE),
-  v.maxValue(MAX_TE),
+  v.minValue(TE_MIN),
+  v.maxValue(TE_MAX),
   v.brand("" as "TameEffectivenessSchema"),
 );
 
 export type Imprinting = v.InferOutput<typeof ImprintingSchema>;
-export const MIN_IMP = 0;
-export const MAX_IMP = 1;
+export const IMP_MIN = 0;
+export const IMP_MAX = 1;
 export const ImprintingSchema = v.pipe(
   v.number(),
-  v.minValue(MIN_IMP),
-  v.maxValue(MAX_IMP),
+  v.minValue(IMP_MIN),
+  v.maxValue(IMP_MAX),
   v.brand("" as "ImprintingSchema"),
 );
 
 // 野生はテイム効果なしで計算する。
-export const WILD_TE = MIN_TE;
+export const WILD_TE = TE_MIN as TameEffectiveness;
 const WildTeSchema = v.pipe(
-  v.fallback(v.literal(WILD_TE), WILD_TE),
+  v.fallback(v.literal(TE_MIN), TE_MIN),
   v.brand("" as "TameEffectivenessSchema"),
 );
 
 // 野生は刷り込みボーナスなしで計算する。
-export const WILD_IMP = MIN_IMP;
+export const WILD_IMP = IMP_MIN as Imprinting;
 const WildImpSchema = v.pipe(
-  v.fallback(v.literal(WILD_IMP), WILD_IMP),
+  v.fallback(v.literal(IMP_MIN), IMP_MIN),
   v.brand("" as "ImprintingSchema"),
 );
 
 // テイム後は刷り込みボーナスなしで計算する。
-export const DOM_IMP = MIN_IMP;
+export const DOM_IMP = IMP_MIN as Imprinting;
 const DomImpSchema = v.pipe(
-  v.fallback(v.literal(DOM_IMP), DOM_IMP),
+  v.fallback(v.literal(IMP_MIN), IMP_MIN),
   v.brand("" as "ImprintingSchema"),
 );
 
 // ブリはテイム効果1で計算する。
-export const BRED_TE = MAX_TE;
+export const BRED_TE = TE_MAX as TameEffectiveness;
 const BredTeSchema = v.pipe(
-  v.fallback(v.literal(BRED_TE), BRED_TE),
+  v.fallback(v.literal(TE_MAX), TE_MAX),
   v.brand("" as "TameEffectivenessSchema"),
 );
 
@@ -129,3 +137,14 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
     settings: SettingsSchema,
   }),
 ]);
+
+export type StatsMetaDetail = {
+  schemaError?: string;
+  valueDiff?: number;
+};
+export type StatsMeta = Partial<Record<StatsName, StatsMetaDetail>>;
+
+export interface Meta {
+  hasError: boolean;
+  statsMeta: StatsMeta;
+}
