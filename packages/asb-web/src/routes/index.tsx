@@ -10,8 +10,9 @@ function HomeComponent() {
       <ul>
         <li>
           <Link
-            to="/calc_level"
+            to="/calc"
             search={{
+              mode: "value->level",
               type: "wild",
               n: "",
               h: 0,
@@ -24,11 +25,8 @@ function HomeComponent() {
               i: 0,
             }}
           >
-            個体値→レベル
+            個体値↔レベル
           </Link>
-        </li>
-        <li>
-          <Link to="/calc_value">レベル→個体値</Link>
         </li>
       </ul>
     </div>

@@ -150,36 +150,57 @@ function cVpt(
 export function calculateLevelController(
   ip: CalculateLevelInputPack,
 ): CalculateLevelOutputPack {
-  let levels: { [k: string]: LevelDetail } | null = null;
-  let te: TameEffectiveness | null = null;
-  let meta: Meta | null = null;
-  switch (ip.type) {
-    case "wild": {
-      [levels, meta] = calculateLevelWild(ip);
-      te = WILD_TE;
-      break;
+  try {
+    let levels: { [k: string]: LevelDetail } | null = null;
+    let te: TameEffectiveness | null = null;
+    let meta: Meta | null = null;
+    switch (ip.type) {
+      case "wild": {
+        [levels, meta] = calculateLevelWild(ip);
+        te = WILD_TE;
+        break;
+      }
+      case "dom": {
+        [levels, te, meta] = calculateLevelDom(ip);
+        break;
+      }
+      case "bred": {
+        [levels, meta] = calculateLevelBred(ip);
+        te = BRED_TE;
+        break;
+      }
     }
-    case "dom": {
-      [levels, te, meta] = calculateLevelDom(ip);
-      break;
-    }
-    case "bred": {
-      [levels, meta] = calculateLevelBred(ip);
-      te = BRED_TE;
-      break;
-    }
-  }
 
-  const parsed = v.safeParse(LevelsSchema, levels);
-  if (parsed.success) {
-    return {
-      status: "success",
-      levels: parsed.output,
-      tameEffectiveness: te,
-      meta,
-    };
-  } else {
-    return toOutputPackFailure("internal_error", parsed.issues);
+    const parsed = v.safeParse(LevelsSchema, levels);
+    if (parsed.success) {
+      return {
+        status: "success",
+        levels: parsed.output,
+        tameEffectiveness: te,
+        meta,
+      };
+    } else {
+      return toOutputPackFailure("internal_error", parsed.issues);
+    }
+  } catch (e) {
+    if (e instanceof Error) {
+      return {
+        status: "failure",
+        errorType: "internal_error",
+        errors: [
+          {
+            path: typeof e.cause === "string" ? e.cause : "root",
+            message: e.message,
+          },
+        ],
+      };
+    } else {
+      return {
+        status: "failure",
+        errorType: "internal_error",
+        errors: [{ path: "root", message: JSON.stringify(e) }],
+      };
+    }
   }
 }
 
@@ -228,7 +249,7 @@ function calculateLevelDom(
     }
   }
   if (!buffLevels || !buffTe || !buffMeta)
-    throw new Error("calculateLevelDomがなんかへん");
+    throw new Error("calculateLevelDom で失敗しました。", { cause: "root" });
   return [buffLevels, buffTe, buffMeta];
 }
 
@@ -277,13 +298,14 @@ function cLw(
       cVw(ld, ip.species.stats[sn], ip.settings.statMultipliers[sn]),
       sn,
     );
-    const tmpDiff = tmpVw - value;
+    const tmpDiff = value - tmpVw;
     if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
       buffLd = ld;
       buffDiff = tmpDiff;
     }
   }
-  if (!buffLd) throw Error();
+  if (!buffLd)
+    throw new Error("cLw で失敗しました。", { cause: `levels.${sn}` });
   return [buffLd, buffDiff === 0 ? undefined : { valueDiff: buffDiff }];
 }
 
@@ -303,13 +325,14 @@ function cLpt(
       cVpt(sn, ld, te, ip.imprinting, ip.species, ip.settings),
       sn,
     );
-    const tmpDiff = tmpVpt - value;
+    const tmpDiff = value - tmpVpt;
     if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
       buffLd = ld;
       buffDiff = tmpDiff;
     }
   }
-  if (!buffLd) throw new Error();
+  if (!buffLd)
+    throw new Error("cLpt で失敗しました。", { cause: `levels.${sn}` });
   return [buffLd, { valueDiff: buffDiff }];
 }
 

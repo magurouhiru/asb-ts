@@ -69,7 +69,7 @@ export interface InputForCalculateValueAndOutputOfCalculateLevel {
 /** 入力: レベル→個体値 */
 export type InputForCalculateValue = Omit<
   CalculateValueInputPack,
-  "species" | "imprinting"
+  "species" | "imprinting" | "tameEffectiveness"
 > &
   InputCommon &
   InputForCalculateValueAndOutputOfCalculateLevel;
