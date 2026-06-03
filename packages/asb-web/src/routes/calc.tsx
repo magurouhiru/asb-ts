@@ -71,7 +71,7 @@ const searchSchema = v.pipe(
 );
 
 export const Route = createFileRoute("/calc")({
-  component: CalcLevelComponent,
+  component: CalcComponent,
   validateSearch: searchSchema,
 });
 
@@ -88,7 +88,7 @@ const { useAppForm } = createFormHook({
   formContext,
 });
 
-function CalcLevelComponent() {
+function CalcComponent() {
   const { mode, type, n, h, s, o, f, w, m, t, i } = Route.useSearch();
 
   const settings = createSettings();
@@ -156,6 +156,7 @@ function CalcLevelComponent() {
     onSubmit: ({ value }) => {
       setOpcl(null);
       setOpcv(null);
+      if (!value.bp) return;
       if (value.mode === "value->level") {
         setOpcl(
           calculateLevel({
