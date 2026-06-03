@@ -5,6 +5,7 @@ import {
   Chip,
   EmptyState,
   ErrorMessage,
+  FieldError,
   Label,
   ListBox,
   NumberField,
@@ -412,6 +413,7 @@ function CalcComponent() {
                         <NumberField.Input />
                         <NumberField.IncrementButton />
                       </NumberField.Group>
+                      <FieldError></FieldError>
                       <ErrorMessage>{diff}</ErrorMessage>
                     </field.NumberField>
                   )}
@@ -434,8 +436,8 @@ function CalcComponent() {
                           }
                           minValue={0}
                           formatOptions={{
-                            maximumFractionDigits: 1,
-                            minimumFractionDigits: 1,
+                            maximumFractionDigits: 0,
+                            minimumFractionDigits: 0,
                           }}
                         >
                           <Label>wild</Label>
@@ -460,8 +462,8 @@ function CalcComponent() {
                           isDisabled
                           minValue={0}
                           formatOptions={{
-                            maximumFractionDigits: 1,
-                            minimumFractionDigits: 1,
+                            maximumFractionDigits: 0,
+                            minimumFractionDigits: 0,
                           }}
                         >
                           <Label>mut</Label>
@@ -486,8 +488,8 @@ function CalcComponent() {
                           isDisabled
                           minValue={0}
                           formatOptions={{
-                            maximumFractionDigits: 1,
-                            minimumFractionDigits: 1,
+                            maximumFractionDigits: 0,
+                            minimumFractionDigits: 0,
                           }}
                         >
                           <Label>dom</Label>
@@ -517,8 +519,8 @@ function CalcComponent() {
             minValue={0}
             maxValue={1}
             formatOptions={{
-              maximumFractionDigits: 1,
-              minimumFractionDigits: 1,
+              maximumFractionDigits: 0,
+              minimumFractionDigits: 0,
               style: "percent",
             }}
           >
@@ -542,8 +544,8 @@ function CalcComponent() {
             minValue={0}
             maxValue={1}
             formatOptions={{
-              maximumFractionDigits: 1,
-              minimumFractionDigits: 1,
+              maximumFractionDigits: 0,
+              minimumFractionDigits: 0,
               style: "percent",
             }}
           >

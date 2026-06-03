@@ -9,10 +9,10 @@ function pushASBError(
   errors: ASBError[],
   obj: Record<string, string[] | undefined>,
 ) {
-  Object.entries(obj).forEach(([_k, v]) => {
+  Object.entries(obj).forEach(([k, v]) => {
     if (v) {
       v.forEach((message) => {
-        errors.push({ path: "root", message });
+        errors.push({ path: k, message });
       });
     }
   });
@@ -24,6 +24,7 @@ export function toOutputPackFailure(
 ): OutputPackFailure {
   const errors: ASBError[] = [];
   const f = flatten(issues);
+  console.log(f);
 
   const root = f.root;
   if (root) {

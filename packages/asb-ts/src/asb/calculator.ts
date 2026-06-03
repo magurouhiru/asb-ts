@@ -248,7 +248,7 @@ function calculateLevelDom(
       buffMeta = tmpMeta;
     }
   }
-  if (!buffLevels || !buffTe || !buffMeta)
+  if (buffLevels === null || buffTe === null || buffMeta === null)
     throw new Error("calculateLevelDom で失敗しました。", { cause: "root" });
   return [buffLevels, buffTe, buffMeta];
 }
@@ -304,7 +304,7 @@ function cLw(
       buffDiff = tmpDiff;
     }
   }
-  if (!buffLd)
+  if (buffLd === null)
     throw new Error("cLw で失敗しました。", { cause: `levels.${sn}` });
   return [buffLd, buffDiff === 0 ? undefined : { valueDiff: buffDiff }];
 }
@@ -331,7 +331,7 @@ function cLpt(
       buffDiff = tmpDiff;
     }
   }
-  if (!buffLd)
+  if (buffLd === null)
     throw new Error("cLpt で失敗しました。", { cause: `levels.${sn}` });
   return [buffLd, { valueDiff: buffDiff }];
 }
