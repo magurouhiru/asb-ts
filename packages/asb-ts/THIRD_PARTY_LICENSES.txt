@@ -1,10 +1,10 @@
-├─ @biomejs/biome@2.4.10
+├─ @biomejs/biome@2.4.15
 │  ├─ licenses: MIT OR Apache-2.0
 │  ├─ repository: https://github.com/biomejs/biome
 │  ├─ publisher: Emanuele Stoppa
 │  ├─ path: /home/vscode/app/packages/asb-ts/node_modules/@biomejs/biome
 │  └─ licenseFile: /home/vscode/app/packages/asb-ts/node_modules/@biomejs/biome/LICENSE-MIT
-├─ @types/bun@1.3.11
+├─ @types/bun@1.3.14
 │  ├─ licenses: MIT
 │  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
 │  ├─ path: /home/vscode/app/packages/asb-ts/node_modules/@types/bun
