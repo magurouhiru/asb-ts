@@ -129,7 +129,7 @@ function cVw(
 }
 
 function cVpt(
-  type: Type,
+  type: Exclude<Type, "wild">,
   sn: StatsName,
   ld: LevelDetail,
   te: TameEffectiveness,
@@ -173,7 +173,7 @@ function cVpt(
 }
 
 function cV(
-  type: Type,
+  type: Exclude<Type, "wild">,
   sn: StatsName,
   ld: LevelDetail,
   te: TameEffectiveness,
@@ -310,7 +310,7 @@ function calculateLevelDomCore(
   meta: Meta,
 ): [{ [k: string]: LevelDetail }, Meta] {
   const result = StatsNames.map((sn) => {
-    const [ld, smd] = cLpt(ip.type, sn, te, ip);
+    const [ld, smd] = cLpt(sn, te, ip);
     return { sn, ld, smd };
   });
   const levels = Object.fromEntries(result.map(({ sn, ld }) => [sn, ld]));
@@ -320,11 +320,40 @@ function calculateLevelDomCore(
   return [levels, meta];
 }
 
-const TARGET_LEVEL_DETAIL_LIST_SIZE = 500; // とりあえずレベル500まで計算する。これ以上は現実的に存在しないと思うので。
-const TARGET_LEVEL_DETAIL_LIST = Array.from(
+// とりあえずレベル100まで計算する。これ以上は現実的に存在しないと思うので。
+const TARGET_LEVEL_DETAIL_LIST_SIZE = 100;
+const TARGET_LEVEL_RANGE = Array.from(
   { length: TARGET_LEVEL_DETAIL_LIST_SIZE + 1 },
-  (_, i) => v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: 0 }),
+  (_, i) => i,
 );
+
+const TARGET_LEVEL_DETAIL_LIST_WILD = TARGET_LEVEL_RANGE.map((i) =>
+  v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: 0 }),
+);
+const TARGET_LEVEL_DETAIL_LIST_WILD_DOM = TARGET_LEVEL_RANGE.flatMap((i) =>
+  TARGET_LEVEL_RANGE.map((k) =>
+    v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: k }),
+  ),
+);
+const TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM = TARGET_LEVEL_RANGE.flatMap((i) =>
+  TARGET_LEVEL_RANGE.flatMap((j) =>
+    TARGET_LEVEL_RANGE.map((k) =>
+      v.parse(LevelDetailSchema, { wild: i, mut: j, dom: k }),
+    ),
+  ),
+);
+
+// 気絶値とりあえずレベル500まで計算する。これ以上は現実的に存在しないと思うので。
+const TARGET_LEVEL_DETAIL_LIST_SIZE_TORPIDITY = 500;
+const TARGET_LEVEL_RANGE_TORPIDITY = Array.from(
+  { length: TARGET_LEVEL_DETAIL_LIST_SIZE_TORPIDITY + 1 },
+  (_, i) => i,
+);
+const TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY =
+  TARGET_LEVEL_RANGE_TORPIDITY.map((i) =>
+    v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: 0 }),
+  );
+
 const LEVEL_DETAIL_0 = { wild: 0, mut: 0, dom: 0 } satisfies LevelDetail;
 
 function cLw(
@@ -337,7 +366,9 @@ function cLw(
     return [LEVEL_DETAIL_0, undefined];
   let buffLd: LevelDetail | null = null;
   let buffDiff = Number.MAX_SAFE_INTEGER;
-  for (const ld of TARGET_LEVEL_DETAIL_LIST) {
+  for (const ld of sn === "torpidity"
+    ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
+    : TARGET_LEVEL_DETAIL_LIST_WILD) {
     const tmpVw = round(
       cVw(
         ip.type,
@@ -360,7 +391,6 @@ function cLw(
 }
 
 function cLpt(
-  type: Type,
   sn: StatsName,
   te: TameEffectiveness,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
@@ -371,9 +401,19 @@ function cLpt(
     return [LEVEL_DETAIL_0, undefined];
   let buffLd: LevelDetail | null = null;
   let buffDiff = Number.MAX_SAFE_INTEGER;
-  for (const ld of TARGET_LEVEL_DETAIL_LIST) {
+
+  const mm = (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn];
+  const targetLevel =
+    sn === "torpidity"
+      ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
+      : ip.type === "dom"
+        ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
+        : mm === 1
+          ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
+          : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM;
+  for (const ld of targetLevel) {
     const tmpVpt = round(
-      cVpt(type, sn, ld, te, ip.imprinting, ip.species, ip.settings),
+      cVpt(ip.type, sn, ld, te, ip.imprinting, ip.species, ip.settings),
       sn,
     );
     const tmpDiff = value - tmpVpt;
