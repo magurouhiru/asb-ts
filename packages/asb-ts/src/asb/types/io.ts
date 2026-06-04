@@ -133,6 +133,7 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
 
 export interface StatsMetaDetail {
   valueDiff?: number;
+  equalWildMutationRates?: boolean;
 }
 export type StatsMeta = Partial<Record<StatsName, StatsMetaDetail>>;
 

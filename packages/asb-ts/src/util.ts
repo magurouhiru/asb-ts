@@ -24,7 +24,6 @@ export function toOutputPackFailure(
 ): OutputPackFailure {
   const errors: ASBError[] = [];
   const f = flatten(issues);
-  console.log(f);
 
   const root = f.root;
   if (root) {

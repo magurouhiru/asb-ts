@@ -46,6 +46,11 @@ export const BlueprintPathSchema = v.pipe(
   v.brand("SpeciesSchema/blueprintPath"),
 );
 
+export type MutationMultiplier = v.InferOutput<typeof MutationMultiplierSchema>;
+export const MutationMultiplierSchema = v.object(
+  v.entriesFromList(StatsNames, v.number()),
+);
+
 export type TamedBaseHealthMultiplier = v.InferOutput<
   typeof TamedBaseHealthMultiplierSchema
 >;
@@ -62,6 +67,7 @@ export const SpeciesSchema = v.object({
   mod: v.nullable(ModNameSchema),
   stats: StatsSchema,
   statImprintMultiplier: v.optional(StatsImprintMultiplierSchema),
+  mutationMultiplier: v.optional(MutationMultiplierSchema),
   tamedBaseHealthMultiplier: v.optional(TamedBaseHealthMultiplierSchema),
 });
 
@@ -88,3 +94,22 @@ export const DEFAULT_STAT_IMPRINT_MULTIPLIER = {
 export const DEFAULT_TBHM = 1 satisfies v.InferInput<
   typeof TamedBaseHealthMultiplierSchema
 > as TamedBaseHealthMultiplier;
+
+export const DEFAULT_MUTATION_MULTIPLIER = {
+  health: 1,
+  stamina: 1,
+  torpidity: 1,
+  oxygen: 1,
+
+  food: 1,
+  water: 1,
+  temperature: 1,
+  weight: 1,
+
+  meleeDamageMultiplier: 1,
+  speedMultiplier: 1,
+  temperatureFortitude: 1,
+  craftingSpeedMultiplier: 1,
+} as const satisfies v.InferInput<
+  typeof MutationMultiplierSchema
+> as MutationMultiplier;

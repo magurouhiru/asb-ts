@@ -6,6 +6,7 @@ import {
   type CalculateLevelOutputPack,
   type CalculateValueInputPack,
   type CalculateValueOutputPack,
+  DEFAULT_MUTATION_MULTIPLIER,
   DEFAULT_STAT_IMPRINT_MULTIPLIER,
   DEFAULT_TBHM,
   type Imprinting,
@@ -13,6 +14,7 @@ import {
   LevelDetailSchema,
   LevelsSchema,
   type Meta,
+  type MutationMultiplier,
   type Settings,
   type Species,
   type StatMultiplierItem,
@@ -46,6 +48,7 @@ export function calculateValueController(
 
   const parsed = v.safeParse(ValuesSchema, result);
   if (parsed.success) {
+    setEqualWildMutationRates(ip.species, meta);
     return { status: "success", values: parsed.output, meta };
   } else {
     return toOutputPackFailure("internal_error", parsed.issues);
@@ -62,6 +65,7 @@ function calculateValueWild(
         cVw(
           ip.levels[sn],
           ip.species.stats[sn],
+          (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn],
           ip.settings.statMultipliers[sn],
         ),
         sn,
@@ -105,10 +109,14 @@ function round(num: number, sn: StatsName): number {
 function cVw(
   ld: LevelDetail,
   stat: Stats[StatsName],
+  mm: MutationMultiplier[StatsName],
   smi: StatMultiplierItem,
 ): number {
   if (!stat) return 0;
-  return stat.baseValue * (1 + ld.wild * stat.incPerWildLevel * smi.IwM);
+  return (
+    stat.baseValue *
+    (1 + (ld.wild + ld.mut * mm) * stat.incPerWildLevel * smi.IwM)
+  );
 }
 
 function cVpt(
@@ -128,8 +136,9 @@ function cVpt(
   const statImprintMultiplier =
     species.statImprintMultiplier?.[sn] ?? DEFAULT_STAT_IMPRINT_MULTIPLIER[sn];
   const smi = settings.statMultipliers[sn];
+  const mm = (species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn];
 
-  const vw = cVw(ld, stat, smi);
+  const vw = cVw(ld, stat, mm, smi);
   const tmp1 =
     vw * tbhm * (1 + imprinting * statImprintMultiplier * settings.IBM);
   // テイム時の加算ボーナスがマイナスの時はTaM(サーバーの設定)を掛けない。
@@ -173,6 +182,7 @@ export function calculateLevelController(
 
     const parsed = v.safeParse(LevelsSchema, levels);
     if (parsed.success) {
+      setEqualWildMutationRates(ip.species, meta);
       return {
         status: "success",
         levels: parsed.output,
@@ -295,7 +305,12 @@ function cLw(
   let buffDiff = Number.MAX_SAFE_INTEGER;
   for (const ld of TARGET_LEVEL_DETAIL_LIST) {
     const tmpVw = round(
-      cVw(ld, ip.species.stats[sn], ip.settings.statMultipliers[sn]),
+      cVw(
+        ld,
+        ip.species.stats[sn],
+        (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn],
+        ip.settings.statMultipliers[sn],
+      ),
       sn,
     );
     const tmpDiff = value - tmpVw;
@@ -338,4 +353,17 @@ function cLpt(
 
 function createMeta(): Meta {
   return { statsMeta: {} };
+}
+
+function setEqualWildMutationRates(species: Species, meta: Meta) {
+  const mms = species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER;
+  StatsNames.forEach((sn) => {
+    const mm = mms[sn];
+    if (mm === 1) {
+      if (meta.statsMeta[sn] === undefined) {
+        meta.statsMeta[sn] = {};
+      }
+      meta.statsMeta[sn].equalWildMutationRates = true;
+    }
+  });
 }

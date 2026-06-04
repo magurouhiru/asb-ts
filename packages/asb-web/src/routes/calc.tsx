@@ -3,6 +3,7 @@ import {
   Alert,
   Autocomplete,
   Chip,
+  Description,
   EmptyState,
   ErrorMessage,
   FieldError,
@@ -412,7 +413,7 @@ function CalcComponent() {
 
               <div className="grow">
                 <div className="flex gap-x-1">
-                  <div className="grow">
+                  <div className="flex-1 grow">
                     <form.AppField name={`levels.${sn}.wild`}>
                       {(field) => (
                         <field.NumberField
@@ -432,15 +433,15 @@ function CalcComponent() {
                         >
                           <Label>wild</Label>
                           <NumberField.Group>
-                            <NumberField.DecrementButton />
+                            <NumberField.DecrementButton className="max-sm:hidden" />
                             <NumberField.Input />
-                            <NumberField.IncrementButton />
+                            <NumberField.IncrementButton className="max-sm:hidden" />
                           </NumberField.Group>
                         </field.NumberField>
                       )}
                     </form.AppField>
                   </div>
-                  <div className="grow">
+                  <div className="flex-1 grow">
                     <form.AppField name={`levels.${sn}.mut`}>
                       {(field) => (
                         <field.NumberField
@@ -449,7 +450,9 @@ function CalcComponent() {
                           }
                           value={field.state.value}
                           onChange={(e) => field.setValue(e)}
-                          isDisabled
+                          isDisabled={
+                            field.form.state.values.mode === "value->level"
+                          }
                           minValue={0}
                           formatOptions={{
                             maximumFractionDigits: 0,
@@ -458,15 +461,18 @@ function CalcComponent() {
                         >
                           <Label>mut</Label>
                           <NumberField.Group>
-                            <NumberField.DecrementButton />
+                            <NumberField.DecrementButton className="max-sm:hidden" />
                             <NumberField.Input />
-                            <NumberField.IncrementButton />
+                            <NumberField.IncrementButton className="max-sm:hidden" />
                           </NumberField.Group>
+                          {meta?.statsMeta[sn]?.equalWildMutationRates && (
+                            <Description>野生と上昇率が同じ</Description>
+                          )}
                         </field.NumberField>
                       )}
                     </form.AppField>
                   </div>
-                  <div className="grow">
+                  <div className="flex-1 grow">
                     <form.AppField name={`levels.${sn}.dom`}>
                       {(field) => (
                         <field.NumberField
@@ -484,9 +490,9 @@ function CalcComponent() {
                         >
                           <Label>dom</Label>
                           <NumberField.Group>
-                            <NumberField.DecrementButton />
+                            <NumberField.DecrementButton className="max-sm:hidden" />
                             <NumberField.Input />
-                            <NumberField.IncrementButton />
+                            <NumberField.IncrementButton className="max-sm:hidden" />
                           </NumberField.Group>
                         </field.NumberField>
                       )}

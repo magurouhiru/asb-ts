@@ -33,6 +33,7 @@
 ※ 公式wikiの計算式にはない？認識だが、変異のレベルは補正があれば補正をかけてLwと同じように計算する
 ARKStatsExtractor/ARKBreedingStats/values/Values.cs:594行付近と
 ARKStatsExtractor/ARKBreedingStats/Stats.cs:58行付近を参照
+Dreadnoughtusくらい？
 
 **2. テイムされた個体値 (Tamed)**
 
