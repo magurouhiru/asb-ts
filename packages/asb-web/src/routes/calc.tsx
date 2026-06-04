@@ -36,7 +36,6 @@ import { useEffect, useState } from "react";
 import * as v from "valibot";
 
 const MODE_LIST = ["value->level", "level->value"] as const;
-type Mode = (typeof MODE_LIST)[number];
 
 const DISPLAY_STATS_NAME_LIST = [
   "health",
@@ -243,28 +242,27 @@ function CalcComponent() {
           <field.RadioGroup
             defaultValue={field.form.options.defaultValues?.mode}
             value={field.state.value}
-            onChange={(e) => field.setValue(e as Mode)}
             name="mode"
             orientation="horizontal"
             className="gap-y-1"
           >
             <Label className="w-full">mode</Label>
-            <Radio value="value->level">
-              <Radio.Control>
-                <Radio.Indicator></Radio.Indicator>
-              </Radio.Control>
-              <Radio.Content>
-                <Label>{"value->level"}</Label>
-              </Radio.Content>
-            </Radio>
-            <Radio value="level->value">
-              <Radio.Control>
-                <Radio.Indicator></Radio.Indicator>
-              </Radio.Control>
-              <Radio.Content>
-                <Label>{"level->value"}</Label>
-              </Radio.Content>
-            </Radio>
+            {MODE_LIST.map((v) => (
+              <Radio
+                key={v}
+                value={v}
+                onClick={() => {
+                  field.setValue(v);
+                }}
+              >
+                <Radio.Control>
+                  <Radio.Indicator></Radio.Indicator>
+                </Radio.Control>
+                <Radio.Content>
+                  <Label>{v}</Label>
+                </Radio.Content>
+              </Radio>
+            ))}
           </field.RadioGroup>
         )}
       </form.AppField>
@@ -280,30 +278,22 @@ function CalcComponent() {
             className="gap-y-1"
           >
             <Label className="w-full">type</Label>
-            <Radio value="wild">
-              <Radio.Control>
-                <Radio.Indicator></Radio.Indicator>
-              </Radio.Control>
-              <Radio.Content>
-                <Label>wild</Label>
-              </Radio.Content>
-            </Radio>
-            <Radio value="dom">
-              <Radio.Control>
-                <Radio.Indicator></Radio.Indicator>
-              </Radio.Control>
-              <Radio.Content>
-                <Label>dom</Label>
-              </Radio.Content>
-            </Radio>
-            <Radio value="bred">
-              <Radio.Control>
-                <Radio.Indicator></Radio.Indicator>
-              </Radio.Control>
-              <Radio.Content>
-                <Label>bred</Label>
-              </Radio.Content>
-            </Radio>
+            {Types.map((v) => (
+              <Radio
+                key={v}
+                value={v}
+                onClick={() => {
+                  field.setValue(v);
+                }}
+              >
+                <Radio.Control>
+                  <Radio.Indicator></Radio.Indicator>
+                </Radio.Control>
+                <Radio.Content>
+                  <Label>{v}</Label>
+                </Radio.Content>
+              </Radio>
+            ))}
           </field.RadioGroup>
         )}
       </form.AppField>
