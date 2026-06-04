@@ -20,6 +20,7 @@ import {
   type StatMultiplierItem,
   type Stats,
   type StatsMeta,
+  type StatsMetaDetail,
   type StatsName,
   StatsNames,
   type TameEffectiveness,
@@ -34,22 +35,30 @@ export function calculateValueController(
   ip: CalculateValueInputPack,
 ): CalculateValueOutputPack {
   let result: { [k: string]: number } | null = null;
+  let statsMeta: StatsMeta | null = null;
   const meta = createMeta();
   switch (ip.type) {
     case "wild": {
-      result = calculateValueWild(ip);
+      [result, statsMeta] = calculateValueWild(ip);
+      meta.isTameEffectivenessCalculatedAsZero = true;
+      meta.isImprintingCalculatedAsZero = true;
       break;
     }
-    case "dom":
+    case "dom": {
+      [result, statsMeta] = calculateValueDomBred(ip);
+      meta.isImprintingCalculatedAsZero = true;
+      break;
+    }
     case "bred": {
-      result = calculateValueDomBred(ip);
+      [result, statsMeta] = calculateValueDomBred(ip);
+      meta.isTameEffectivenessCalculatedAsOne = true;
       break;
     }
   }
 
   const parsed = v.safeParse(ValuesSchema, result);
   if (parsed.success) {
-    setEqualWildMutationRates(ip.species, meta);
+    meta.statsMeta = statsMeta;
     return { status: "success", values: parsed.output, meta };
   } else {
     return toOutputPackFailure("internal_error", parsed.issues);
@@ -58,44 +67,49 @@ export function calculateValueController(
 
 function calculateValueWild(
   ip: Extract<CalculateValueInputPack, { type: "wild" }>,
-) {
-  return Object.fromEntries(
-    StatsNames.map((sn) => [
+): [{ [k: string]: number }, StatsMeta] {
+  const result = StatsNames.map((sn) => {
+    const [vw, statsMetaDetail] = cVw(
+      ip.type,
       sn,
-      round(
-        cVw(
-          ip.type,
-          ip.levels[sn],
-          ip.species.stats[sn],
-          (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn],
-          ip.settings.statMultipliers[sn],
-        ),
-        sn,
-      ),
-    ]),
-  );
+      ip.levels[sn],
+      ip.species.stats,
+      ip.species.mutationMultiplier,
+      ip.settings.statMultipliers[sn],
+    );
+    return { sn, vw, statsMetaDetail };
+  });
+
+  return [
+    Object.fromEntries(result.map(({ sn, vw }) => [sn, round(vw, sn)])),
+    Object.fromEntries(
+      result.map(({ sn, statsMetaDetail }) => [sn, statsMetaDetail]),
+    ),
+  ];
 }
 
 function calculateValueDomBred(
   ip: Exclude<CalculateValueInputPack, { type: "wild" }>,
-) {
-  return Object.fromEntries(
-    StatsNames.map((sn) => [
+): [{ [k: string]: number }, StatsMeta] {
+  const result = StatsNames.map((sn) => {
+    const [v, statsMetaDetail] = cV(
+      ip.type,
       sn,
-      round(
-        cV(
-          ip.type,
-          sn,
-          ip.levels[sn],
-          ip.tameEffectiveness,
-          ip.imprinting,
-          ip.species,
-          ip.settings,
-        ),
-        sn,
-      ),
-    ]),
-  );
+      ip.levels[sn],
+      ip.tameEffectiveness,
+      ip.imprinting,
+      ip.species,
+      ip.settings,
+    );
+    return { sn, v, statsMetaDetail };
+  });
+
+  return [
+    Object.fromEntries(result.map(({ sn, v }) => [sn, round(v, sn)])),
+    Object.fromEntries(
+      result.map(({ sn, statsMetaDetail }) => [sn, statsMetaDetail]),
+    ),
+  ];
 }
 
 const PRECISION_10 = 10;
@@ -111,21 +125,34 @@ function round(num: number, sn: StatsName): number {
 
 function cVw(
   type: Type,
+  sn: StatsName,
   ld: LevelDetail,
-  stat: Stats[StatsName],
-  mm: MutationMultiplier[StatsName],
+  stats: Stats,
+  mm: MutationMultiplier | undefined,
   smi: StatMultiplierItem,
-): number {
-  if (!stat) return 0;
+): [number, StatsMetaDetail] {
+  const stat = stats[sn];
+  if (!stat) return [0, { hasMissingStatsForCalculation: true }];
   // 公式wikiの計算式にはない？認識だが、変異のレベルは補正があれば補正をかけてLwと同じように計算する
   // ARKStatsExtractor/ARKBreedingStats/values/Values.cs:594行付近と
   // ARKStatsExtractor/ARKBreedingStats/Stats.cs:58行付近を参照
+  const statsMetaDetail: StatsMetaDetail = {};
+  const mmi = (mm ?? DEFAULT_MUTATION_MULTIPLIER)[sn];
+  if (mmi === 1) {
+    statsMetaDetail.equalWildMutationRates = true;
+  }
   // 野生で変異はしないので野生では0にする
-  const adjustedMutLevel = type === "wild" ? 0 : ld.mut * mm;
-  return (
+  const adjustedMutLevel = type === "wild" ? 0 : ld.mut * mmi;
+  if (ld.mut !== 0) {
+    statsMetaDetail.isWildLevelCalculatedAsZero = true;
+  }
+  if (ld.dom !== 0) {
+    statsMetaDetail.isDomLevelCalculatedAsZero = true;
+  }
+  const vw =
     stat.baseValue *
-    (1 + (ld.wild + adjustedMutLevel) * stat.incPerWildLevel * smi.IwM)
-  );
+    (1 + (ld.wild + adjustedMutLevel) * stat.incPerWildLevel * smi.IwM);
+  return [vw, statsMetaDetail];
 }
 
 function cVpt(
@@ -136,9 +163,9 @@ function cVpt(
   imprinting: Imprinting,
   species: Species,
   settings: Settings,
-): number {
+): [number, StatsMetaDetail] {
   const stat = species.stats[sn];
-  if (!stat) return 0;
+  if (!stat) return [0, { hasMissingStatsForCalculation: true }];
   const tbhm =
     sn === "health"
       ? (species.tamedBaseHealthMultiplier ?? DEFAULT_TBHM)
@@ -146,9 +173,15 @@ function cVpt(
   const statImprintMultiplier =
     species.statImprintMultiplier?.[sn] ?? DEFAULT_STAT_IMPRINT_MULTIPLIER[sn];
   const smi = settings.statMultipliers[sn];
-  const mm = (species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn];
 
-  const vw = cVw(type, ld, stat, mm, smi);
+  const [vw, statsMetaDetail] = cVw(
+    type,
+    sn,
+    ld,
+    species.stats,
+    species.mutationMultiplier,
+    smi,
+  );
   // テイム時の加算ボーナスがマイナスの時はTaM(サーバーの設定)を掛けない。
   // 公式の計算式にはないけどARKStatsExtractor/ARKBreedingStats/values/Values.cs:576行付近にコメントとして記述してある
   const addBounus =
@@ -169,7 +202,7 @@ function cVpt(
   // `Vpt = (Vw × TBHM × (1 + IB × 0.2 × IBM) + Ta × TaM) × (1 + TE × Tm × TmM)` の
   //                                                         ^^^^^^^^^^^^^^^^^ ここの部分
   const tmp2 = 1 + te * multiplicativeBonus;
-  return tmp1 * tmp2;
+  return [tmp1 * tmp2, statsMetaDetail];
 }
 
 function cV(
@@ -180,14 +213,22 @@ function cV(
   imprinting: Imprinting,
   species: Species,
   settings: Settings,
-): number {
+): [number, StatsMetaDetail] {
   const stat = species.stats[sn];
-  if (!stat) return 0;
-  const vpt = cVpt(type, sn, ld, te, imprinting, species, settings);
-
-  return (
-    vpt * (1 + ld.dom * stat.incPerDomLevel * settings.statMultipliers[sn].IdM)
+  if (!stat) return [0, { hasMissingStatsForCalculation: true }];
+  const [vpt, statsMetaDetail] = cVpt(
+    type,
+    sn,
+    ld,
+    te,
+    imprinting,
+    species,
+    settings,
   );
+  statsMetaDetail.isDomLevelCalculatedAsZero = true;
+  const v =
+    vpt * (1 + ld.dom * stat.incPerDomLevel * settings.statMultipliers[sn].IdM);
+  return [v, statsMetaDetail];
 }
 
 export function calculateLevelController(
@@ -201,22 +242,25 @@ export function calculateLevelController(
       case "wild": {
         [levels, meta] = calculateLevelWild(ip);
         te = WILD_TE;
+        meta.isTameEffectivenessCalculatedAsZero = true;
+        meta.isImprintingCalculatedAsZero = true;
         break;
       }
       case "dom": {
         [levels, te, meta] = calculateLevelDom(ip);
+        meta.isImprintingCalculatedAsZero = true;
         break;
       }
       case "bred": {
         [levels, meta] = calculateLevelBred(ip);
         te = BRED_TE;
+        meta.isTameEffectivenessCalculatedAsOne = true;
         break;
       }
     }
 
     const parsed = v.safeParse(LevelsSchema, levels);
     if (parsed.success) {
-      setEqualWildMutationRates(ip.species, meta);
       return {
         status: "success",
         levels: parsed.output,
@@ -359,48 +403,54 @@ const LEVEL_DETAIL_0 = { wild: 0, mut: 0, dom: 0 } satisfies LevelDetail;
 function cLw(
   sn: StatsName,
   ip: Extract<CalculateLevelInputPack, { type: "wild" }>,
-): [LevelDetail, StatsMeta[StatsName]] {
+): [LevelDetail, StatsMetaDetail] {
   const stat = ip.species.stats[sn];
   const value = ip.values[sn];
   if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
-    return [LEVEL_DETAIL_0, undefined];
+    return [LEVEL_DETAIL_0, { hasMissingStatsForCalculation: true }];
   let buffLd: LevelDetail | null = null;
   let buffDiff = Number.MAX_SAFE_INTEGER;
+  let buffStatsMetaDetail: StatsMetaDetail = {};
+
   for (const ld of sn === "torpidity"
     ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
     : TARGET_LEVEL_DETAIL_LIST_WILD) {
-    const tmpVw = round(
-      cVw(
-        ip.type,
-        ld,
-        ip.species.stats[sn],
-        (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn],
-        ip.settings.statMultipliers[sn],
-      ),
+    const [tmpVw, tmpStatsMetaDetail] = cVw(
+      ip.type,
       sn,
+      ld,
+      ip.species.stats,
+      ip.species.mutationMultiplier,
+      ip.settings.statMultipliers[sn],
     );
-    const tmpDiff = value - tmpVw;
+    const tmpDiff = value - round(tmpVw, sn);
     if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
       buffLd = ld;
       buffDiff = tmpDiff;
+      buffStatsMetaDetail = tmpStatsMetaDetail;
     }
   }
-  if (buffLd === null)
+  if (buffLd === null) {
     throw new Error("cLw で失敗しました。", { cause: `levels.${sn}` });
-  return [buffLd, buffDiff === 0 ? undefined : { valueDiff: buffDiff }];
+  }
+  if (buffDiff !== 0) {
+    buffStatsMetaDetail.valueDiff = buffDiff;
+  }
+  return [buffLd, buffStatsMetaDetail];
 }
 
 function cLpt(
   sn: StatsName,
   te: TameEffectiveness,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
-): [LevelDetail, StatsMeta[StatsName]] {
+): [LevelDetail, StatsMetaDetail] {
   const stat = ip.species.stats[sn];
   const value = ip.values[sn];
   if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
-    return [LEVEL_DETAIL_0, undefined];
+    return [LEVEL_DETAIL_0, { hasMissingStatsForCalculation: true }];
   let buffLd: LevelDetail | null = null;
   let buffDiff = Number.MAX_SAFE_INTEGER;
+  let buffStatsMetaDetail: StatsMetaDetail = {};
 
   const mm = (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn];
   const targetLevel =
@@ -412,34 +462,31 @@ function cLpt(
           ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
           : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM;
   for (const ld of targetLevel) {
-    const tmpVpt = round(
-      cVpt(ip.type, sn, ld, te, ip.imprinting, ip.species, ip.settings),
+    const [tmpVpt, tmpStatsMetaDetail] = cVpt(
+      ip.type,
       sn,
+      ld,
+      te,
+      ip.imprinting,
+      ip.species,
+      ip.settings,
     );
-    const tmpDiff = value - tmpVpt;
+    const tmpDiff = value - round(tmpVpt, sn);
     if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
       buffLd = ld;
       buffDiff = tmpDiff;
+      buffStatsMetaDetail = tmpStatsMetaDetail;
     }
   }
-  if (buffLd === null)
+  if (buffLd === null) {
     throw new Error("cLpt で失敗しました。", { cause: `levels.${sn}` });
-  return [buffLd, { valueDiff: buffDiff }];
+  }
+  if (buffDiff !== 0) {
+    buffStatsMetaDetail.valueDiff = buffDiff;
+  }
+  return [buffLd, buffStatsMetaDetail];
 }
 
 function createMeta(): Meta {
   return { statsMeta: {} };
-}
-
-function setEqualWildMutationRates(species: Species, meta: Meta) {
-  const mms = species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER;
-  StatsNames.forEach((sn) => {
-    const mm = mms[sn];
-    if (mm === 1) {
-      if (meta.statsMeta[sn] === undefined) {
-        meta.statsMeta[sn] = {};
-      }
-      meta.statsMeta[sn].equalWildMutationRates = true;
-    }
-  });
 }

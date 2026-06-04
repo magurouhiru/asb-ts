@@ -134,11 +134,17 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
 export interface StatsMetaDetail {
   valueDiff?: number;
   equalWildMutationRates?: boolean;
+  isWildLevelCalculatedAsZero?: boolean;
+  isDomLevelCalculatedAsZero?: boolean;
+  hasMissingStatsForCalculation?: boolean;
 }
 export type StatsMeta = Partial<Record<StatsName, StatsMetaDetail>>;
 
 export interface Meta {
   statsMeta: StatsMeta;
+  isTameEffectivenessCalculatedAsZero?: boolean;
+  isTameEffectivenessCalculatedAsOne?: boolean;
+  isImprintingCalculatedAsZero?: boolean;
 }
 
 export type ErrorType = ["input_error", "internal_error"][number];
