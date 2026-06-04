@@ -451,7 +451,9 @@ function CalcComponent() {
                           value={field.state.value}
                           onChange={(e) => field.setValue(e)}
                           isDisabled={
-                            field.form.state.values.mode === "value->level"
+                            field.form.state.values.mode === "value->level" ||
+                            field.form.state.values.type === "wild" ||
+                            field.form.state.values.type === "dom"
                           }
                           minValue={0}
                           formatOptions={{
@@ -481,7 +483,10 @@ function CalcComponent() {
                           }
                           value={field.state.value}
                           onChange={(e) => field.setValue(e)}
-                          isDisabled
+                          isDisabled={
+                            field.form.state.values.mode === "value->level" ||
+                            field.form.state.values.type === "wild"
+                          }
                           minValue={0}
                           formatOptions={{
                             maximumFractionDigits: 0,

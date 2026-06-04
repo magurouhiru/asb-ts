@@ -39,9 +39,12 @@ export function calculateValueController(
       result = calculateValueWild(ip);
       break;
     }
-    case "dom":
-    case "bred": {
+    case "dom": {
       result = calculateValueDom(ip);
+      break;
+    }
+    case "bred": {
+      result = calculateValueBred(ip);
       break;
     }
   }
@@ -75,13 +78,34 @@ function calculateValueWild(
 }
 
 function calculateValueDom(
-  ip: Exclude<CalculateValueInputPack, { type: "wild" }>,
+  ip: Extract<CalculateValueInputPack, { type: "dom" }>,
 ) {
   return Object.fromEntries(
     StatsNames.map((sn) => [
       sn,
       round(
         cVpt(
+          sn,
+          ip.levels[sn],
+          ip.tameEffectiveness,
+          ip.imprinting,
+          ip.species,
+          ip.settings,
+        ),
+        sn,
+      ),
+    ]),
+  );
+}
+
+function calculateValueBred(
+  ip: Extract<CalculateValueInputPack, { type: "bred" }>,
+) {
+  return Object.fromEntries(
+    StatsNames.map((sn) => [
+      sn,
+      round(
+        cV(
           sn,
           ip.levels[sn],
           ip.tameEffectiveness,
@@ -154,6 +178,23 @@ function cVpt(
       : stat.multiplicativeBonus;
   const tmp3 = 1 + te * multiplicativeBonus;
   return (tmp1 + tmp2) * tmp3;
+}
+
+function cV(
+  sn: StatsName,
+  ld: LevelDetail,
+  te: TameEffectiveness,
+  imprinting: Imprinting,
+  species: Species,
+  settings: Settings,
+): number {
+  const stat = species.stats[sn];
+  if (!stat) return 0;
+  const vpt = cVpt(sn, ld, te, imprinting, species, settings);
+
+  return (
+    vpt * (1 + ld.dom * stat.incPerDomLevel * settings.statMultipliers[sn].IdM)
+  );
 }
 
 export function calculateLevelController(
