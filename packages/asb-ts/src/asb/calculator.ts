@@ -504,7 +504,7 @@ function cLpt(
   const stat = ip.species.stats[sn];
   const value = ip.values[sn];
   if (!stat || stat.incPerWildLevel <= 0 || value <= 0)
-    return [LEVEL_DETAIL_0, { hasMissingStatsForCalculation: true }];
+    return [LEVEL_DETAIL_0, { hasMissingStatsForCalculation: value > 0 }];
   let buffLd: LevelDetail | null = null;
   let buffDiff = Number.MAX_SAFE_INTEGER;
   let buffStatsMetaDetail: StatsMetaDetail = {};

@@ -240,6 +240,21 @@ function CalcComponent() {
     <form className="grid grid-flow-row gap-1">
       {opcl?.status === "failure" && alert(opcl)}
       {opcv?.status === "failure" && alert(opcv)}
+      {form.state.values.mode === "value->level" &&
+        (form.state.values.type === "dom" ||
+          form.state.values.type === "bred") && (
+          <Alert status="warning">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>
+                {"value->level"} では野生のレベルだけ算出できます。
+              </Alert.Title>
+              <Alert.Description>
+                誤差がないときのレベルの割り振りをどうすればいいか決まってないので。そのうちできるといいな
+              </Alert.Description>
+            </Alert.Content>
+          </Alert>
+        )}
 
       <form.AppField name="mode">
         {(field) => (
