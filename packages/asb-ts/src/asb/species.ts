@@ -5,11 +5,14 @@ import {
   AllModSpecies,
   type FullStatsRaw,
   type ModName,
+  type MutationMult,
   type StatImprintMult,
   type StatsRow,
 } from "./migration/values/index.js";
 import type { Variant } from "./migration/variants/index.js";
 import {
+  type MutationMultiplier,
+  MutationMultiplierSchema,
   type Settings,
   type Species,
   SpeciesSchema,
@@ -49,6 +52,7 @@ export function createSpeciesList(settings: Settings): Species[] {
       mod: ModName | null;
       stats: FullStatsRaw | null;
       statImprintMults: StatImprintMult | null;
+      mutationMult: MutationMult | null;
       tamedBaseHealthMultiplier: number | null;
     }
   >();
@@ -62,6 +66,7 @@ export function createSpeciesList(settings: Settings): Species[] {
         value.mod = ms.mod;
         if (s.fullStatsRaw) value.stats = s.fullStatsRaw;
         if (s.statImprintMult) value.statImprintMults = s.statImprintMult;
+        if (s.mutationMult) value.mutationMult = s.mutationMult;
         if (s.TamedBaseHealthMultiplier)
           value.tamedBaseHealthMultiplier = s.TamedBaseHealthMultiplier;
       } else {
@@ -74,6 +79,7 @@ export function createSpeciesList(settings: Settings): Species[] {
           mod: ms.mod,
           stats: s.fullStatsRaw ?? null,
           statImprintMults: s.statImprintMult ?? null,
+          mutationMult: s.mutationMult ?? null,
           tamedBaseHealthMultiplier: s.TamedBaseHealthMultiplier ?? null,
         });
       }
@@ -90,6 +96,9 @@ export function createSpeciesList(settings: Settings): Species[] {
         stats: toStats(s.stats),
         statImprintMultiplier: s.statImprintMults
           ? toStatImprintMultiplier(s.statImprintMults)
+          : undefined,
+        mutationMultiplier: s.mutationMult
+          ? toMutationMultiplier(s.mutationMult)
           : undefined,
         tamedBaseHealthMultiplier: s.tamedBaseHealthMultiplier ?? undefined,
       } satisfies v.InferInput<typeof SpeciesSchema>);
@@ -206,4 +215,38 @@ function toStatImprintMultiplier([
     craftingSpeedMultiplier,
     torpidity,
   } satisfies v.InferInput<typeof StatsImprintMultiplierSchema>);
+}
+
+function toMutationMultiplier([
+  health,
+  stamina,
+  torpidity,
+  oxygen,
+
+  food,
+  water,
+  temperature,
+  weight,
+
+  meleeDamageMultiplier,
+  speedMultiplier,
+  temperatureFortitude,
+  craftingSpeedMultiplier,
+]: MutationMult): MutationMultiplier {
+  return v.parse(MutationMultiplierSchema, {
+    health,
+    stamina,
+    oxygen,
+    food,
+
+    water,
+    temperature,
+    weight,
+    meleeDamageMultiplier,
+
+    speedMultiplier,
+    temperatureFortitude,
+    craftingSpeedMultiplier,
+    torpidity,
+  } satisfies v.InferInput<typeof MutationMultiplierSchema>);
 }

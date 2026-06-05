@@ -48,31 +48,12 @@ export const ImprintingSchema = v.pipe(
 
 // 野生はテイム効果なしで計算する。
 export const WILD_TE = TE_MIN as TameEffectiveness;
-const WildTeSchema = v.pipe(
-  v.fallback(v.literal(TE_MIN), TE_MIN),
-  v.brand("" as "TameEffectivenessSchema"),
-);
-
 // 野生は刷り込みボーナスなしで計算する。
 export const WILD_IMP = IMP_MIN as Imprinting;
-const WildImpSchema = v.pipe(
-  v.fallback(v.literal(IMP_MIN), IMP_MIN),
-  v.brand("" as "ImprintingSchema"),
-);
-
 // テイム後は刷り込みボーナスなしで計算する。
 export const DOM_IMP = IMP_MIN as Imprinting;
-const DomImpSchema = v.pipe(
-  v.fallback(v.literal(IMP_MIN), IMP_MIN),
-  v.brand("" as "ImprintingSchema"),
-);
-
 // ブリはテイム効果1で計算する。
 export const BRED_TE = TE_MAX as TameEffectiveness;
-const BredTeSchema = v.pipe(
-  v.fallback(v.literal(TE_MAX), TE_MAX),
-  v.brand("" as "TameEffectivenessSchema"),
-);
 
 export type CalculateValueInputPack = v.InferOutput<
   typeof CalculateValueInputPackSchema
@@ -81,8 +62,8 @@ export const CalculateValueInputPackSchema = v.variant("type", [
   v.object({
     type: v.literal("wild" satisfies Type),
     levels: LevelsSchema,
-    tameEffectiveness: WildTeSchema,
-    imprinting: WildImpSchema,
+    tameEffectiveness: TameEffectivenessSchema,
+    imprinting: ImprintingSchema,
     species: SpeciesSchema,
     settings: SettingsSchema,
   }),
@@ -90,14 +71,14 @@ export const CalculateValueInputPackSchema = v.variant("type", [
     type: v.literal("dom" satisfies Type),
     levels: LevelsSchema,
     tameEffectiveness: TameEffectivenessSchema,
-    imprinting: DomImpSchema,
+    imprinting: ImprintingSchema,
     species: SpeciesSchema,
     settings: SettingsSchema,
   }),
   v.object({
     type: v.literal("bred" satisfies Type),
     levels: LevelsSchema,
-    tameEffectiveness: BredTeSchema,
+    tameEffectiveness: TameEffectivenessSchema,
     imprinting: ImprintingSchema,
     species: SpeciesSchema,
     settings: SettingsSchema,
@@ -111,14 +92,14 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
   v.object({
     type: v.literal("wild" satisfies Type),
     values: ValuesSchema,
-    imprinting: WildImpSchema,
+    imprinting: ImprintingSchema,
     species: SpeciesSchema,
     settings: SettingsSchema,
   }),
   v.object({
     type: v.literal("dom" satisfies Type),
     values: ValuesSchema,
-    imprinting: DomImpSchema,
+    imprinting: ImprintingSchema,
     species: SpeciesSchema,
     settings: SettingsSchema,
   }),
@@ -130,14 +111,20 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
     settings: SettingsSchema,
   }),
 ]);
-
 export interface StatsMetaDetail {
   valueDiff?: number;
+  equalWildMutationRates?: boolean;
+  isMutLevelCalculatedAsZero?: boolean;
+  isDomLevelCalculatedAsZero?: boolean;
+  hasMissingStatsForCalculation?: boolean;
 }
 export type StatsMeta = Partial<Record<StatsName, StatsMetaDetail>>;
 
 export interface Meta {
   statsMeta: StatsMeta;
+  isTameEffectivenessCalculatedAsZero?: boolean;
+  isTameEffectivenessCalculatedAsOne?: boolean;
+  isImprintingCalculatedAsZero?: boolean;
 }
 
 export type ErrorType = ["input_error", "internal_error"][number];
