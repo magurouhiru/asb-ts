@@ -411,10 +411,6 @@ function calculateLevelDomCore(
 
 // とりあえずレベル100まで計算する。これ以上は現実的に存在しないと思うので。
 const TARGET_LEVEL_DETAIL_LIST_SIZE = 100;
-const TARGET_LEVEL_RANGE = Array.from(
-  { length: TARGET_LEVEL_DETAIL_LIST_SIZE + 1 },
-  (_, i) => i,
-);
 const TARGET_LEVEL_RANGE_WITHOUT_0 = Array.from(
   { length: TARGET_LEVEL_DETAIL_LIST_SIZE },
   (_, i) => i + 1,
@@ -423,26 +419,31 @@ const TARGET_LEVEL_RANGE_WITHOUT_0 = Array.from(
 const TARGET_LEVEL_DETAIL_LIST_WILD = TARGET_LEVEL_RANGE_WITHOUT_0.map((i) =>
   v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: 0 }),
 );
-const TARGET_LEVEL_DETAIL_LIST_WILD_DOM = TARGET_LEVEL_RANGE_WITHOUT_0.flatMap(
-  (i) =>
-    TARGET_LEVEL_RANGE.map((k) =>
-      v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: k }),
-    ),
-);
-const TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM =
-  TARGET_LEVEL_RANGE_WITHOUT_0.flatMap((i) =>
-    TARGET_LEVEL_RANGE.flatMap((j) =>
-      TARGET_LEVEL_RANGE.map((k) =>
-        v.parse(LevelDetailSchema, { wild: i, mut: j, dom: k }),
-      ),
-    ),
-  );
+// const TARGET_LEVEL_RANGE = Array.from(
+//   { length: TARGET_LEVEL_DETAIL_LIST_SIZE + 1 },
+//   (_, i) => i,
+// );
+// TODO: 値が一致したときにレベルの割り振りを行う仕掛けを考える↓はうまくいかなかったやつ
+// const TARGET_LEVEL_DETAIL_LIST_WILD_DOM = TARGET_LEVEL_RANGE_WITHOUT_0.flatMap(
+//   (i) =>
+//     TARGET_LEVEL_RANGE.map((k) =>
+//       v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: k }),
+//     ),
+// );
+// const TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM =
+//   TARGET_LEVEL_RANGE_WITHOUT_0.flatMap((i) =>
+//     TARGET_LEVEL_RANGE.flatMap((j) =>
+//       TARGET_LEVEL_RANGE.map((k) =>
+//         v.parse(LevelDetailSchema, { wild: i, mut: j, dom: k }),
+//       ),
+//     ),
+//   );
 
 // 気絶値とりあえずレベル500まで計算する。これ以上は現実的に存在しないと思うので。
 const TARGET_LEVEL_DETAIL_LIST_SIZE_TORPIDITY = 500;
 const TARGET_LEVEL_RANGE_TORPIDITY = Array.from(
-  { length: TARGET_LEVEL_DETAIL_LIST_SIZE_TORPIDITY + 1 },
-  (_, i) => i,
+  { length: TARGET_LEVEL_DETAIL_LIST_SIZE_TORPIDITY },
+  (_, i) => i + 1,
 );
 const TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY =
   TARGET_LEVEL_RANGE_TORPIDITY.map((i) =>
@@ -508,15 +509,20 @@ function cLpt(
   let buffDiff = Number.MAX_SAFE_INTEGER;
   let buffStatsMetaDetail: StatsMetaDetail = {};
 
-  const mm = (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn];
   const targetLevel =
     sn === "torpidity"
       ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
-      : ip.type === "dom"
-        ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
-        : mm === 1
-          ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
-          : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM;
+      : TARGET_LEVEL_DETAIL_LIST_WILD;
+  // TODO: 値が一致したときにレベルの割り振りを行う仕掛けを考える↓はうまくいかなかったやつ
+  // const mm = (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sn];
+  // const targetLevel =
+  //   sn === "torpidity"
+  //     ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
+  //     : ip.type === "dom"
+  //       ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
+  //       : mm === 1
+  //         ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
+  //         : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM;
   for (const ld of targetLevel) {
     const [tmpVpt, tmpStatsMetaDetail] = cV(
       ip.type,
