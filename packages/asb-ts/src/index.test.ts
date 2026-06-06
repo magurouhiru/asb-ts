@@ -274,10 +274,10 @@ describe("calculateLevel", () => {
     // 5. ステータスを確認して対応する処理を行う
     if (result.status === "failure") expect.fail(JSON.stringify(result));
     const { levels, tameEffectiveness, meta } = result;
+    console.log(levels);
 
     const species = speciesList.find((s) => s.blueprintPath === bp);
     if (!species) throw expect.fail("生物が見つからなんだ");
-    console.log(species.name);
 
     expect(levels.health.wild).toBe(expected[0]);
     expect(levels.stamina.wild).toBe(expected[1]);

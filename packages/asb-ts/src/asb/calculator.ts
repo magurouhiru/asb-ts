@@ -27,6 +27,7 @@ import {
   type TameEffectiveness,
   TameEffectivenessSchema,
   TE_MAX,
+  type TotalLevel,
   type Type,
   ValuesSchema,
   WILD_IMP,
@@ -412,141 +413,77 @@ function calculateLevelBred(
 function calculateLevelDomCore(
   te: TameEffectiveness,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
-  meta: Meta,
+  _meta: Meta,
 ): [{ [k: string]: LevelDetail }, Meta] {
-  const result = {
-    health_result: cLpt("health", te, ip),
-    stamina_result: cLpt("stamina", te, ip),
-    oxygen_result: cLpt("oxygen", te, ip),
-    food_result: cLpt("food", te, ip),
-
-    water_result: cLpt("water", te, ip),
-    temperature_result: cLpt("temperature", te, ip),
-    weight_result: cLpt("weight", te, ip),
-    meleeDamageMultiplier_result: cLpt("meleeDamageMultiplier", te, ip),
-
-    speedMultiplier_result: cLpt("speedMultiplier", te, ip),
-    temperatureFortitude_result: cLpt("temperatureFortitude", te, ip),
-    craftingSpeedMultiplier_result: cLpt("craftingSpeedMultiplier", te, ip),
-    torpidity_result: cLpt("torpidity", te, ip),
-  };
-
-  type Obj = Record<
-    StatsName,
-    { levelDetail: LevelDetail; statsMetaDetail: StatsMetaDetail }
-  >;
+  const tmp = Object.fromEntries(
+    StatsNames.map((sn) => [sn, cLpt(sn, te, ip)]),
+  );
+  type TmpResult = Partial<Record<StatsName, LevelDetail>>;
+  type Obj = { r: TmpResult; m: StatsMeta };
   const objList: Obj[] = [];
 
-  for (const health of result.health_result) {
-    for (const stamina of result.stamina_result) {
-      for (const oxygen of result.oxygen_result) {
-        for (const food of result.food_result) {
-          //
-          for (const water of result.water_result) {
-            for (const temperature of result.temperature_result) {
-              for (const weight of result.weight_result) {
-                for (const meleeDamageMultiplier of result.meleeDamageMultiplier_result) {
-                  //
-                  for (const speedMultiplier of result.speedMultiplier_result) {
-                    for (const temperatureFortitude of result.temperatureFortitude_result) {
-                      for (const craftingSpeedMultiplier of result.craftingSpeedMultiplier_result) {
-                        for (const torpidity of result.torpidity_result) {
-                          objList.push({
-                            health,
-                            stamina,
-                            oxygen,
-                            food,
-
-                            water,
-                            temperature,
-                            weight,
-                            meleeDamageMultiplier,
-
-                            speedMultiplier,
-                            temperatureFortitude,
-                            craftingSpeedMultiplier,
-                            torpidity,
-                          });
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+  const flatComb = (i: number, obj: Obj) => {
+    if (i === StatsNames.length) {
+      objList.push(obj);
+      return;
     }
-  }
+    const sn = StatsNames[i];
+    if (!sn) throw new Error("バグです1");
+    const tmpSn = tmp[sn];
+    if (!tmpSn) throw new Error("バグです2");
+    tmpSn.forEach(({ levelDetail, statsMetaDetail }) => {
+      const r = { ...obj.r };
+      r[sn] = levelDetail;
+      const m = { ...obj.m };
+      m[sn] = statsMetaDetail;
+      flatComb(i + 1, { r, m });
+    });
+  };
 
-  const calcTLDiff = (obj: Obj) =>
-    ip.totalLevel -
-    1 -
-    Object.entries(obj).reduce((acc, [sn, { levelDetail }]) => {
-      if (sn === "torpidity") return acc;
-      else return acc + levelDetail.wild + levelDetail.mut + levelDetail.dom;
-    }, 0);
-  const calcMeanWildLevel = (obj: Obj) =>
-    Object.entries(obj).reduce((acc, [sn, { levelDetail }]) => {
-      if (sn === "torpidity") return acc;
-      else return acc + levelDetail.wild;
-    }, 0) /
-    Object.entries(obj).reduce((acc, [sn, { levelDetail }]) => {
-      if (sn === "torpidity") return acc;
-      else if (levelDetail.wild > 0) return acc + 1;
-      else return acc;
-    }, 0);
-  const getWildLevel = (obj: Obj) =>
-    Object.entries(obj)
-      .filter(([sn]) => sn !== "torpidity")
-      .map(([, { levelDetail }]) => levelDetail.wild);
+  flatComb(0, { r: {}, m: {} });
 
-  objList.sort((a, b) => {
-    const aDiff = calcTLDiff(a);
-    const bDiff = calcTLDiff(b);
-    return Math.abs(aDiff) - Math.abs(bDiff);
+  const minDiff = objList.reduce((acc, { r }) => {
+    const tmpDiff = calcTotalLevelDiff(ip.totalLevel, r);
+    if (tmpDiff < acc) return tmpDiff;
+    else return acc;
+  }, Number.MAX_SAFE_INTEGER);
+  const minDiffObjList = objList.filter(({ r }) => {
+    const tmpDiff = calcTotalLevelDiff(ip.totalLevel, r);
+    return minDiff === tmpDiff;
   });
 
-  // console.log("objList[0]", objList[0]);
-  // console.log("objList[1]", objList[1]);
+  let targetObje = minDiffObjList[0];
+  if (!targetObje) throw new Error("バグです3");
 
-  // console.log(
-  //   objList.map((a) => {
-  //     const aDiff =
-  //       ip.totalLevel -
-  //       1 -
-  //       Object.entries(a).reduce((acc, [sn, { levelDetail }]) => {
-  //         if (sn === "torpidity") return acc;
-  //         else
-  //           return acc + levelDetail.wild + levelDetail.mut + levelDetail.dom;
-  //       }, 0);
-  //     return aDiff;
-  //   }),
-  // );
-
-  const first = objList[0];
-  if (!first) throw new Error();
-  const d = calcTLDiff(first);
-  const f = objList.filter((obj) => d === calcTLDiff(obj));
-
-  const bufD = Number.MAX_SAFE_INTEGER;
-  let bufO: Obj | null = null;
-  for (const o of f) {
-    const mwl = calcMeanWildLevel(o);
-    const tmpD = getWildLevel(o).reduce((_acc, v) => Math.abs(mwl - v), 0);
-    if (tmpD < bufD) {
-      bufO = o;
-    }
+  if (minDiffObjList.length > 1) {
+    // レベルの差が同じものが複数ある場合は、ASBと同様に、各statの野生のレベル平均に近い奴を採用する
+    // ARKStatsExtractor/ARKBreedingStats/Form1.extractor.cs:422行付近を参照
+    const { obj } = minDiffObjList.reduce(
+      (acc, obj) => {
+        const not0 = StatsNames.filter((sn) => (obj.r[sn]?.wild ?? 0) !== 0);
+        const cntNot0 = not0.reduce((acc_1, sn) => {
+          if (sn === "torpidity") return acc_1;
+          else if (obj.r[sn]?.wild === 0) return acc_1;
+          else return acc_1 + 1;
+        }, 0);
+        const sum = sumLevels(obj.r);
+        const meanLevel = sum / cntNot0;
+        const meanLevelDiff = not0.reduce((acc_2, sn) => {
+          const tmpMeanLevel = obj.r[sn]?.wild ?? 0;
+          if (sn === "torpidity") return acc_2;
+          else return acc_2 + Math.abs(meanLevel - tmpMeanLevel);
+        }, 0);
+        if (meanLevelDiff < acc.meanLevelDiff) return { meanLevelDiff, obj };
+        else return acc;
+      },
+      {
+        meanLevelDiff: Number.MAX_SAFE_INTEGER,
+        obj: targetObje,
+      },
+    );
+    targetObje = obj;
   }
-  if (!bufO) throw new Error();
-  const levels = Object.fromEntries(
-    Object.entries(bufO).map(([sn, { levelDetail }]) => [sn, levelDetail]),
-  );
-  StatsNames.map((sn) => (meta.statsMeta[sn] = bufO[sn].statsMetaDetail));
-  const tmpTotalLevelDiff = ip.totalLevel - 1 - sumLevels(levels);
-  if (tmpTotalLevelDiff) meta.totalLevelDiff = tmpTotalLevelDiff;
-  return [levels, meta];
+  return [targetObje.r, { statsMeta: targetObje.m }];
 }
 
 // とりあえずレベル100まで計算する。これ以上は現実的に存在しないと思うので。
@@ -699,4 +636,12 @@ function sumLevels(levels: { [k: string]: LevelDetail }) {
     if (sn === "torpidity") return acc;
     else return acc + ld.wild + ld.mut + ld.dom;
   }, 0);
+}
+
+function calcTotalLevelDiff(
+  tl: TotalLevel,
+  levels: { [k: string]: LevelDetail },
+) {
+  const sum = sumLevels(levels);
+  return Math.abs(tl - 1 - sum);
 }
