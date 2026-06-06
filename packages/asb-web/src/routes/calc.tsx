@@ -68,6 +68,7 @@ const searchSchema = v.pipe(
     m: v.fallback(v.number(), 0),
     t: v.fallback(v.number(), 0),
     i: v.fallback(v.number(), 0),
+    level: v.fallback(v.number(), 0),
   }),
 );
 
@@ -90,7 +91,7 @@ const { useAppForm } = createFormHook({
 });
 
 function CalcComponent() {
-  const { mode, type, n, h, s, o, f, w, m, t, i } = Route.useSearch();
+  const { mode, type, n, h, s, o, f, w, m, t, i, level } = Route.useSearch();
 
   const settings = createSettings();
   const speciesList = createSpeciesList(settings);
@@ -106,6 +107,7 @@ function CalcComponent() {
     bp: n ? searchBP(speciesList, n, settings) : "",
     tameEffectiveness: 0,
     imprinting: i,
+    totalLevel: level,
 
     // 値
     values: {
@@ -380,16 +382,36 @@ function CalcComponent() {
         )}
       </form.AppField>
 
+      <form.AppField name="totalLevel">
+        {(field) => (
+          <field.NumberField
+            defaultValue={field.form.options.defaultValues?.totalLevel}
+            value={field.state.value}
+            onChange={(e) => field.setValue(e)}
+            isDisabled={field.form.state.values.mode !== "value->level"}
+            minValue={0}
+            maxValue={500}
+            formatOptions={{
+              maximumFractionDigits: 0,
+              minimumFractionDigits: 0,
+            }}
+          >
+            <Label>totalLevel</Label>
+            <NumberField.Group>
+              <NumberField.DecrementButton />
+              <NumberField.Input />
+              <NumberField.IncrementButton />
+              {meta?.totalLevelDiff && (
+                <ErrorMessage>{toDiffStr(meta?.totalLevelDiff)}</ErrorMessage>
+              )}
+            </NumberField.Group>
+          </field.NumberField>
+        )}
+      </form.AppField>
+
       {DISPLAY_STATS_NAME_LIST.map((sn) => {
         const tmp = meta?.statsMeta[sn]?.valueDiff ?? 0;
-        const sign = tmp >= 0 ? "+" : "-";
-        const value = (
-          sn === "meleeDamageMultiplier" ? Math.abs(tmp * 100) : Math.abs(tmp)
-        ).toFixed(1);
-        const diff =
-          tmp === 0
-            ? undefined
-            : `diff: ${sign} ${value} ${sn === "meleeDamageMultiplier" ? "%" : ""}`;
+        const diff = toDiffStr(tmp, sn);
         return (
           <div key={sn}>
             <div className="flex gap-2">
@@ -605,4 +627,14 @@ function CalcComponent() {
       </form.AppField>
     </form>
   );
+}
+
+function toDiffStr(n: number, sn?: StatsName): string | undefined {
+  const sign = n >= 0 ? "+" : "-";
+  const value = (
+    sn === "meleeDamageMultiplier" ? Math.abs(n * 100) : Math.abs(n)
+  ).toFixed(1);
+  return n === 0
+    ? undefined
+    : `diff: ${sign} ${value} ${sn === "meleeDamageMultiplier" ? "%" : ""}`;
 }

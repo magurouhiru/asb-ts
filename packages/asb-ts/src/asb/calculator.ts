@@ -442,14 +442,14 @@ function calculateLevelDomCore(
 
   flatComb(0, { r: {}, m: {} });
 
-  const minDiff = objList.reduce((acc, { r }) => {
+  const minTotalLevelDiff = objList.reduce((acc, { r }) => {
     const tmpDiff = calcTotalLevelDiff(ip.totalLevel, r);
     if (tmpDiff < acc) return tmpDiff;
     else return acc;
   }, Number.MAX_SAFE_INTEGER);
   const minDiffObjList = objList.filter(({ r }) => {
     const tmpDiff = calcTotalLevelDiff(ip.totalLevel, r);
-    return minDiff === tmpDiff;
+    return minTotalLevelDiff === tmpDiff;
   });
 
   let targetObje = minDiffObjList[0];
@@ -483,7 +483,10 @@ function calculateLevelDomCore(
     );
     targetObje = obj;
   }
-  return [targetObje.r, { statsMeta: targetObje.m }];
+  return [
+    targetObje.r,
+    { statsMeta: targetObje.m, totalLevelDiff: minTotalLevelDiff ?? undefined },
+  ];
 }
 
 // とりあえずレベル100まで計算する。これ以上は現実的に存在しないと思うので。
