@@ -647,12 +647,12 @@ function sumLevels(levels: { [k: string]: LevelDetail }) {
   }, 0);
 }
 
-function sumWildLevels(levels: { [k: string]: LevelDetail }) {
-  return Object.entries(levels).reduce((acc, [sn, ld]) => {
-    if (sn === "torpidity") return acc;
-    else return acc + ld.wild;
-  }, 0);
-}
+// function sumWildLevels(levels: { [k: string]: LevelDetail }) {
+//   return Object.entries(levels).reduce((acc, [sn, ld]) => {
+//     if (sn === "torpidity") return acc;
+//     else return acc + ld.wild;
+//   }, 0);
+// }
 
 function calcTotalLevelDiff(
   tl: TotalLevel,

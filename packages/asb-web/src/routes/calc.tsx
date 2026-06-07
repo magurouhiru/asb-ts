@@ -28,11 +28,11 @@ import {
   type OutputOfCalculateValue,
   type OutputPackFailure,
   type StatsName,
+  StatsNames,
   searchBP,
   type Type,
   Types,
   type Values,
-  StatsNames,
 } from "asb-ts";
 import { useEffect, useState } from "react";
 import * as v from "valibot";
