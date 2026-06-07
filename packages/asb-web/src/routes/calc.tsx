@@ -250,15 +250,14 @@ function CalcComponent() {
           (acc, sn) => acc + opcl.levels[sn].mut + opcl.levels[sn].dom,
           0,
         ) !== 0 && (
-          <Alert>
-            <Alert.Indicator>
-              <Alert.Content>
-                <Alert.Title>mut,domが出るときはちょっとあれかも</Alert.Title>
-                <Alert.Description>
-                  画像からだと値が荒いのでテイム効果がうまく計算できないので、ずれることがある。そのうち治るといいですね。
-                </Alert.Description>
-              </Alert.Content>
-            </Alert.Indicator>
+          <Alert status="warning">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>mut,domが出るときはちょっとあれかも</Alert.Title>
+              <Alert.Description>
+                画像からだと値が荒いのでテイム効果がうまく計算できないので、ずれることがある。そのうち治るといいですね。
+              </Alert.Description>
+            </Alert.Content>
           </Alert>
         )}
 
