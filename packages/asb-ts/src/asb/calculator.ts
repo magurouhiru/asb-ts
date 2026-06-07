@@ -358,7 +358,7 @@ function calculateLevelWild(
   return [levels, meta];
 }
 
-const TARGET_TE_LIST_SIZE = 100;
+const TARGET_TE_LIST_SIZE = 10;
 const TARGET_TE_LIST = Array.from(
   { length: TE_MAX * TARGET_TE_LIST_SIZE + 1 },
   (_, i) => v.parse(TameEffectivenessSchema, i / TARGET_TE_LIST_SIZE),
@@ -367,6 +367,7 @@ function calculateLevelDom(
   ip: Extract<CalculateLevelInputPack, { type: "dom" }>,
 ): [{ [k: string]: LevelDetail }, TameEffectiveness, Meta] {
   let buffTotalLevelDiff = Number.MAX_SAFE_INTEGER;
+  let buffWildLevelDiff = Number.MAX_SAFE_INTEGER;
   let buffDiff = Number.MAX_SAFE_INTEGER;
   let buffLevels: { [k: string]: LevelDetail } | null = null;
   let buffTe: TameEffectiveness | null = null;
@@ -381,17 +382,24 @@ function calculateLevelDom(
       0,
     );
     const tmpTotalLevelDiff = Math.abs(tmpMeta.totalLevelDiff ?? 0);
-    if (tmpTotalLevelDiff < buffTotalLevelDiff) {
+    const tmpWildLevelDiff = Math.abs(tmpMeta.wildLevelDiff ?? 0);
+    if (
+      tmpTotalLevelDiff < buffTotalLevelDiff &&
+      tmpWildLevelDiff < buffWildLevelDiff
+    ) {
       buffTotalLevelDiff = tmpTotalLevelDiff;
+      buffWildLevelDiff = tmpWildLevelDiff;
       buffDiff = tmpSumDiff;
       buffLevels = tmpLevels;
       buffTe = te;
       buffMeta = tmpMeta;
     } else if (
       tmpTotalLevelDiff === buffTotalLevelDiff &&
+      tmpWildLevelDiff === buffWildLevelDiff &&
       tmpSumDiff <= buffDiff
     ) {
       buffTotalLevelDiff = tmpTotalLevelDiff;
+      buffWildLevelDiff = tmpWildLevelDiff;
       buffDiff = tmpSumDiff;
       buffLevels = tmpLevels;
       buffTe = te;
@@ -442,14 +450,27 @@ function calculateLevelDomCore(
 
   flatComb(0, { r: {}, m: {} });
 
+  const calcTotalDiff = (r: Obj["r"]) => calcTotalLevelDiff(ip.totalLevel, r);
   const minTotalLevelDiff = objList.reduce((acc, { r }) => {
-    const tmpDiff = calcTotalLevelDiff(ip.totalLevel, r);
+    const tmpDiff = calcTotalDiff(r);
     if (tmpDiff < acc) return tmpDiff;
     else return acc;
   }, Number.MAX_SAFE_INTEGER);
-  const minDiffObjList = objList.filter(({ r }) => {
-    const tmpDiff = calcTotalLevelDiff(ip.totalLevel, r);
+  const minTotalDiffObjList = objList.filter(({ r }) => {
+    const tmpDiff = calcTotalDiff(r);
     return minTotalLevelDiff === tmpDiff;
+  });
+
+  const calcWildDiff = (r: Obj["r"]) =>
+    Math.abs((r.torpidity?.wild ?? 0) - sumWildLevels(r));
+  const minWildLevelDiff = minTotalDiffObjList.reduce((acc, { r }) => {
+    const tmpDiff = calcWildDiff(r);
+    if (tmpDiff < acc) return tmpDiff;
+    else return acc;
+  }, Number.MAX_SAFE_INTEGER);
+  const minDiffObjList = minTotalDiffObjList.filter(({ r }) => {
+    const tmpDiff = calcWildDiff(r);
+    return minWildLevelDiff === tmpDiff;
   });
 
   let targetObje = minDiffObjList[0];
@@ -485,7 +506,11 @@ function calculateLevelDomCore(
   }
   return [
     targetObje.r,
-    { statsMeta: targetObje.m, totalLevelDiff: minTotalLevelDiff ?? undefined },
+    {
+      statsMeta: targetObje.m,
+      totalLevelDiff: minTotalLevelDiff ?? undefined,
+      wildLevelDiff: minWildLevelDiff ?? undefined,
+    },
   ];
 }
 
@@ -638,6 +663,13 @@ function sumLevels(levels: { [k: string]: LevelDetail }) {
   return Object.entries(levels).reduce((acc, [sn, ld]) => {
     if (sn === "torpidity") return acc;
     else return acc + ld.wild + ld.mut + ld.dom;
+  }, 0);
+}
+
+function sumWildLevels(levels: { [k: string]: LevelDetail }) {
+  return Object.entries(levels).reduce((acc, [sn, ld]) => {
+    if (sn === "torpidity") return acc;
+    else return acc + ld.wild;
   }, 0);
 }
 

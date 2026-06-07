@@ -138,6 +138,7 @@ export interface Meta {
   isTameEffectivenessCalculatedAsOne?: boolean;
   isImprintingCalculatedAsZero?: boolean;
   totalLevelDiff?: number;
+  wildLevelDiff?: number;
 }
 
 export type ErrorType = ["input_error", "internal_error"][number];
