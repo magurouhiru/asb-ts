@@ -55,6 +55,12 @@ export const TotalLevelSchema = v.pipe(
   v.brand("" as "TotalLevelSchema"), // 単品で使いそうなので、v.brandする
 );
 
+export type WithDom = v.InferOutput<typeof WithDomSchema>;
+export const WithDomSchema = v.pipe(
+  v.boolean(),
+  v.brand("" as "WithDomSchema"), // 単品で使いそうなので、v.brandする
+);
+
 // 野生はテイム効果なしで計算する。
 export const WILD_TE = TE_MIN as TameEffectiveness;
 // 野生は刷り込みボーナスなしで計算する。
@@ -101,6 +107,7 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
   v.object({
     type: v.literal("wild" satisfies Type),
     values: ValuesSchema,
+    withDom: WithDomSchema,
     totalLevel: TotalLevelSchema,
     imprinting: ImprintingSchema,
     species: SpeciesSchema,
@@ -109,6 +116,7 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
   v.object({
     type: v.literal("dom" satisfies Type),
     values: ValuesSchema,
+    withDom: WithDomSchema,
     totalLevel: TotalLevelSchema,
     imprinting: ImprintingSchema,
     species: SpeciesSchema,
@@ -117,6 +125,7 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
   v.object({
     type: v.literal("bred" satisfies Type),
     values: ValuesSchema,
+    withDom: WithDomSchema,
     totalLevel: TotalLevelSchema,
     imprinting: ImprintingSchema,
     species: SpeciesSchema,

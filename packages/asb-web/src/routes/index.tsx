@@ -24,6 +24,7 @@ function HomeComponent() {
               t: 0,
               i: 0,
               level: 0,
+              withDom: true,
             }}
           >
             個体値↔レベル

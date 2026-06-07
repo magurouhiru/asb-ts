@@ -80,9 +80,9 @@ export type OutputOfCalculateValue = CalculateValueOutputPack;
 /** 入力: 個体値→レベル */
 export type InputForCalculateLevel = Omit<
   CalculateLevelInputPack,
-  "species" | "imprinting" | "totalLevel"
+  "species" | "imprinting" | "totalLevel" | "withDom"
 > &
-  InputCommon & { totalLevel: number };
+  InputCommon & { totalLevel: number } & { withDom: boolean };
 
 /** 出力: 個体値→レベル */
 export type OutputOfCalculateLevel =
@@ -138,6 +138,7 @@ export function calculateLevel(
   const parsed = v.safeParse(CalculateLevelInputPackSchema, {
     type: input.type,
     values: input.values,
+    withDom: input.withDom,
     totalLevel: input.totalLevel,
     imprinting: input.imprinting,
     species: found,

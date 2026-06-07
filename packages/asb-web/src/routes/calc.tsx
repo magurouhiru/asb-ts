@@ -13,6 +13,7 @@ import {
   Radio,
   RadioGroup,
   SearchField,
+  Switch,
   useFilter,
 } from "@heroui/react";
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
@@ -70,6 +71,7 @@ const searchSchema = v.pipe(
     t: v.fallback(v.number(), 0),
     i: v.fallback(v.number(), 0),
     level: v.fallback(v.number(), 0),
+    withDom: v.fallback(v.boolean(), true),
   }),
 );
 
@@ -85,6 +87,7 @@ const { useAppForm } = createFormHook({
     Autocomplete,
     NumberField,
     RadioGroup,
+    Switch,
   },
   formComponents: {},
   fieldContext,
@@ -92,7 +95,8 @@ const { useAppForm } = createFormHook({
 });
 
 function CalcComponent() {
-  const { mode, type, n, h, s, o, f, w, m, t, i, level } = Route.useSearch();
+  const { mode, type, n, h, s, o, f, w, m, t, i, level, withDom } =
+    Route.useSearch();
 
   const settings = createSettings();
   const speciesList = createSpeciesList(settings);
@@ -109,6 +113,7 @@ function CalcComponent() {
     tameEffectiveness: 0,
     imprinting: i,
     totalLevel: level,
+    withDom,
 
     // 値
     values: {
@@ -322,6 +327,24 @@ function CalcComponent() {
         )}
       </form.AppField>
 
+      <Label>withDom</Label>
+      <form.AppField name="withDom">
+        {(field) => (
+          <field.Switch
+            defaultSelected={field.form.options.defaultValues?.withDom}
+            onChange={(e) => field.setValue(e)}
+            name="withDom"
+          >
+            <Switch.Control>
+              <Switch.Thumb />
+            </Switch.Control>
+            <Switch.Content>
+              <Label />
+            </Switch.Content>
+          </field.Switch>
+        )}
+      </form.AppField>
+
       <form.AppField name="bp">
         {(field) => (
           <field.Autocomplete
@@ -425,8 +448,8 @@ function CalcComponent() {
                 </ErrorMessage>
               )}
             </div>
-            <div className="flex flex-wrap gap-x-1 sm:flex-nowrap">
-              <div className="grow">
+            <div className="grid grid-cols-1 gap-x-1 sm:grid-cols-3">
+              <div className="col-span-1 grow">
                 <form.AppField name={`values.${sn}`}>
                   {(field) => (
                     <field.NumberField
@@ -461,7 +484,7 @@ function CalcComponent() {
                 </form.AppField>
               </div>
 
-              <div className="grow">
+              <div className="col-span-2">
                 <div className="flex gap-x-1">
                   <div className="flex-1 grow">
                     <form.AppField name={`levels.${sn}.wild`}>
@@ -522,8 +545,7 @@ function CalcComponent() {
                               野生と上昇率が同じ
                               <br />
                               {field.form.state.values.mode ===
-                                "value->level" &&
-                                "野生と区別付かないので、野生にまとめてます"}
+                                "value->level" && "なので、野生にまとめてます"}
                             </Description>
                           )}
                           {meta?.statsMeta[sn]?.isMutLevelCalculatedAsZero && (

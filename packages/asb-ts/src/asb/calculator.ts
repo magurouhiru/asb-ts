@@ -509,6 +509,12 @@ const TARGET_LEVEL_RANGE = Array.from(
   { length: TARGET_LEVEL_DETAIL_LIST_SIZE + 1 },
   (_, i) => i,
 );
+const TARGET_LEVEL_DETAIL_LIST_WILD_MUT = TARGET_LEVEL_RANGE_WITHOUT_0.flatMap(
+  (i) =>
+    TARGET_LEVEL_RANGE.map((j) =>
+      v.parse(LevelDetailSchema, { wild: i, mut: j, dom: 0 }),
+    ),
+);
 const TARGET_LEVEL_DETAIL_LIST_WILD_DOM = TARGET_LEVEL_RANGE_WITHOUT_0.flatMap(
   (i) =>
     TARGET_LEVEL_RANGE.map((k) =>
@@ -603,11 +609,17 @@ function cLpt(
   const targetLevel =
     sn === "torpidity"
       ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
-      : ip.type === "dom"
-        ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
-        : mm === 1
+      : ip.withDom
+        ? ip.type === "dom"
           ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
-          : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM;
+          : mm === 1
+            ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
+            : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM
+        : ip.type === "dom"
+          ? TARGET_LEVEL_DETAIL_LIST_WILD
+          : mm === 1
+            ? TARGET_LEVEL_DETAIL_LIST_WILD
+            : TARGET_LEVEL_DETAIL_LIST_WILD_MUT;
   for (const ld of targetLevel) {
     const [tmpVpt, tmpStatsMetaDetail] = cV(
       ip.type,

@@ -253,6 +253,7 @@ describe("calculateLevel", () => {
         craftingSpeedMultiplier: 0, // 無視
       },
       totalLevel: inputs.totalLevel,
+      withDom: true,
     });
 
     // 5. ステータスを確認して対応する処理を行う
@@ -534,6 +535,7 @@ describe("calculateLevel", () => {
         craftingSpeedMultiplier: 0, // 無視
       },
       totalLevel: inputs.totalLevel,
+      withDom: true,
     });
 
     // 5. ステータスを確認して対応する処理を行う
