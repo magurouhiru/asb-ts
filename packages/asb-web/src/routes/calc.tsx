@@ -448,8 +448,8 @@ function CalcComponent() {
                 </ErrorMessage>
               )}
             </div>
-            <div className="flex flex-wrap gap-x-1 sm:flex-nowrap">
-              <div className="grow">
+            <div className="grid grid-cols-1 gap-x-1 sm:grid-cols-3">
+              <div className="col-span-1 grow">
                 <form.AppField name={`values.${sn}`}>
                   {(field) => (
                     <field.NumberField
@@ -484,7 +484,7 @@ function CalcComponent() {
                 </form.AppField>
               </div>
 
-              <div className="grow">
+              <div className="col-span-2">
                 <div className="flex gap-x-1">
                   <div className="flex-1 grow">
                     <form.AppField name={`levels.${sn}.wild`}>
