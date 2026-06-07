@@ -23,6 +23,7 @@ function HomeComponent() {
               m: 0,
               t: 0,
               i: 0,
+              level: 0,
             }}
           >
             個体値↔レベル
