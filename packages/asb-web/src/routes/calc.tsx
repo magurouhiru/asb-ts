@@ -77,7 +77,7 @@ const searchSchema = v.pipe(
         v.string(),
         v.transform((input) => toTrue.includes(input)),
       ),
-      true,
+      false,
     ),
   }),
 );
