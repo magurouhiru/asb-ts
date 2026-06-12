@@ -5,7 +5,7 @@ export const DEFAULT_REGIONS_OPTION = {
   dhmNL: 0.024,
   ymS: 0.42,
   dlmS: 0.15,
-  drmS: 0.13,
+  drmS: 0.18,
   dhmS: 0.0317,
 };
 

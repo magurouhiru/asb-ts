@@ -1,11 +1,23 @@
-import { OcrQueueManager } from "asb-ts";
-import { createContext, useContext, useEffect, useRef } from "react";
+import { OcrQueueManager, type OcrQueueManagerStatus } from "asb-ts";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
-const OcrContext = createContext<OcrQueueManager | null>(null);
+const OcrContext = createContext<
+  [OcrQueueManager, OcrQueueManagerStatus, number, number] | null
+>(null);
 
 export function OcrProvider({ children }: { children: React.ReactNode }) {
+  const [status, setStatus] =
+    useState<OcrQueueManagerStatus>("Not initialized");
+  const [requestCnt, setRequestCnt] = useState<number>(0);
+  const [completeCnt, setCompleteCnt] = useState<number>(0);
   // useRef を使って、Reactの再描画でもインスタンスが絶対に1つに保たれるようにする
-  const ocrQueueRef = useRef(new OcrQueueManager());
+  const ocrQueueRef = useRef(
+    new OcrQueueManager((s, rCnt, cCnt) => {
+      setStatus(s);
+      setRequestCnt(rCnt);
+      setCompleteCnt(cCnt);
+    }),
+  );
 
   useEffect(() => {
     return () => {
@@ -14,7 +26,9 @@ export function OcrProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <OcrContext.Provider value={ocrQueueRef.current}>
+    <OcrContext.Provider
+      value={[ocrQueueRef.current, status, requestCnt, completeCnt]}
+    >
       {children}
     </OcrContext.Provider>
   );

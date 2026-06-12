@@ -29,13 +29,11 @@ export function createSettings(settings?: Partial<Settings>): Settings {
   return v.parse(SettingsSchema, { ...DEFAULT_SETTINGS, ...settings });
 }
 
-import { PSM as TesseractPsm } from "tesseract.js";
 import { getImgPacks } from "./asb/ocr.browser.js";
 import { getOcrTexts, getRegions, type OcrQueueManager } from "./asb/ocr.js";
 
 export * from "./asb/ocr.js";
 export { createSpeciesList } from "./asb/species.js";
-export { TesseractPsm };
 
 export function searchBP(
   speciesList: Species[],

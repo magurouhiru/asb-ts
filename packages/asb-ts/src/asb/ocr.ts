@@ -18,11 +18,34 @@ import {
   type Regions,
 } from "./types/index.js";
 
+const Status = ["Not initialized", "Suspended", "Running"] as const;
+export type OcrQueueManagerStatus = (typeof Status)[number];
+
 export class OcrQueueManager {
   private queue: Promise<string> = Promise.resolve("");
 
   // 💡 初期化処理そのものを Promise として保持し、重複実行を防ぐ
   private initPromise: Promise<Worker> | null = null;
+
+  private status: OcrQueueManagerStatus = "Not initialized";
+  private requestCnt = 0;
+  private completeCnt = 0;
+
+  private callBack?: (
+    status: OcrQueueManagerStatus,
+    requestCnt: number,
+    completeCnt: number,
+  ) => void;
+
+  constructor(
+    callBack?: (
+      status: OcrQueueManagerStatus,
+      requestCnt: number,
+      completeCnt: number,
+    ) => void,
+  ) {
+    if (callBack) this.callBack = callBack;
+  }
 
   /**
    * 💡 内部専用の初期化関数（外部から呼ぶ必要はありません）
@@ -34,9 +57,11 @@ export class OcrQueueManager {
     }
 
     // 最初の1回目だけ、新しく初期化の Promise を作成して保持する
-    this.initPromise = (async () => {
-      return await createWorker("jpn");
-    })();
+    this.initPromise = createWorker("jpn").then((worker) => {
+      if (this.callBack)
+        this.callBack(this.status, this.requestCnt, this.completeCnt);
+      return worker;
+    });
 
     return this.initPromise;
   }
@@ -48,11 +73,24 @@ export class OcrQueueManager {
     img: ImageLike,
     params: Partial<WorkerParams>,
   ): Promise<string> {
+    this.requestCnt = this.requestCnt + 1;
     // 列の最後尾に自分を並ばせる
     // 毎回paramsを変えたいので、数珠つなぎにして、順番が変にならないようにする
     this.queue = this.queue
+      .then(() => {
+        this.status = "Running";
+        if (this.callBack)
+          this.callBack(this.status, this.requestCnt, this.completeCnt);
+      })
       .then(() => this.ensureInitialized())
       .then((worker) => this.executeOcr(worker, img, params))
+      .then((text) => {
+        this.status = "Suspended";
+        this.completeCnt = this.completeCnt + 1;
+        if (this.callBack)
+          this.callBack(this.status, this.requestCnt, this.completeCnt);
+        return text;
+      })
       .catch((error) => {
         throw error;
       });

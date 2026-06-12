@@ -44,7 +44,7 @@ function OcrComponent() {
     ["dhmS", dhmS, setDhmS],
   ];
 
-  const ocrQueue = useOcrQueue();
+  const [ocrQueue, status, requestCnt, completeCnt] = useOcrQueue();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -115,7 +115,7 @@ function OcrComponent() {
         ))}
       </div>
       <div className="grid grid-cols-[auto_auto_auto_auto] gap-2">
-        <span></span>
+        <span>{`${status}: ${completeCnt}/${requestCnt}`}</span>
         {IMG_PACK_LABELS.map((ipl) => (
           <span key={ipl}>{ipl}</span>
         ))}
