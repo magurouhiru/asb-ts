@@ -12,7 +12,8 @@ import { Toast } from "@heroui/react";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { StrictMode } from "react";
-import NotFound from "./component/404";
+import NotFound from "./components/404";
+import { OcrProvider } from "./contexts";
 // biome-ignore lint/suspicious/noTsIgnore: vita でビルド時に作成されるので無視する
 // @ts-ignore
 import { messages } from "./locales/ja/messages";
@@ -45,7 +46,9 @@ if (rootElement && !rootElement.innerHTML) {
     <StrictMode>
       <I18nProvider i18n={i18n}>
         <Toast.Provider />
-        <RouterProvider router={router} defaultNotFoundComponent={NotFound} />
+        <OcrProvider>
+          <RouterProvider router={router} defaultNotFoundComponent={NotFound} />
+        </OcrProvider>
       </I18nProvider>
     </StrictMode>,
   );

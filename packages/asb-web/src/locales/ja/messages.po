@@ -13,6 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/component/404.tsx:4
+#: src/components/404.tsx:4
 msgid "404 - Not Found"
 msgstr "404 - Not Found"

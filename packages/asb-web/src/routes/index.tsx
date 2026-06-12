@@ -30,6 +30,9 @@ function HomeComponent() {
             個体値↔レベル
           </Link>
         </li>
+        <li>
+          <Link to="/ocr">OCR</Link>
+        </li>
       </ul>
     </div>
   );

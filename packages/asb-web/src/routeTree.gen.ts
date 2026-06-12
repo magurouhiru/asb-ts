@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as Privacy_policyRouteImport } from './routes/privacy_policy'
+import { Route as OcrRouteImport } from './routes/ocr'
 import { Route as CalcRouteImport } from './routes/calc'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -17,6 +18,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const Privacy_policyRoute = Privacy_policyRouteImport.update({
   id: '/privacy_policy',
   path: '/privacy_policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OcrRoute = OcrRouteImport.update({
+  id: '/ocr',
+  path: '/ocr',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalcRoute = CalcRouteImport.update({
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/calc': typeof CalcRoute
+  '/ocr': typeof OcrRoute
   '/privacy_policy': typeof Privacy_policyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/calc': typeof CalcRoute
+  '/ocr': typeof OcrRoute
   '/privacy_policy': typeof Privacy_policyRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/calc': typeof CalcRoute
+  '/ocr': typeof OcrRoute
   '/privacy_policy': typeof Privacy_policyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/calc' | '/privacy_policy'
+  fullPaths: '/' | '/about' | '/calc' | '/ocr' | '/privacy_policy'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/calc' | '/privacy_policy'
-  id: '__root__' | '/' | '/about' | '/calc' | '/privacy_policy'
+  to: '/' | '/about' | '/calc' | '/ocr' | '/privacy_policy'
+  id: '__root__' | '/' | '/about' | '/calc' | '/ocr' | '/privacy_policy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   CalcRoute: typeof CalcRoute
+  OcrRoute: typeof OcrRoute
   Privacy_policyRoute: typeof Privacy_policyRoute
 }
 
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy_policy'
       fullPath: '/privacy_policy'
       preLoaderRoute: typeof Privacy_policyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ocr': {
+      id: '/ocr'
+      path: '/ocr'
+      fullPath: '/ocr'
+      preLoaderRoute: typeof OcrRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calc': {
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CalcRoute: CalcRoute,
+  OcrRoute: OcrRoute,
   Privacy_policyRoute: Privacy_policyRoute,
 }
 export const routeTree = rootRouteImport

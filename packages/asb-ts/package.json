@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "fuse.js": "catalog:",
+    "tesseract.js": "^7.0.0",
     "valibot": "catalog:"
   },
   "devDependencies": {

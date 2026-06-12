@@ -1,9 +1,5 @@
 import { flatten, type GenericSchema, type SafeParseResult } from "valibot";
-import type {
-  ASBError,
-  ErrorType,
-  OutputPackFailure,
-} from "./asb/types/index.js";
+import type { ASBError, ErrorType, OutputPackFailure } from "./types/index.js";
 
 function pushASBError(
   errors: ASBError[],

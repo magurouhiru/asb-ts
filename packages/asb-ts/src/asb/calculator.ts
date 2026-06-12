@@ -1,5 +1,4 @@
 import * as v from "valibot";
-import { toOutputPackFailure } from "../util.js";
 import {
   BRED_TE,
   type CalculateLevelInputPack,
@@ -33,6 +32,7 @@ import {
   WILD_IMP,
   WILD_TE,
 } from "./types/index.js";
+import { toOutputPackFailure } from "./util.js";
 
 export function calculateValueController(
   ip: CalculateValueInputPack,

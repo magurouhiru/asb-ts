@@ -4,7 +4,7 @@ import {
   CalculateValueInputPackSchema,
   type LevelDetail,
   type Type,
-} from "./io.js";
+} from "./calculator.js";
 import { DEFAULT_SETTINGS } from "./settings.js";
 import { type StatsName, StatsNames } from "./stats-name.js";
 

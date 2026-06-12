@@ -6,22 +6,10 @@ services:
     tty: true
     volumes:
       - ..:/home/vscode/app
-#   ollama:
-#     image: ollama/ollama:latest
-#     # build:
-#     #   context: .
-#     #   dockerfile: ollama.Dockerfile
-#     ports:
-#       - "11434:11434"
-#     deploy:
-#       resources:
-#         reservations:
-#           devices:
-#             - driver: nvidia
-#               count: all          # すべてのGPUを指定
-#               capabilities: [gpu] # 必須設定
-#     volumes:
-#       - ollama_data:/root/.ollama
+    networks:
+      - shared-ai-net
 
-# volumes:
-#   ollama_data:
+networks:
+  shared-ai-net:
+    name: asb-web_ai-network
+    external: true
