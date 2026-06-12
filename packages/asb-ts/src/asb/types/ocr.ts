@@ -3,10 +3,10 @@ export const DEFAULT_REGIONS_OPTION = {
   dlmNL: 0.06,
   drmNL: 0.1,
   dhmNL: 0.024,
-  ymS: 0.42,
+  ymS: 0.415,
   dlmS: 0.15,
   drmS: 0.18,
-  dhmS: 0.0317,
+  dhmS: 0.0321,
 };
 
 export const DEFAULT_THRESHOLD = 128;

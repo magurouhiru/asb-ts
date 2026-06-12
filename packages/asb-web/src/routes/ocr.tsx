@@ -1,4 +1,4 @@
-import { Label, NumberField } from "@heroui/react";
+import { Label, NumberField, toast } from "@heroui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   DEFAULT_REGIONS_OPTION,
@@ -13,6 +13,8 @@ import { useOcrQueue } from "@/contexts";
 export const Route = createFileRoute("/ocr")({
   component: OcrComponent,
 });
+
+const allowedFileTypes = ["image/png", "image/jpeg"];
 
 function OcrComponent() {
   const [img, setImg] = useState<HTMLImageElement | null>(null);
@@ -46,15 +48,24 @@ function OcrComponent() {
 
   const [ocrQueue, status, requestCnt, completeCnt] = useOcrQueue();
 
+  const ImageSetter = (files: FileList | null) => {
+    const file = files?.[0];
+    if (file) {
+      if (allowedFileTypes.includes(file.type)) {
+        const image = new Image();
+        image.onload = () => {
+          setImg(image);
+        };
+        image.src = URL.createObjectURL(files[0]);
+      } else {
+        toast.danger("画像ファイルを指定してください");
+      }
+    }
+  };
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    if (files && files.length > 0) {
-      const image = new Image();
-      image.onload = () => {
-        setImg(image);
-      };
-      image.src = URL.createObjectURL(files[0]);
-    }
+    ImageSetter(files);
   };
 
   useEffect(() => {
@@ -98,12 +109,42 @@ function OcrComponent() {
 
   return (
     <div className="grid grid-cols-1 gap-2">
-      <input type="file" accept="image/*" onChange={handleFileChange} />
-      <canvas ref={canvasReff} className="w-full"></canvas>
+      <input
+        id="file_input"
+        type="file"
+        accept={allowedFileTypes.join(",")}
+        onChange={handleFileChange}
+      />
+      <div className="relative">
+        <canvas ref={canvasReff} className="w-full"></canvas>
+        <label
+          htmlFor="file_input"
+          className="absolute top-0 left-0 grid h-full w-full cursor-pointer items-center justify-center border-2 text-2xl"
+          onDragOver={(e) => {
+            e.preventDefault();
+          }}
+          onDrop={(e) => {
+            e.preventDefault();
+            ImageSetter(e.dataTransfer.files);
+          }}
+        >
+          <div hidden={!!img}>
+            <p>画像ファイルを選択してください。</p>
+            <p>または、ドラッグアンドドロップしてください。</p>
+          </div>
+        </label>
+      </div>
       <div className="grid grid-cols-4 gap-2">
         {regionsOptions.map(([name, value, settter]) => (
           <div key={name}>
-            <NumberField value={value} onChange={(e) => settter(e)}>
+            <NumberField
+              value={value}
+              onChange={(e) => settter(e)}
+              formatOptions={{
+                maximumFractionDigits: 5,
+                minimumFractionDigits: 1,
+              }}
+            >
               <Label>{name}</Label>
               <NumberField.Group>
                 <NumberField.DecrementButton />
