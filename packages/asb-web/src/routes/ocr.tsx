@@ -1,7 +1,8 @@
-import { Label, NumberField, toast } from "@heroui/react";
+import { Label, NumberField, Separator, toast } from "@heroui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   DEFAULT_REGIONS_OPTION,
+  NORMALIZED_TEXTS_LABELS,
   OCR_LABELS,
   type ReadOutput,
   type Region,
@@ -109,74 +110,115 @@ function OcrComponent() {
 
   return (
     <div className="grid grid-cols-1 gap-2">
-      <input
-        id="file_input"
-        type="file"
-        accept={allowedFileTypes.join(",")}
-        onChange={handleFileChange}
-      />
-      <div className="relative">
-        <canvas ref={canvasReff} className="w-full"></canvas>
-        <label
-          htmlFor="file_input"
-          className="absolute top-0 left-0 grid h-full w-full cursor-pointer items-center justify-center border-2 text-2xl"
-          onDragOver={(e) => {
-            e.preventDefault();
-          }}
-          onDrop={(e) => {
-            e.preventDefault();
-            ImageSetter(e.dataTransfer.files);
-          }}
-        >
-          <div hidden={!!img}>
-            <p>画像ファイルを選択してください。</p>
-            <p>または、ドラッグアンドドロップしてください。</p>
-          </div>
-        </label>
-      </div>
-      <div className="grid grid-cols-4 gap-2">
-        {regionsOptions.map(([name, value, settter]) => (
-          <div key={name}>
-            <NumberField
-              value={value}
-              onChange={(e) => settter(e)}
-              step={name === "dhmNL" || name === "dhmS" ? 0.00001 : 0.001}
-              formatOptions={{
-                maximumFractionDigits: 5,
-                minimumFractionDigits: 3,
-              }}
-            >
-              <Label>{name}</Label>
-              <NumberField.Group>
-                <NumberField.DecrementButton />
-                <NumberField.Input />
-                <NumberField.IncrementButton />
-              </NumberField.Group>
-            </NumberField>
-          </div>
-        ))}
-      </div>
-      <div className="grid grid-cols-[auto_auto_auto_auto] gap-2">
-        <span>{`${status}: ${completeCnt}/${requestCnt}`}</span>
-        {IMG_PACK_LABELS.map((ipl) => (
-          <span key={ipl}>{ipl}</span>
-        ))}
-        {readOutput &&
-          OCR_LABELS.map((ol) => (
-            <div key={ol} className="col-span-full grid grid-cols-subgrid">
-              <span>{ol}</span>
-              {IMG_PACK_LABELS.map((ipl) => (
-                <div key={ipl} className="">
-                  <img
-                    src={readOutput.imgPacks[ol][ipl].toDataURL()}
-                    aria-label={`${ol} ${ipl}`}
-                  />
-                  <span>{readOutput.ocrTexts[ol][ipl]}</span>
-                </div>
-              ))}
+      <section>
+        <h3>ファイル設定</h3>
+        <input
+          id="file_input"
+          type="file"
+          accept={allowedFileTypes.join(",")}
+          onChange={handleFileChange}
+        />
+        <div className="relative">
+          <canvas ref={canvasReff} className="w-full"></canvas>
+          <label
+            htmlFor="file_input"
+            className="absolute top-0 left-0 grid h-full w-full cursor-pointer items-center justify-center border-2 text-2xl"
+            onDragOver={(e) => {
+              e.preventDefault();
+            }}
+            onDrop={(e) => {
+              e.preventDefault();
+              ImageSetter(e.dataTransfer.files);
+            }}
+          >
+            <div hidden={!!img}>
+              <p>画像ファイルを選択してください。</p>
+              <p>または、ドラッグアンドドロップしてください。</p>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <Separator />
+
+      <section>
+        <h3>切り抜き位置調整</h3>
+        <div className="grid grid-cols-4 gap-2">
+          {regionsOptions.map(([name, value, settter]) => (
+            <div key={name}>
+              <NumberField
+                value={value}
+                onChange={(e) => settter(e)}
+                step={name === "dhmNL" || name === "dhmS" ? 0.00001 : 0.001}
+                formatOptions={{
+                  maximumFractionDigits: 5,
+                  minimumFractionDigits: 3,
+                }}
+              >
+                <Label>{name}</Label>
+                <NumberField.Group>
+                  <NumberField.DecrementButton />
+                  <NumberField.Input />
+                  <NumberField.IncrementButton />
+                </NumberField.Group>
+              </NumberField>
             </div>
           ))}
-      </div>
+        </div>
+      </section>
+
+      <Separator />
+
+      <section>
+        <h3>切り抜き結果と生の結果</h3>
+        <span>{`OCRステータス: ${status}, 完了/全量 ${completeCnt}/${requestCnt}`}</span>
+        <div className="grid grid-cols-[auto_auto_auto_auto] gap-2">
+          <span></span>
+          {IMG_PACK_LABELS.map((ipl) => (
+            <span key={ipl}>{ipl}</span>
+          ))}
+          {readOutput &&
+            OCR_LABELS.map((ol) => (
+              <div key={ol} className="col-span-full grid grid-cols-subgrid">
+                <span>{ol}</span>
+                {IMG_PACK_LABELS.map((ipl) => (
+                  <div key={ipl} className="">
+                    <img
+                      src={readOutput.imgPacks[ol][ipl].toDataURL()}
+                      aria-label={`${ol} ${ipl}`}
+                    />
+                    <span>{readOutput.ocrTexts[ol][ipl]}</span>
+                  </div>
+                ))}
+              </div>
+            ))}
+        </div>
+      </section>
+
+      <Separator />
+
+      <section>
+        <h3>補正結果と補正内容</h3>
+        <div className="grid grid-cols-[auto_auto_auto] gap-2">
+          <span></span>
+          <span>補正結果</span>
+          <span>補正内容</span>
+          {readOutput &&
+            NORMALIZED_TEXTS_LABELS.map((ntl) => (
+              <div key={ntl} className="col-span-full grid grid-cols-subgrid">
+                <span>{ntl}</span>
+                <span>{readOutput.normalizedTexts[ntl]}</span>
+                <div>
+                  {Object.entries(readOutput.meta[ntl]).map(([ml, v]) => (
+                    <div key={ml}>
+                      {ml}: {JSON.stringify(v)}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+        </div>
+      </section>
     </div>
   );
 }

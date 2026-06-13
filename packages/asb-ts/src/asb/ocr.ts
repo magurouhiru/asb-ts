@@ -10,11 +10,14 @@ import {
 } from "tesseract.js";
 import {
   type ImgPacks_Browser,
+  type NormalizedTexts,
+  type NormalizedTextsLabel,
   OCR_LABELS,
   OCR_STAT_NAME_LABELS,
   OCR_STAT_VALUE_LABELS,
   type OcrCommonLabel,
   type OcrLabel,
+  type OcrMeta,
   type OcrText,
   type OcrTexts,
   type Region,
@@ -306,4 +309,64 @@ export async function getOcrText(
       binary,
     },
   ]);
+}
+
+export function getNormalizedTexts(ocrTexts: OcrTexts): {
+  normalizedTexts: NormalizedTexts;
+  meta: OcrMeta;
+} {
+  const meta: OcrMeta = { name: {} };
+  const name = getNormalizedTextName(ocrTexts, meta);
+  return {
+    normalizedTexts: {
+      name,
+    },
+    meta,
+  };
+}
+
+function getNormalizedTextName(ocrTexts: OcrTexts, meta: OcrMeta): string {
+  normalizeRemoveSpaces(ocrTexts, meta, "name");
+  let result = chooseTextIfSame(ocrTexts, meta, "name");
+  if (!result) {
+    meta.name.reasonForChoice = "fallback_original";
+    result = ocrTexts.name.original;
+  }
+  return result;
+}
+
+function normalizeRemoveSpaces(
+  ocrTexts: OcrTexts,
+  meta: OcrMeta,
+  label: NormalizedTextsLabel,
+) {
+  ocrTexts[label] = {
+    original: ocrTexts[label].original.replaceAll(" ", ""),
+    grayscale: ocrTexts[label].grayscale.replaceAll(" ", ""),
+    binary: ocrTexts[label].binary.replaceAll(" ", ""),
+  };
+  meta[label].removeSpaces = true;
+}
+
+function chooseTextIfSame(
+  ocrTexts: OcrTexts,
+  meta: OcrMeta,
+  label: NormalizedTextsLabel,
+): string | null {
+  const { original, grayscale, binary } = ocrTexts[label];
+  if (original === grayscale && original === binary) {
+    meta[label].reasonForChoice = "same_text_3";
+    return original;
+  } else if (original === grayscale) {
+    meta[label].reasonForChoice = "same_text_2";
+    return original;
+  } else if (grayscale === binary) {
+    meta[label].reasonForChoice = "same_text_2";
+    return grayscale;
+  } else if (binary === original) {
+    meta[label].reasonForChoice = "same_text_2";
+    return binary;
+  } else {
+    return null;
+  }
 }

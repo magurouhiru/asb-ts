@@ -60,10 +60,15 @@ export interface Region {
 
 export type ReadOutput = Output_Browser;
 
-export interface Output_Browser {
+export type ReadOutputCommon = {
   regions: Regions;
-  imgPacks: ImgPacks_Browser;
   ocrTexts: OcrTexts;
+  normalizedTexts: NormalizedTexts;
+  meta: OcrMeta;
+};
+
+export interface Output_Browser extends ReadOutputCommon {
+  imgPacks: ImgPacks_Browser;
 }
 
 export type ImgPacks_Browser = Record<OcrLabel, ImgPack_Browser>;
@@ -73,3 +78,22 @@ export type ImgPack_Browser = Record<ImgPackLabel, HTMLCanvasElement>;
 
 export type OcrTexts = Record<OcrLabel, OcrText>;
 export type OcrText = Record<ImgPackLabel, string>;
+
+export const NORMALIZED_TEXTS_LABELS = ["name"] as const;
+export type NormalizedTextsLabel = (typeof NORMALIZED_TEXTS_LABELS)[number];
+
+export type NormalizedTexts = {
+  name: string;
+};
+
+export type OcrMeta = Record<NormalizedTextsLabel, OcrMetaDetail>;
+
+export interface OcrMetaDetail extends Normalize, ReasonForChoice {}
+
+export interface Normalize {
+  removeSpaces?: boolean;
+}
+
+export interface ReasonForChoice {
+  reasonForChoice?: "same_text_3" | "same_text_2" | "fallback_original";
+}

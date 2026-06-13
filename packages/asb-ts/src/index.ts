@@ -30,7 +30,12 @@ export function createSettings(settings?: Partial<Settings>): Settings {
 }
 
 import { getImgPacks } from "./asb/ocr.browser.js";
-import { getOcrTexts, getRegions, type OcrQueueManager } from "./asb/ocr.js";
+import {
+  getNormalizedTexts,
+  getOcrTexts,
+  getRegions,
+  type OcrQueueManager,
+} from "./asb/ocr.js";
 
 export * from "./asb/ocr.js";
 export { createSpeciesList } from "./asb/species.js";
@@ -185,9 +190,13 @@ export async function read(
   );
   const imgPacks = getImgPacks(sourceImg, threshold, regions);
   const ocrTexts = await getOcrTexts(manager, imgPacks);
+  const ocrTextsClone = structuredClone(ocrTexts);
+  const { normalizedTexts, meta } = getNormalizedTexts(ocrTextsClone);
   return {
     regions,
     imgPacks,
     ocrTexts,
+    normalizedTexts,
+    meta,
   };
 }
