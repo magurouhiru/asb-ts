@@ -70,6 +70,8 @@ export type ReadOutputCommon = {
   logs: NormalizeLog;
 };
 
+export type NormalizeLog = Record<NormalizedTextsLabel, LogDetail[]>;
+
 export interface Output_Browser extends ReadOutputCommon {
   imgPacks: ImgPacks_Browser;
 }
@@ -89,6 +91,20 @@ export type NormalizedTexts = {
   name: string | null;
   totalLevel: TotalLevel | null;
 };
+
+export type LogDetail =
+  | {
+      isValibotError: true;
+      action: "valibot safeParse";
+      flatError: v.FlatErrors<v.GenericSchema>;
+    }
+  | {
+      isValibotError: false;
+      action: string;
+      input: string;
+      output: string | null;
+      param?: string;
+    };
 
 export const OcrTextSchema = v.object(
   v.entriesFromList(IMG_PACK_LABELS, v.string()),
@@ -112,28 +128,87 @@ export const NormalizeInputSchema = v.object({
 });
 export type NormalizeInput = v.InferOutput<typeof NormalizeInputSchema>;
 
-export const PreProcessSchema = (logic: (input: PreInput) => PreInput) =>
-  v.transform(logic);
+export type PreProcessLogic = (input: PreInput) => {
+  action: string;
+  output: OcrText;
+  param?: string;
+};
+
+export const PreProcessSchema = (logic: PreProcessLogic, log: LogDetail[]) =>
+  v.pipe(
+    PreInputSchema,
+    v.transform((input: PreInput) => {
+      const result = logic(input);
+      log.push({
+        ...result,
+        isValibotError: false,
+        input: JSON.stringify(input.ocrText),
+        output: JSON.stringify(result.output),
+      });
+      return { ...input, ocrText: result.output };
+    }),
+  );
+
+export type SelectProcessLogic = (input: SelectInput) => {
+  action: string;
+  output: string | null;
+  param?: string;
+};
 
 export const SelectProcessSchema = (
-  logic: (input: SelectInput) => SelectInput,
-) => v.transform(logic);
+  logic: SelectProcessLogic,
+  log: LogDetail[],
+) =>
+  v.pipe(
+    SelectInputSchema,
+    v.transform((input: SelectInput) => {
+      const result = logic(input);
+      log.push({
+        ...result,
+        isValibotError: false,
+        input: JSON.stringify(input.ocrText),
+        output: result.output,
+      });
+      if (result.output !== null) {
+        return { ...input, selectedText: result.output };
+      } else {
+        return input;
+      }
+    }),
+  );
+
+export type NormalizeProcessLogic = (input: NormalizeInput) => {
+  action: string;
+  output: string;
+  param?: string;
+};
 
 export const NormalizeProcessSchema = (
-  logic: (input: NormalizeInput) => NormalizeInput,
-) => v.transform(logic);
+  logic: NormalizeProcessLogic,
+  log: LogDetail[],
+) =>
+  v.pipe(
+    NormalizeInputSchema,
+    v.transform((input: NormalizeInput) => {
+      const result = logic(input);
+      log.push({
+        ...result,
+        isValibotError: false,
+        input: input.normalizedText,
+        output: result.output,
+      });
+      return { ...input, normalizedText: result.output };
+    }),
+  );
 
-export const PreOutputSchema = v.pipe(
+export const ToSelectInputSchema = v.pipe(
   PreInputSchema,
   v.transform((input) => ({ ...input, selectedText: null })),
   SelectInputSchema,
 );
 
-export const SelectOutputSchema = v.pipe(
-  v.object({
-    ocrText: OcrTextSchema,
-    selectedText: v.string(),
-  }),
+export const ToNormalizeInputSchema = v.pipe(
+  SelectInputSchema,
   v.transform((input) => ({
     ...input,
     normalizedText: input.selectedText,
@@ -141,17 +216,8 @@ export const SelectOutputSchema = v.pipe(
   NormalizeInputSchema,
 );
 
-export const NormalizeOutputSchema = v.pipe(
+export const ToStringSchema = v.pipe(
   NormalizeInputSchema,
   v.transform((input) => input.normalizedText),
   v.string(),
 );
-
-export type NormalizeLog = Record<NormalizedTextsLabel, LogDetail[]>;
-
-export interface LogDetail {
-  input: string;
-  output: string;
-  action: string;
-  param?: unknown;
-}

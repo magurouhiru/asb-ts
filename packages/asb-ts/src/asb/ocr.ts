@@ -15,9 +15,8 @@ import {
   type LogDetail,
   type NormalizedTexts,
   type NormalizeInput,
-  NormalizeInputSchema,
   type NormalizeLog,
-  NormalizeOutputSchema,
+  type NormalizeProcessLogic,
   NormalizeProcessSchema,
   OCR_LABELS,
   OCR_STAT_NAME_LABELS,
@@ -27,15 +26,16 @@ import {
   type OcrText,
   type OcrTexts,
   type PreInput,
-  PreInputSchema,
-  PreOutputSchema,
+  type PreProcessLogic,
   PreProcessSchema,
   type Region,
   type Regions,
   type SelectInput,
-  SelectInputSchema,
-  SelectOutputSchema,
+  type SelectProcessLogic,
   SelectProcessSchema,
+  ToNormalizeInputSchema,
+  ToSelectInputSchema,
+  ToStringSchema,
   TotalLevelSchema,
 } from "./types/index.js";
 
@@ -333,109 +333,115 @@ export function getNormalizedTexts(ocrTexts: OcrTexts): {
   normalizedTexts: NormalizedTexts;
   logs: NormalizeLog;
 } {
-  const logs: NormalizeLog = { name: [], totalLevel: [] };
-  const name = getNormalizedTextName(ocrTexts, logs.name);
-  const totalLevel = getNormalizedTextTotalLevel(ocrTexts, logs.totalLevel);
+  const name = getNormalizedTextName(ocrTexts, []);
+  const totalLevel = getNormalizedTextTotalLevel(ocrTexts, []);
   return {
     normalizedTexts: {
-      name,
-      totalLevel,
+      name: name.result,
+      totalLevel: totalLevel.result,
     },
-    logs,
+    logs: {
+      name: name.log,
+      totalLevel: totalLevel.log,
+    },
   };
 }
 
 function getNormalizedTextName(
   ocrTexts: OcrTexts,
-  _log: LogDetail[],
-): string | null {
+  log: LogDetail[],
+): { log: LogDetail[]; result: NormalizedTexts["name"] } {
   const ocrText = ocrTexts.name;
   const result = v.safeParse(
     v.pipe(
-      PreInputSchema,
-      PreProcessSchema(preRemoveSpace),
-      PreOutputSchema,
-      SelectInputSchema,
-      SelectProcessSchema(selectIfSameString),
-      SelectProcessSchema(selectFallback),
-      SelectOutputSchema,
-      NormalizeInputSchema,
-      NormalizeOutputSchema,
+      PreProcessSchema(preRemoveSpace, log),
+      ToSelectInputSchema,
+      SelectProcessSchema(selectIfSameString, log),
+      SelectProcessSchema(selectFallback, log),
+      ToNormalizeInputSchema,
+      ToStringSchema,
     ),
     { ocrText },
   );
   if (result.success) {
-    return result.output;
+    return { log, result: result.output };
   } else {
-    return null;
+    return { log, result: null };
   }
 }
 
 function getNormalizedTextTotalLevel(
   ocrTexts: OcrTexts,
-  _log: LogDetail[],
-): NormalizedTexts["totalLevel"] {
+  log: LogDetail[],
+): { log: LogDetail[]; result: NormalizedTexts["totalLevel"] } {
   const ocrText = ocrTexts.level;
   const result = v.safeParse(
     v.pipe(
-      PreInputSchema,
-      PreProcessSchema(preRemoveSpace),
-      PreOutputSchema,
-      SelectInputSchema,
-      SelectProcessSchema(selectIfSameString),
-      SelectProcessSchema(selectTextIfMatchTotalLevelRegExp),
-      SelectProcessSchema(selectFallback),
-      SelectOutputSchema,
-      NormalizeInputSchema,
-      NormalizeProcessSchema(normalizeRemoveLevel),
-      NormalizeOutputSchema,
+      PreProcessSchema(preRemoveSpace, log),
+      ToSelectInputSchema,
+      SelectProcessSchema(selectIfSameString, log),
+      SelectProcessSchema(selectTextIfMatchTotalLevelRegExp, log),
+      SelectProcessSchema(selectFallback, log),
+      ToNormalizeInputSchema,
+      NormalizeProcessSchema(normalizeRemoveLevel, log),
+      ToStringSchema,
+      v.nonEmpty(),
       v.toNumber(),
       TotalLevelSchema,
     ),
-    { ocrText },
+    { log, ocrText },
   );
   if (result.success) {
-    return result.output;
+    return { log, result: result.output };
   } else {
-    return null;
+    const flatError = v.flatten(result.issues);
+    log.push({
+      isValibotError: true,
+      action: "valibot safeParse",
+      flatError,
+    });
+    return { log, result: null };
   }
 }
 
-const preRemoveSpace = ({
+const preRemoveSpace: PreProcessLogic = ({
   ocrText: { original, grayscale, binary },
-}: PreInput): PreInput => ({
-  ocrText: {
+}: PreInput) => ({
+  action: "preRemoveSpace",
+  output: {
     original: removeStringCore(original, spaceString),
     grayscale: removeStringCore(grayscale, spaceString),
     binary: removeStringCore(binary, spaceString),
   },
+  param: spaceString,
 });
 
-const selectIfSameString = (input: SelectInput): SelectInput => {
+const selectIfSameString: SelectProcessLogic = (input: SelectInput) => {
   const { original, grayscale, binary } = input.ocrText;
-  let selectedText = null;
+  let output = null;
   if (original === grayscale && original === binary) {
-    selectedText = original;
+    output = original;
   } else if (original === grayscale) {
-    selectedText = original;
+    output = original;
   } else if (grayscale === binary) {
-    selectedText = grayscale;
+    output = grayscale;
   } else if (binary === original) {
-    selectedText = binary;
+    output = binary;
   } else {
-    selectedText = null;
+    output = null;
   }
 
-  return { ...input, selectedText };
+  return { action: "selectIfSameString", output: output };
 };
 
 const totalLevelRegExp = /レベル:\d{1,3}/;
 
-const selectTextIfMatchTotalLevelRegExp = (
+const selectTextIfMatchTotalLevelRegExp: SelectProcessLogic = (
   input: SelectInput,
-): SelectInput => ({
-  ...input,
-  selectedText: selectTextIfMatchCore(input, totalLevelRegExp),
+) => ({
+  action: "selectTextIfMatchTotalLevelRegExp",
+  output: selectTextIfMatchCore(input, totalLevelRegExp),
+  param: totalLevelRegExp.source,
 });
 
 function selectTextIfMatchCore(
@@ -458,14 +464,17 @@ function selectTextIfMatchCore(
   }
 }
 
-const selectFallback = (input: SelectInput): SelectInput => ({
-  ...input,
-  selectedText: input.ocrText.original,
+const selectFallback: SelectProcessLogic = (input: SelectInput) => ({
+  action: "selectFallback",
+  output: input.ocrText.original,
 });
 
-const normalizeRemoveLevel = (input: NormalizeInput): NormalizeInput => ({
-  ...input,
-  normalizedText: removeStringCore(input.normalizedText, levelWhiteListString),
+const normalizeRemoveLevel: NormalizeProcessLogic = (
+  input: NormalizeInput,
+) => ({
+  action: "normalizeRemoveLevel",
+  output: removeStringCore(input.normalizedText, levelWhiteListString),
+  param: levelWhiteListString,
 });
 
 const spaceString = " 　";
