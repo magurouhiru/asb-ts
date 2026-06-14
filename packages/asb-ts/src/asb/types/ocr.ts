@@ -1,5 +1,27 @@
 import * as v from "valibot";
 import type { TotalLevel } from "./calculator.js";
+import { StatsNames } from "./stats-name.js";
+
+export const DISPLAY_STAT_NAME_LIST = [...StatsNames, "imprinting"] as const;
+export type DisplayStatName = (typeof DISPLAY_STAT_NAME_LIST)[number];
+
+export const DISPLAY_STAT_NAME_DICT: Record<DisplayStatName, string[]> = {
+  health: ["体力"],
+  stamina: ["スタミナ"],
+  oxygen: ["酸素量"],
+  food: ["食料"],
+
+  water: [],
+  temperature: [],
+  weight: ["重量"],
+  meleeDamageMultiplier: ["近接攻撃力"],
+
+  speedMultiplier: [],
+  temperatureFortitude: [],
+  craftingSpeedMultiplier: [],
+  torpidity: ["気絶値"],
+  imprinting: ["刷り込み中"],
+} as const;
 
 export const DEFAULT_REGIONS_OPTION = {
   ymNL: 0.17,
@@ -84,12 +106,28 @@ export type ImgPack_Browser = Record<ImgPackLabel, HTMLCanvasElement>;
 export type OcrTexts = Record<OcrLabel, OcrText>;
 export type OcrText = Record<ImgPackLabel, string>;
 
-export const NORMALIZED_TEXTS_LABELS = ["name", "totalLevel"] as const;
+export const NORMALIZED_TEXTS_LABELS = [
+  "name",
+  "totalLevel",
+  ...OCR_STAT_NAME_LABELS,
+] as const;
 export type NormalizedTextsLabel = (typeof NORMALIZED_TEXTS_LABELS)[number];
 
 export type NormalizedTexts = {
   name: string | null;
   totalLevel: TotalLevel | null;
+
+  stat_name_0: string | null;
+  stat_name_1: string | null;
+  stat_name_2: string | null;
+  stat_name_3: string | null;
+  stat_name_4: string | null;
+
+  stat_name_5: string | null;
+  stat_name_6: string | null;
+  stat_name_7: string | null;
+  stat_name_8: string | null;
+  stat_name_9: string | null;
 };
 
 export type LogDetail =

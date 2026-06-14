@@ -211,11 +211,10 @@ function OcrComponent() {
                 <div>
                   {Object.entries(readOutput.logs[ntl]).map(([ml, v]) => (
                     <div key={ml}>
-                      {ml}| action: {v.action}
+                      {`${ml}| action: ${v.action}, `}
                       {v.isValibotError
-                        ? `flatError: ${JSON.stringify(v.flatError)}`
-                        : `output: ${JSON.stringify(v.output)}${v.param ?? ` param: ${JSON.stringify(v.param)}`}`}
-                      ,
+                        ? `flatError: ${JSON.stringify(v.flatError, null, 2)}`
+                        : `output: ${JSON.stringify(v.output, null, 2)}${v.param !== undefined ? ` param: ${JSON.stringify(v.param, null, 2)}` : ""}`}
                     </div>
                   ))}
                 </div>

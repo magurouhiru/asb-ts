@@ -10,6 +10,7 @@ import {
 } from "tesseract.js";
 import * as v from "valibot";
 import {
+  DISPLAY_STAT_NAME_DICT,
   IMG_PACK_LABELS,
   type ImgPacks_Browser,
   type LogDetail,
@@ -23,6 +24,7 @@ import {
   OCR_STAT_VALUE_LABELS,
   type OcrCommonLabel,
   type OcrLabel,
+  type OcrStatNameLabel,
   type OcrText,
   type OcrTexts,
   type PreInput,
@@ -272,10 +274,11 @@ const levelParams: Partial<WorkerParams> = {
   tessedit_char_whitelist: levelWhiteListString + whiteListNumber,
 } as const;
 
+const displayStatNameList = Object.values(DISPLAY_STAT_NAME_DICT).flat();
+const statNameWWhiteListString = displayStatNameList.join("");
 const statNameParams: Partial<WorkerParams> = {
   ...defaultParams,
-  tessedit_char_whitelist:
-    "体力スタミナ酸素量食料重量近接攻撃力気絶値刷り込み中",
+  tessedit_char_whitelist: statNameWWhiteListString,
 } as const;
 
 const statValueWhiteListString = "./%" as const;
@@ -333,25 +336,56 @@ export function getNormalizedTexts(ocrTexts: OcrTexts): {
   normalizedTexts: NormalizedTexts;
   logs: NormalizeLog;
 } {
-  const name = getNormalizedTextName(ocrTexts, []);
-  const totalLevel = getNormalizedTextTotalLevel(ocrTexts, []);
+  const name = getNormalizedTextName(ocrTexts.name, []);
+  const totalLevel = getNormalizedTextTotalLevel(ocrTexts.level, []);
+
+  const stat_name_obj = Object.fromEntries(
+    OCR_STAT_NAME_LABELS.map((label) => [
+      label,
+      getNormalizedTextStatName(ocrTexts[label], []),
+    ]),
+  ) as Record<OcrStatNameLabel, { log: LogDetail[]; result: string | null }>;
+
   return {
     normalizedTexts: {
       name: name.result,
       totalLevel: totalLevel.result,
+
+      stat_name_0: stat_name_obj.stat_name_0.result,
+      stat_name_1: stat_name_obj.stat_name_1.result,
+      stat_name_2: stat_name_obj.stat_name_2.result,
+      stat_name_3: stat_name_obj.stat_name_3.result,
+      stat_name_4: stat_name_obj.stat_name_4.result,
+
+      stat_name_5: stat_name_obj.stat_name_5.result,
+      stat_name_6: stat_name_obj.stat_name_6.result,
+      stat_name_7: stat_name_obj.stat_name_7.result,
+      stat_name_8: stat_name_obj.stat_name_8.result,
+      stat_name_9: stat_name_obj.stat_name_9.result,
     },
     logs: {
       name: name.log,
       totalLevel: totalLevel.log,
+
+      stat_name_0: stat_name_obj.stat_name_0.log,
+      stat_name_1: stat_name_obj.stat_name_1.log,
+      stat_name_2: stat_name_obj.stat_name_2.log,
+      stat_name_3: stat_name_obj.stat_name_3.log,
+      stat_name_4: stat_name_obj.stat_name_4.log,
+
+      stat_name_5: stat_name_obj.stat_name_5.log,
+      stat_name_6: stat_name_obj.stat_name_6.log,
+      stat_name_7: stat_name_obj.stat_name_7.log,
+      stat_name_8: stat_name_obj.stat_name_8.log,
+      stat_name_9: stat_name_obj.stat_name_9.log,
     },
   };
 }
 
 function getNormalizedTextName(
-  ocrTexts: OcrTexts,
+  ocrText: OcrText,
   log: LogDetail[],
 ): { log: LogDetail[]; result: NormalizedTexts["name"] } {
-  const ocrText = ocrTexts.name;
   const result = v.safeParse(
     v.pipe(
       PreProcessSchema(preRemoveSpace, log),
@@ -366,22 +400,25 @@ function getNormalizedTextName(
   if (result.success) {
     return { log, result: result.output };
   } else {
+    const flatError = v.flatten(result.issues);
+    log.push({
+      isValibotError: true,
+      action: "valibot safeParse",
+      flatError,
+    });
     return { log, result: null };
   }
 }
 
 function getNormalizedTextTotalLevel(
-  ocrTexts: OcrTexts,
+  ocrText: OcrText,
   log: LogDetail[],
 ): { log: LogDetail[]; result: NormalizedTexts["totalLevel"] } {
-  const ocrText = ocrTexts.level;
   const result = v.safeParse(
     v.pipe(
       PreProcessSchema(preRemoveSpace, log),
       ToSelectInputSchema,
-      SelectProcessSchema(selectIfSameString, log),
       SelectProcessSchema(selectTextIfMatchTotalLevelRegExp, log),
-      SelectProcessSchema(selectFallback, log),
       ToNormalizeInputSchema,
       NormalizeProcessSchema(normalizeRemoveLevel, log),
       ToStringSchema,
@@ -390,6 +427,33 @@ function getNormalizedTextTotalLevel(
       TotalLevelSchema,
     ),
     { log, ocrText },
+  );
+  if (result.success) {
+    return { log, result: result.output };
+  } else {
+    const flatError = v.flatten(result.issues);
+    log.push({
+      isValibotError: true,
+      action: "valibot safeParse",
+      flatError,
+    });
+    return { log, result: null };
+  }
+}
+
+function getNormalizedTextStatName(
+  ocrText: OcrText,
+  log: LogDetail[],
+): { log: LogDetail[]; result: string | null } {
+  const result = v.safeParse(
+    v.pipe(
+      PreProcessSchema(preRemoveSpace, log),
+      ToSelectInputSchema,
+      SelectProcessSchema(selectTextIfExactMatchStatName, log),
+      ToNormalizeInputSchema,
+      ToStringSchema,
+    ),
+    { ocrText },
   );
   if (result.success) {
     return { log, result: result.output };
@@ -463,6 +527,19 @@ function selectTextIfMatchCore(
     return null;
   }
 }
+
+const selectTextIfExactMatchStatName: SelectProcessLogic = (
+  input: SelectInput,
+) => {
+  const found = IMG_PACK_LABELS.map((label) =>
+    displayStatNameList.find((name) => input.ocrText[label] === name),
+  ).filter((v) => v !== undefined)[0];
+  return {
+    action: "selectTextIfExactMatchStatName",
+    output: found !== undefined ? found : null,
+    param: JSON.stringify(displayStatNameList),
+  };
+};
 
 const selectFallback: SelectProcessLogic = (input: SelectInput) => ({
   action: "selectFallback",
