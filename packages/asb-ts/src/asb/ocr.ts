@@ -14,7 +14,11 @@ import {
   type ImgPacks_Browser,
   type LogDetail,
   type NormalizedTexts,
+  type NormalizeInput,
+  NormalizeInputSchema,
   type NormalizeLog,
+  NormalizeOutputSchema,
+  NormalizeProcessSchema,
   OCR_LABELS,
   OCR_STAT_NAME_LABELS,
   OCR_STAT_VALUE_LABELS,
@@ -22,8 +26,16 @@ import {
   type OcrLabel,
   type OcrText,
   type OcrTexts,
+  type PreInput,
+  PreInputSchema,
+  PreOutputSchema,
+  PreProcessSchema,
   type Region,
   type Regions,
+  type SelectInput,
+  SelectInputSchema,
+  SelectOutputSchema,
+  SelectProcessSchema,
   TotalLevelSchema,
 } from "./types/index.js";
 
@@ -333,171 +345,130 @@ export function getNormalizedTexts(ocrTexts: OcrTexts): {
   };
 }
 
-function withLog<
-  A extends { input: string; param?: B } | { input: OcrText; param?: B },
-  B,
-  T,
-  Key extends string,
->(obj: { [K in Key]: (arg: A) => T }, args: A, log: LogDetail[]): T {
-  const first = Object.entries(obj)[0];
-  if (!first) throw new Error("なんか変");
-  const [action, f] = first;
-  const output = (f as (arg: A) => T)(args);
-  log.push(
-    args.param === undefined
-      ? {
-          input: JSON.stringify(args.input),
-          output: JSON.stringify(output),
-          action,
-        }
-      : {
-          input: JSON.stringify(args.input),
-          output: JSON.stringify(output),
-          action,
-          param: JSON.stringify(args.param),
-        },
-  );
-  return output;
-}
-
-function getNormalizedTextName(ocrTexts: OcrTexts, log: LogDetail[]): string {
+function getNormalizedTextName(
+  ocrTexts: OcrTexts,
+  _log: LogDetail[],
+): string | null {
   const ocrText = ocrTexts.name;
-  const normalizedOcrText = withLog(
-    { normalizeAllRemoveString },
-    { input: ocrText, param: spaceString },
-    log,
+  const result = v.safeParse(
+    v.pipe(
+      PreInputSchema,
+      PreProcessSchema(preRemoveSpace),
+      PreOutputSchema,
+      SelectInputSchema,
+      SelectProcessSchema(selectIfSameString),
+      SelectProcessSchema(selectFallback),
+      SelectOutputSchema,
+      NormalizeInputSchema,
+      NormalizeOutputSchema,
+    ),
+    { ocrText },
   );
-  let selected = withLog(
-    { selectIfSameString },
-    { input: normalizedOcrText },
-    log,
-  );
-  if (!selected) {
-    selected = withLog({ selectFallback }, { input: normalizedOcrText }, log);
+  if (result.success) {
+    return result.output;
+  } else {
+    return null;
   }
-  return selected;
 }
 
 function getNormalizedTextTotalLevel(
   ocrTexts: OcrTexts,
-  log: LogDetail[],
+  _log: LogDetail[],
 ): NormalizedTexts["totalLevel"] {
   const ocrText = ocrTexts.level;
-  const normalizedOcrText = withLog(
-    { normalizeAllRemoveString },
-    { input: ocrText, param: spaceString },
-    log,
+  const result = v.safeParse(
+    v.pipe(
+      PreInputSchema,
+      PreProcessSchema(preRemoveSpace),
+      PreOutputSchema,
+      SelectInputSchema,
+      SelectProcessSchema(selectIfSameString),
+      SelectProcessSchema(selectTextIfMatchTotalLevelRegExp),
+      SelectProcessSchema(selectFallback),
+      SelectOutputSchema,
+      NormalizeInputSchema,
+      NormalizeProcessSchema(normalizeRemoveLevel),
+      NormalizeOutputSchema,
+      v.toNumber(),
+      TotalLevelSchema,
+    ),
+    { ocrText },
   );
-  let selected = withLog(
-    { selectIfSameString },
-    { input: normalizedOcrText },
-    log,
-  );
-  if (!selected) {
-    const tmp = withLog(
-      { selectTextIfMatch },
-      { input: normalizedOcrText, param: totalLevelRegExp },
-      log,
-    );
-    if (tmp) selected = tmp;
-  }
-  if (!selected) {
-    selected = withLog({ selectFallback }, { input: normalizedOcrText }, log);
-  }
-  const normalized = withLog(
-    { normalizeRemoveString },
-    { input: selected, param: levelWhiteListString },
-    log,
-  );
-  const parsed = v.safeParse(
-    v.pipe(v.string(), v.toNumber(), TotalLevelSchema),
-    normalized,
-  );
-  if (parsed.success) {
-    return parsed.output;
-  } else {
-    return withLog(
-      { normalizeFallbackNull },
-      { input: normalized, param: v.flatten(parsed.issues) },
-      log,
-    );
-  }
-}
-
-const spaceString = " 　";
-
-function normalizeAllRemoveString({
-  input: { original, grayscale, binary },
-  param,
-}: {
-  input: OcrText;
-  param: string;
-}) {
-  return {
-    original: normalizeRemoveString({ input: original, param }),
-    grayscale: normalizeRemoveString({ input: grayscale, param }),
-    binary: normalizeRemoveString({ input: binary, param }),
-  };
-}
-
-function normalizeRemoveString({
-  input,
-  param,
-}: {
-  input: string;
-  param: string;
-}): string {
-  return Array.from(param).reduce((acc, v) => acc.replaceAll(v, ""), input);
-}
-
-function normalizeFallbackNull(_: {
-  input: string; // エラー記録よう
-  param: v.FlatErrors<v.GenericSchema>; // エラー記録よう
-}): null {
-  return null;
-}
-
-function selectFallback({ input: { original } }: { input: OcrText }): string {
-  return original;
-}
-
-function selectIfSameString({
-  input: { original, grayscale, binary },
-}: {
-  input: OcrText;
-}): string | null {
-  if (original === grayscale && original === binary) {
-    return original;
-  } else if (original === grayscale) {
-    return original;
-  } else if (grayscale === binary) {
-    return grayscale;
-  } else if (binary === original) {
-    return binary;
+  if (result.success) {
+    return result.output;
   } else {
     return null;
   }
 }
 
+const preRemoveSpace = ({
+  ocrText: { original, grayscale, binary },
+}: PreInput): PreInput => ({
+  ocrText: {
+    original: removeStringCore(original, spaceString),
+    grayscale: removeStringCore(grayscale, spaceString),
+    binary: removeStringCore(binary, spaceString),
+  },
+});
+
+const selectIfSameString = (input: SelectInput): SelectInput => {
+  const { original, grayscale, binary } = input.ocrText;
+  let selectedText = null;
+  if (original === grayscale && original === binary) {
+    selectedText = original;
+  } else if (original === grayscale) {
+    selectedText = original;
+  } else if (grayscale === binary) {
+    selectedText = grayscale;
+  } else if (binary === original) {
+    selectedText = binary;
+  } else {
+    selectedText = null;
+  }
+
+  return { ...input, selectedText };
+};
+
 const totalLevelRegExp = /レベル:\d{1,3}/;
 
-function selectTextIfMatch({
-  input,
-  param,
-}: {
-  input: OcrText;
-  param: RegExp;
-}): string | null {
-  const matchList = IMG_PACK_LABELS.filter((label) => param.test(input[label]));
+const selectTextIfMatchTotalLevelRegExp = (
+  input: SelectInput,
+): SelectInput => ({
+  ...input,
+  selectedText: selectTextIfMatchCore(input, totalLevelRegExp),
+});
+
+function selectTextIfMatchCore(
+  { ocrText }: SelectInput,
+  target: RegExp,
+): string | null {
+  const matchList = IMG_PACK_LABELS.filter((label) =>
+    target.test(ocrText[label]),
+  );
   if (matchList.length > 0) {
     if (matchList.includes("original")) {
-      return input.original;
+      return ocrText.original;
     } else if (matchList.includes("grayscale")) {
-      return input.grayscale;
+      return ocrText.grayscale;
     } else {
-      return input.binary;
+      return ocrText.binary;
     }
   } else {
     return null;
   }
+}
+
+const selectFallback = (input: SelectInput): SelectInput => ({
+  ...input,
+  selectedText: input.ocrText.original,
+});
+
+const normalizeRemoveLevel = (input: NormalizeInput): NormalizeInput => ({
+  ...input,
+  normalizedText: removeStringCore(input.normalizedText, levelWhiteListString),
+});
+
+const spaceString = " 　";
+function removeStringCore(input: string, param: string): string {
+  return Array.from(param).reduce((acc, v) => acc.replaceAll(v, ""), input);
 }

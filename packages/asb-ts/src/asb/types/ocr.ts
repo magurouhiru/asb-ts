@@ -1,3 +1,4 @@
+import * as v from "valibot";
 import type { TotalLevel } from "./calculator.js";
 
 export const DEFAULT_REGIONS_OPTION = {
@@ -85,9 +86,66 @@ export const NORMALIZED_TEXTS_LABELS = ["name", "totalLevel"] as const;
 export type NormalizedTextsLabel = (typeof NORMALIZED_TEXTS_LABELS)[number];
 
 export type NormalizedTexts = {
-  name: string;
+  name: string | null;
   totalLevel: TotalLevel | null;
 };
+
+export const OcrTextSchema = v.object(
+  v.entriesFromList(IMG_PACK_LABELS, v.string()),
+);
+
+export const PreInputSchema = v.object({
+  ocrText: OcrTextSchema,
+});
+export type PreInput = v.InferOutput<typeof PreInputSchema>;
+
+export const SelectInputSchema = v.object({
+  ocrText: OcrTextSchema,
+  selectedText: v.nullable(v.string()),
+});
+export type SelectInput = v.InferOutput<typeof SelectInputSchema>;
+
+export const NormalizeInputSchema = v.object({
+  ocrText: OcrTextSchema,
+  selectedText: v.string(),
+  normalizedText: v.string(),
+});
+export type NormalizeInput = v.InferOutput<typeof NormalizeInputSchema>;
+
+export const PreProcessSchema = (logic: (input: PreInput) => PreInput) =>
+  v.transform(logic);
+
+export const SelectProcessSchema = (
+  logic: (input: SelectInput) => SelectInput,
+) => v.transform(logic);
+
+export const NormalizeProcessSchema = (
+  logic: (input: NormalizeInput) => NormalizeInput,
+) => v.transform(logic);
+
+export const PreOutputSchema = v.pipe(
+  PreInputSchema,
+  v.transform((input) => ({ ...input, selectedText: null })),
+  SelectInputSchema,
+);
+
+export const SelectOutputSchema = v.pipe(
+  v.object({
+    ocrText: OcrTextSchema,
+    selectedText: v.string(),
+  }),
+  v.transform((input) => ({
+    ...input,
+    normalizedText: input.selectedText,
+  })),
+  NormalizeInputSchema,
+);
+
+export const NormalizeOutputSchema = v.pipe(
+  NormalizeInputSchema,
+  v.transform((input) => input.normalizedText),
+  v.string(),
+);
 
 export type NormalizeLog = Record<NormalizedTextsLabel, LogDetail[]>;
 
