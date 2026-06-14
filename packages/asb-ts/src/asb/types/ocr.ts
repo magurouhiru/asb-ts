@@ -117,17 +117,17 @@ export type NormalizedTexts = {
   name: string | null;
   totalLevel: TotalLevel | null;
 
-  stat_name_0: string | null;
-  stat_name_1: string | null;
-  stat_name_2: string | null;
-  stat_name_3: string | null;
-  stat_name_4: string | null;
+  stat_name_0: DisplayStatName | null;
+  stat_name_1: DisplayStatName | null;
+  stat_name_2: DisplayStatName | null;
+  stat_name_3: DisplayStatName | null;
+  stat_name_4: DisplayStatName | null;
 
-  stat_name_5: string | null;
-  stat_name_6: string | null;
-  stat_name_7: string | null;
-  stat_name_8: string | null;
-  stat_name_9: string | null;
+  stat_name_5: DisplayStatName | null;
+  stat_name_6: DisplayStatName | null;
+  stat_name_7: DisplayStatName | null;
+  stat_name_8: DisplayStatName | null;
+  stat_name_9: DisplayStatName | null;
 };
 
 export type LogDetail =

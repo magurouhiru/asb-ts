@@ -11,6 +11,8 @@ import {
 import * as v from "valibot";
 import {
   DISPLAY_STAT_NAME_DICT,
+  DISPLAY_STAT_NAME_LIST,
+  type DisplayStatName,
   IMG_PACK_LABELS,
   type ImgPacks_Browser,
   type LogDetail,
@@ -45,10 +47,15 @@ const Status = ["Not initialized", "Suspended", "Running"] as const;
 export type OcrQueueManagerStatus = (typeof Status)[number];
 
 export class OcrQueueManager {
-  private queue: Promise<string> = Promise.resolve("");
+  private queue: Promise<string>[] = [
+    Promise.resolve(""),
+    Promise.resolve(""),
+    Promise.resolve(""),
+    Promise.resolve(""),
+  ];
 
   // 💡 初期化処理そのものを Promise として保持し、重複実行を防ぐ
-  private initPromise: Promise<Worker> | null = null;
+  private initPromise: Promise<Worker>[] | null = null;
 
   private status: OcrQueueManagerStatus = "Not initialized";
   private requestCnt = 0;
@@ -63,11 +70,14 @@ export class OcrQueueManager {
   private langs: string | string[] | Lang[] = ["jpn"];
   private oem: OEM = OEM.LSTM_ONLY;
   private options: Partial<WorkerOptions> = {};
+  private maxNumberOfWorker = this.queue.length;
+  private numberOfWorker = 2;
 
   constructor(
     langs: string | string[] | Lang[] = ["jpn"],
     oem: OEM = OEM.LSTM_ONLY,
     options: Partial<WorkerOptions> = {},
+    numberOfWorker = 2,
     callBack?: (
       status: OcrQueueManagerStatus,
       requestCnt: number,
@@ -77,25 +87,27 @@ export class OcrQueueManager {
     this.langs = langs;
     this.oem = oem;
     this.options = options;
+    this.numberOfWorker = Math.min(numberOfWorker, this.maxNumberOfWorker);
     if (callBack) this.callBack = callBack;
   }
 
   /**
    * 💡 内部専用の初期化関数（外部から呼ぶ必要はありません）
    */
-  private ensureInitialized(): Promise<Worker> {
+  private ensureInitialized(): Promise<Worker>[] {
     // すでに初期化中、または初期化済みの場合はその Promise をそのまま返す
     if (this.initPromise) {
       return this.initPromise;
     }
 
+    const array = Array.from({ length: this.numberOfWorker }, (_, i) => i);
     // 最初の1回目だけ、新しく初期化の Promise を作成して保持する
-    this.initPromise = createWorker(this.langs, this.oem, this.options).then(
-      (worker) => {
+    this.initPromise = array.map(() =>
+      createWorker(this.langs, this.oem, this.options).then((worker) => {
         if (this.callBack)
           this.callBack(this.status, this.requestCnt, this.completeCnt);
         return worker;
-      },
+      }),
     );
 
     return this.initPromise;
@@ -109,15 +121,17 @@ export class OcrQueueManager {
     params: Partial<WorkerParams>,
   ): Promise<string> {
     this.requestCnt = this.requestCnt + 1;
+    const index = this.requestCnt % this.numberOfWorker;
+
     // 列の最後尾に自分を並ばせる
     // 毎回paramsを変えたいので、数珠つなぎにして、順番が変にならないようにする
-    this.queue = this.queue
+    this.queue[index] = (this.queue[index] as Promise<string>)
       .then(() => {
         this.status = "Running";
         if (this.callBack)
           this.callBack(this.status, this.requestCnt, this.completeCnt);
       })
-      .then(() => this.ensureInitialized())
+      .then(() => this.ensureInitialized()[index] as Promise<Worker>)
       .then((worker) => this.executeOcr(worker, img, params))
       .then((text) => {
         this.status = "Suspended";
@@ -130,7 +144,7 @@ export class OcrQueueManager {
         throw error;
       });
 
-    return this.queue;
+    return this.queue[index];
   }
 
   // 実際にOCRを処理する内部関数
@@ -147,8 +161,11 @@ export class OcrQueueManager {
   // アプリ終了時などに明示的に破棄したい場合のみ使用
   async terminate() {
     if (this.initPromise) {
-      const worker = await this.initPromise;
-      await worker.terminate();
+      const worker = this.initPromise;
+      worker.forEach(async (w) => {
+        const ww = await w;
+        ww.terminate;
+      });
       this.initPromise = null;
     }
   }
@@ -344,7 +361,10 @@ export function getNormalizedTexts(ocrTexts: OcrTexts): {
       label,
       getNormalizedTextStatName(ocrTexts[label], []),
     ]),
-  ) as Record<OcrStatNameLabel, { log: LogDetail[]; result: string | null }>;
+  ) as Record<
+    OcrStatNameLabel,
+    { log: LogDetail[]; result: DisplayStatName | null }
+  >;
 
   return {
     normalizedTexts: {
@@ -444,14 +464,22 @@ function getNormalizedTextTotalLevel(
 function getNormalizedTextStatName(
   ocrText: OcrText,
   log: LogDetail[],
-): { log: LogDetail[]; result: string | null } {
+): { log: LogDetail[]; result: DisplayStatName | null } {
   const result = v.safeParse(
     v.pipe(
       PreProcessSchema(preRemoveSpace, log),
       ToSelectInputSchema,
+      SelectProcessSchema(selectTextIfPpartialMatchStatName, log),
       SelectProcessSchema(selectTextIfExactMatchStatName, log),
       ToNormalizeInputSchema,
       ToStringSchema,
+      v.transform(
+        (input) =>
+          Object.entries(DISPLAY_STAT_NAME_DICT).find(([, displayNames]) =>
+            displayNames.includes(input),
+          )?.[0],
+      ),
+      v.picklist(DISPLAY_STAT_NAME_LIST),
     ),
     { ocrText },
   );
@@ -527,6 +555,32 @@ function selectTextIfMatchCore(
     return null;
   }
 }
+
+// 主に刷り込み中向けの処理(り込み中見たくなる)
+// ターゲットの半分以上の数の文字を検出している　かつ
+// 検出した文字がすべて正しい時だけOK
+const selectTextIfPpartialMatchStatName: SelectProcessLogic = (
+  input: SelectInput,
+) => {
+  const found = IMG_PACK_LABELS.map((label) =>
+    displayStatNameList
+      .filter((name) => name.length > 2)
+      .find((name) => {
+        const text = input.ocrText[label];
+        if (name.length / 2 < text.length && text.length <= name.length) {
+          if (Array.from(text).every((c) => name.includes(c))) {
+            return true;
+          }
+        }
+        return false;
+      }),
+  ).filter((v) => v !== undefined)[0];
+
+  return {
+    action: "selectTextIfPpartialMatchStatName",
+    output: found !== undefined ? found : null,
+  };
+};
 
 const selectTextIfExactMatchStatName: SelectProcessLogic = (
   input: SelectInput,
