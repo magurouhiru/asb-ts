@@ -1,5 +1,5 @@
-import * as v from "valibot";
-import type { Imprinting, TotalLevel, Values } from "./calculator.js";
+import type * as v from "valibot";
+import type { TotalLevel } from "./calculator.js";
 import { StatsNames } from "./stats-name.js";
 
 /////////////////////////////////////////////////////////
@@ -49,9 +49,9 @@ export type OcrRecord<T> = Record<OcrLabel, T>;
 export type ImageRecord<T> = Record<ImageLabel, T>;
 
 export const DISPLAY_STAT_NAME_LABELS = [...StatsNames, "imprinting"] as const;
-export type DisplayStatValueLabel = (typeof DISPLAY_STAT_NAME_LABELS)[number];
+export type DisplayStatNameLabel = (typeof DISPLAY_STAT_NAME_LABELS)[number];
 
-export const DISPLAY_STAT_NAME_RECORD: Record<DisplayStatValueLabel, string[]> =
+export const DISPLAY_STAT_NAME_RECORD: Record<DisplayStatNameLabel, string[]> =
   {
     health: ["体力"],
     stamina: ["スタミナ"],
@@ -106,6 +106,12 @@ export type CroppedImageRecord = ImageRecord<HTMLCanvasElement>;
 
 /////////////////////////////////////////////////////////
 
+export const WHITE_LIST = {
+  level: "レベル:",
+  number: "0123456789",
+  statValue: "./%",
+} as const;
+
 export type OcrExtractedPromiseTextRecord =
   OcrRecord<ExtractedPromiseTextRecord>;
 export type ExtractedPromiseTextRecord = ImageRecord<Promise<string>>;
@@ -119,24 +125,16 @@ export const NORMALIZE_LABELS = [
   "name",
   "totalLevel",
   ...OCR_STAT_NAME_LABELS,
-  "stats_controller",
-  ...DISPLAY_STAT_NAME_LABELS,
+  // "stats_controller",
+  // ...DISPLAY_STAT_NAME_LABELS,
 ] as const;
 export type NormalizeLabel = (typeof NORMALIZE_LABELS)[number];
 
 export type NormalizeRecord<T> = Record<NormalizeLabel, T>;
-export type NormalizeResultRecord = Extract<
-  NormalizeRecord<string | null>,
-  "name"
-> &
-  Extract<NormalizeRecord<TotalLevel | null>, "totalLevel"> &
-  Extract<NormalizeRecord<DisplayStatValueLabel | null>, OcrStatNameLabel> &
-  Extract<
-    NormalizeRecord<Record<DisplayStatValueLabel, OcrStatValueLabel> | null>,
-    "stats_controller"
-  > &
-  Extract<NormalizeRecord<Values | null>, OcrStatValueLabel> &
-  Extract<NormalizeRecord<Imprinting | null>, "imprinting">;
+export type NormalizeResultRecord = {
+  name: string | null;
+  totalLevel: TotalLevel | null;
+} & Record<OcrStatNameLabel, DisplayStatNameLabel | null>;
 
 export type NormalizeLogRecord = NormalizeRecord<LogDetail[]>;
 
@@ -153,119 +151,3 @@ export type LogDetail =
       output: string | null;
       param?: string;
     };
-
-export const ExtractedTextSchema = v.object(
-  v.entriesFromList(IMAGE_LABELS, v.string()),
-);
-
-export const PreInputSchema = v.object({
-  texts: ExtractedTextSchema,
-});
-export type PreInput = v.InferOutput<typeof PreInputSchema>;
-
-export const SelectInputSchema = v.object({
-  texts: ExtractedTextSchema,
-  selectedText: v.nullable(v.string()),
-});
-export type SelectInput = v.InferOutput<typeof SelectInputSchema>;
-
-export const NormalizeInputSchema = v.object({
-  texts: ExtractedTextSchema,
-  selectedText: v.string(),
-  normalizedText: v.string(),
-});
-export type NormalizeInput = v.InferOutput<typeof NormalizeInputSchema>;
-
-export type PreProcessLogic = (input: PreInput) => {
-  action: string;
-  output: ExtractedTextRecord;
-  param?: string;
-};
-
-export const PreProcessSchema = (logic: PreProcessLogic, log: LogDetail[]) =>
-  v.pipe(
-    PreInputSchema,
-    v.transform((input: PreInput) => {
-      const result = logic(input);
-      log.push({
-        ...result,
-        isValibotError: false,
-        input: JSON.stringify(input.texts),
-        output: JSON.stringify(result.output),
-      });
-      return { ...input, ocrText: result.output };
-    }),
-  );
-
-export type SelectProcessLogic = (input: SelectInput) => {
-  action: string;
-  output: string | null;
-  param?: string;
-};
-
-export const SelectProcessSchema = (
-  logic: SelectProcessLogic,
-  log: LogDetail[],
-) =>
-  v.pipe(
-    SelectInputSchema,
-    v.transform((input: SelectInput) => {
-      const result = logic(input);
-      log.push({
-        ...result,
-        isValibotError: false,
-        input: JSON.stringify(input.texts),
-        output: result.output,
-      });
-      if (result.output !== null) {
-        return { ...input, selectedText: result.output };
-      } else {
-        return input;
-      }
-    }),
-  );
-
-export type NormalizeProcessLogic = (input: NormalizeInput) => {
-  action: string;
-  output: string;
-  param?: string;
-};
-
-export const NormalizeProcessSchema = (
-  logic: NormalizeProcessLogic,
-  log: LogDetail[],
-) =>
-  v.pipe(
-    NormalizeInputSchema,
-    v.transform((input: NormalizeInput) => {
-      const result = logic(input);
-      log.push({
-        ...result,
-        isValibotError: false,
-        input: input.normalizedText,
-        output: result.output,
-      });
-      return { ...input, normalizedText: result.output };
-    }),
-  );
-
-export const ToSelectInputSchema = v.pipe(
-  PreInputSchema,
-  v.transform((input) => ({ ...input, selectedText: null })),
-  SelectInputSchema,
-);
-
-export const ToNormalizeInputSchema = v.pipe(
-  SelectInputSchema,
-  v.transform((input) => ({
-    ...input,
-    normalizedText: input.selectedText,
-  })),
-  NormalizeInputSchema,
-);
-
-export const ToStringSchema = v.pipe(
-  NormalizeInputSchema,
-  v.transform((input) => input.normalizedText),
-  v.string(),
-);

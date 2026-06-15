@@ -23,7 +23,7 @@ export function cropOcrImages(
   );
 }
 
-export function cropImages(
+function cropImages(
   sourceCanvas: HTMLCanvasElement,
   threshold: number,
   { x, y, width, height }: CropRect,

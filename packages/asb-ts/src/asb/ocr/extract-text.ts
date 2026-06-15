@@ -1,5 +1,6 @@
 import * as R from "remeda";
 import { PSM, type WorkerParams } from "tesseract.js";
+import * as v from "valibot";
 import {
   DISPLAY_STAT_NAME_RECORD,
   IMAGE_LABELS,
@@ -7,15 +8,9 @@ import {
   type OcrCroppedImageRecord,
   type OcrExtractedPromiseTextRecord,
   type OcrExtractedTextRecord,
+  WHITE_LIST,
 } from "../types/index.js";
 import type { OcrQueueManager } from "./manager.js";
-import * as v from "valibot";
-
-const whiteList = {
-  level: "レベル:",
-  number: "0123456789",
-  statValue: "./%",
-} as const;
 
 const defaultParams: Partial<WorkerParams> = {
   tessedit_pageseg_mode: PSM.SINGLE_LINE,
@@ -24,7 +19,7 @@ const defaultParams: Partial<WorkerParams> = {
 
 const levelParams: Partial<WorkerParams> = {
   ...defaultParams,
-  tessedit_char_whitelist: whiteList.level + whiteList.number,
+  tessedit_char_whitelist: WHITE_LIST.level + WHITE_LIST.number,
 } as const;
 
 const displayStatNameList = Object.values(DISPLAY_STAT_NAME_RECORD).flat();
@@ -36,7 +31,7 @@ const statNameParams: Partial<WorkerParams> = {
 
 const statValueParams: Partial<WorkerParams> = {
   ...defaultParams,
-  tessedit_char_whitelist: whiteList.statValue + whiteList.number,
+  tessedit_char_whitelist: WHITE_LIST.statValue + WHITE_LIST.number,
 } as const;
 
 export function extractOcrPromiseTexts(

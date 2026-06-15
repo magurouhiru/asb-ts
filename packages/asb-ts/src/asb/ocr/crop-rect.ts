@@ -7,7 +7,7 @@ import {
   type OcrCropRectRecord,
 } from "../types/index.js";
 
-export function cropRects(
+export function calcCropRects(
   originalWidth: number,
   originalHeight: number,
   ymNL: number,
@@ -32,7 +32,7 @@ export function cropRects(
   };
 }
 
-export function getNameLevelRegion(
+function getNameLevelRegion(
   originalWidth: number,
   originalHeight: number,
   ym: number,
@@ -61,7 +61,7 @@ export function getNameLevelRegion(
   };
 }
 
-export function getStatsRegions(
+function getStatsRegions(
   originalWidth: number,
   originalHeight: number,
   ym: number,
@@ -88,7 +88,7 @@ export function getStatsRegions(
   };
 }
 
-export function getStatNameRegion(
+function getStatNameRegion(
   originalWidth: number,
   y: number,
   dl: number,
@@ -103,7 +103,7 @@ export function getStatNameRegion(
   };
 }
 
-export function getStatValueRegion(
+function getStatValueRegion(
   originalWidth: number,
   y: number,
   dr: number,
