@@ -29,15 +29,15 @@ export function createSettings(settings?: Partial<Settings>): Settings {
   return v.parse(SettingsSchema, { ...DEFAULT_SETTINGS, ...settings });
 }
 
-import { getImgPacks } from "./asb/ocr.browser.js";
+import { getImgPacks } from "./asb/ocr/crop.browser.js";
 import {
   getNormalizedTexts,
   getOcrTexts,
   getRegions,
   type OcrQueueManager,
-} from "./asb/ocr.js";
+} from "./asb/ocr/normalize.js";
 
-export * from "./asb/ocr.js";
+export * from "./asb/ocr/normalize.js";
 export { createSpeciesList } from "./asb/species.js";
 
 export function searchBP(

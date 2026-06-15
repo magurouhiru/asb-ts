@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "fuse.js": "catalog:",
+    "remeda": "^2.38.0",
     "tesseract.js": "^7.0.0",
     "valibot": "catalog:"
   },

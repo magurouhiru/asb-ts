@@ -205,16 +205,20 @@ function OcrComponent() {
           <span>補正内容</span>
           {readOutput &&
             NORMALIZED_TEXTS_LABELS.map((ntl) => (
-              <div key={ntl} className="col-span-full grid grid-cols-subgrid">
+              <div
+                key={ntl}
+                hidden={ntl === "stats_controller"}
+                className="col-span-full grid max-w-full grid-cols-subgrid"
+              >
                 <span>{ntl}</span>
                 <span>{JSON.stringify(readOutput.normalizedTexts[ntl])}</span>
                 <div>
                   {Object.entries(readOutput.logs[ntl]).map(([ml, v]) => (
-                    <div key={ml}>
+                    <div key={ml} className="break-all">
                       {`${ml}| action: ${v.action}, `}
                       {v.isValibotError
-                        ? `flatError: ${JSON.stringify(v.flatError, null, 2)}`
-                        : `output: ${JSON.stringify(v.output, null, 2)}${v.param !== undefined ? ` param: ${JSON.stringify(v.param, null, 2)}` : ""}`}
+                        ? `flatError: ${JSON.stringify(v.flatError)}`
+                        : `output: ${JSON.stringify(v.output)}${v.param !== undefined ? ` param: ${JSON.stringify(v.param)}` : ""}`}
                     </div>
                   ))}
                 </div>

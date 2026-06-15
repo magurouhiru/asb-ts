@@ -1,4 +1,4 @@
-import { flatten, type GenericSchema, type SafeParseResult } from "valibot";
+import * as v from "valibot";
 import type { ASBError, ErrorType, OutputPackFailure } from "./types/index.js";
 
 function pushASBError(
@@ -16,10 +16,13 @@ function pushASBError(
 
 export function toOutputPackFailure(
   errorType: ErrorType,
-  issues: Extract<SafeParseResult<GenericSchema>, { success: false }>["issues"],
+  issues: Extract<
+    v.SafeParseResult<v.GenericSchema>,
+    { success: false }
+  >["issues"],
 ): OutputPackFailure {
   const errors: ASBError[] = [];
-  const f = flatten(issues);
+  const f = v.flatten(issues);
 
   const root = f.root;
   if (root) {

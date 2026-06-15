@@ -1,16 +1,16 @@
-import {
-  type ImgPack_Browser,
-  type ImgPacks_Browser,
-  OCR_LABELS,
-  type Region,
-  type Regions,
-} from "./types/index.js";
+import * as R from "remeda";
+import type {
+  CroppedImageRecord,
+  CropRect,
+  OcrCroppedImageRecord,
+  OcrCropRectRecord,
+} from "../types/index.js";
 
-export function getImgPacks(
+export function cropOcrImages(
   sourceImg: HTMLImageElement,
   threshold: number,
-  regions: Regions,
-): ImgPacks_Browser {
+  cropRects: OcrCropRectRecord,
+): OcrCroppedImageRecord {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error();
@@ -18,19 +18,16 @@ export function getImgPacks(
   canvas.height = sourceImg.height;
   ctx.drawImage(sourceImg, 0, 0);
 
-  return Object.fromEntries(
-    OCR_LABELS.map((label) => [
-      label,
-      getImgPack(canvas, threshold, regions[label]),
-    ]),
-  ) as ImgPacks_Browser;
+  return R.mapValues(cropRects, (value) =>
+    cropImages(canvas, threshold, value),
+  );
 }
 
-export function getImgPack(
+export function cropImages(
   sourceCanvas: HTMLCanvasElement,
   threshold: number,
-  { x, y, width, height }: Region,
-): ImgPack_Browser {
+  { x, y, width, height }: CropRect,
+): CroppedImageRecord {
   // 1. 各Canvas要素と2Dコンテキストを作成する共通処理
   const createTargetCanvas = (): [
     HTMLCanvasElement,
