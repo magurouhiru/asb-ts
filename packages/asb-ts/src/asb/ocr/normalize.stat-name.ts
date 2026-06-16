@@ -30,8 +30,8 @@ export function normalizeStatName(
     v.pipe(
       PreProcessSchema(preRemoveSpace, log),
       ToSelectInputSchema,
-      SelectProcessSchema(selectTextIfPpartialMatchStatName, log),
       SelectProcessSchema(selectTextIfExactMatchStatName, log),
+      SelectProcessSchema(selectTextIfPpartialMatchStatName, log),
       ToNormalizeInputSchema,
       ToStringSchema,
       v.transform(

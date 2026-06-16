@@ -1,4 +1,11 @@
-import { Label, NumberField, Separator, Table, toast } from "@heroui/react";
+import {
+  Label,
+  NumberField,
+  Separator,
+  Switch,
+  Table,
+  toast,
+} from "@heroui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   type CropRect,
@@ -31,6 +38,8 @@ function OcrComponent() {
   const [dhmS, setDhmS] = useState<number>(DEFAULT_CROP_RECT_OPTION.dhmS);
 
   const [ocrResult, setOcrResult] = useState<ExtractTextsOutput | null>(null);
+
+  const [showLog, setShowLog] = useState<boolean>(true);
 
   const regionsOptions: [
     string,
@@ -171,7 +180,17 @@ function OcrComponent() {
 
       <section>
         <h3>切り抜き結果と生の結果</h3>
-        <span>{`OCRステータス: ${status}, 完了/全量 ${completeCnt}/${requestCnt}`}</span>
+        <p>{`OCRステータス: ${status}, 完了/全量 ${completeCnt}/${requestCnt}`}</p>
+        <Switch isSelected={showLog} onChange={setShowLog}>
+          <Switch.Content>
+            <Switch.Control>
+              <Switch.Thumb>
+                <Switch.Icon /> {/* Optional */}
+              </Switch.Thumb>
+            </Switch.Control>
+            logを表示する
+          </Switch.Content>
+        </Switch>
         {ocrResult && (
           <Table>
             <Table.ScrollContainer>
@@ -182,7 +201,7 @@ function OcrComponent() {
                   <Table.Column>grayscale</Table.Column>
                   <Table.Column>binary</Table.Column>
                   <Table.Column>normarized</Table.Column>
-                  <Table.Column>log</Table.Column>
+                  {showLog && <Table.Column>log</Table.Column>}
                 </Table.Header>
                 <Table.Body>
                   {R.entries(ocrResult.result).map(([ol, ov]) => (
@@ -215,16 +234,18 @@ function OcrComponent() {
                           </Suspense>
                         </span>
                       </Table.Cell>
-                      <Table.Cell>
-                        <span>
-                          <Suspense fallback={<div>待機中...</div>}>
-                            <ShowLog
-                              resultPromise={ocrResult.resultPromise}
-                              ol={ol}
-                            ></ShowLog>
-                          </Suspense>
-                        </span>
-                      </Table.Cell>
+                      {showLog && (
+                        <Table.Cell>
+                          <span>
+                            <Suspense fallback={<div>待機中...</div>}>
+                              <ShowLog
+                                resultPromise={ocrResult.resultPromise}
+                                ol={ol}
+                              ></ShowLog>
+                            </Suspense>
+                          </span>
+                        </Table.Cell>
+                      )}
                     </Table.Row>
                   ))}
                 </Table.Body>
