@@ -1,15 +1,16 @@
 import { Label, NumberField, Separator, Table, toast } from "@heroui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  extractTexts,
-  type ExtractTextsOutput,
-  DEFAULT_CROP_RECT_OPTION,
   type CropRect,
-  OCR_LABELS,
-  IMAGE_LABELS,
+  DEFAULT_CROP_RECT_OPTION,
+  type ExtractTextsOutput,
+  extractTexts,
+  type OcrLabel,
 } from "asb-ts";
 import { Suspense, use, useEffect, useRef, useState } from "react";
+import * as R from "remeda";
 import { useOcrQueue } from "@/contexts";
+
 export const Route = createFileRoute("/ocr")({
   component: OcrComponent,
 });
@@ -97,8 +98,8 @@ function OcrComponent() {
           ctx.lineWidth = 5;
           ctx.strokeRect(x, y, width, height);
         };
-        Object.entries(result.cropRects).forEach(([_, cropRect]) => {
-          strokeRect(cropRect);
+        Object.entries(result.result).forEach(([_, { cropRects }]) => {
+          strokeRect(cropRects);
         });
 
         setOcrResult(result);
@@ -180,30 +181,50 @@ function OcrComponent() {
                   <Table.Column>original</Table.Column>
                   <Table.Column>grayscale</Table.Column>
                   <Table.Column>binary</Table.Column>
+                  <Table.Column>normarized</Table.Column>
+                  <Table.Column>log</Table.Column>
                 </Table.Header>
                 <Table.Body>
-                  {OCR_LABELS.map((ol) => (
+                  {R.entries(ocrResult.result).map(([ol, ov]) => (
                     <Table.Row key={ol}>
                       <Table.Cell>{ol}</Table.Cell>
-                      {IMAGE_LABELS.map((il) => (
+                      {R.entries(ov.croppedImages).map(([il, iv]) => (
                         <Table.Cell key={il}>
                           <div>
                             <img
-                              src={ocrResult.croppedImages[ol][il].toDataURL()}
+                              src={iv.toDataURL()}
                               aria-label="cropped image"
                             />
                             <span>
                               <Suspense fallback={<div>抽出中...</div>}>
-                                <ShowText
-                                  textPromise={
-                                    ocrResult.extractedPromiseTexs[ol][il]
-                                  }
-                                ></ShowText>
+                                <ShowExtractedText
+                                  textPromise={ov.extractedPromiseTexs[il]}
+                                ></ShowExtractedText>
                               </Suspense>
                             </span>
                           </div>
                         </Table.Cell>
                       ))}
+                      <Table.Cell>
+                        <span>
+                          <Suspense fallback={<div>待機中...</div>}>
+                            <ShowNormalizedText
+                              resultPromise={ocrResult.resultPromise}
+                              ol={ol}
+                            ></ShowNormalizedText>
+                          </Suspense>
+                        </span>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <span>
+                          <Suspense fallback={<div>待機中...</div>}>
+                            <ShowLog
+                              resultPromise={ocrResult.resultPromise}
+                              ol={ol}
+                            ></ShowLog>
+                          </Suspense>
+                        </span>
+                      </Table.Cell>
                     </Table.Row>
                   ))}
                 </Table.Body>
@@ -217,7 +238,39 @@ function OcrComponent() {
   );
 }
 
-function ShowText({ textPromise }: { textPromise: Promise<string> }) {
+function ShowExtractedText({ textPromise }: { textPromise: Promise<string> }) {
   const text = use(textPromise);
-  return <span>{text !== "" ? text : "何もない"}</span>;
+  return <span>{text}</span>;
+}
+
+function ShowNormalizedText({
+  resultPromise,
+  ol,
+}: {
+  resultPromise: ExtractTextsOutput["resultPromise"];
+  ol: OcrLabel;
+}) {
+  const text = use(resultPromise)[ol].normalizedTexts;
+  return <span>{text}</span>;
+}
+
+function ShowLog({
+  resultPromise,
+  ol,
+}: {
+  resultPromise: ExtractTextsOutput["resultPromise"];
+  ol: OcrLabel;
+}) {
+  const logList = use(resultPromise)[ol].log;
+  return (
+    <div>
+      {logList.map((log, i) => {
+        return (
+          <p
+            key={log.action}
+          >{`${i}| ${log.isValibotError ? `error: ${JSON.stringify(log.flatError, null, 2)}` : `action: ${log.action}, output: ${log.output}`}`}</p>
+        );
+      })}
+    </div>
+  );
 }

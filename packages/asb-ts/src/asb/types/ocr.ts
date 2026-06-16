@@ -1,5 +1,5 @@
 import type * as v from "valibot";
-import type { TotalLevel } from "./calculator.js";
+import type { Imprinting, TotalLevel } from "./calculator.js";
 import { StatsNames } from "./stats-name.js";
 
 /////////////////////////////////////////////////////////
@@ -121,22 +121,17 @@ export type ExtractedTextRecord = ImageRecord<string>;
 
 /////////////////////////////////////////////////////////
 
-export const NORMALIZE_LABELS = [
-  "name",
-  "totalLevel",
-  ...OCR_STAT_NAME_LABELS,
-  // "stats_controller",
-  // ...DISPLAY_STAT_NAME_LABELS,
-] as const;
-export type NormalizeLabel = (typeof NORMALIZE_LABELS)[number];
+export type OcrNormalizedTextRecord = {
+  [K in OcrLabel]: K extends "name"
+    ? string | null
+    : K extends "level"
+      ? TotalLevel | null
+      : K extends OcrStatNameLabel
+        ? DisplayStatNameLabel | null
+        : (number | Imprinting) | null;
+};
 
-export type NormalizeRecord<T> = Record<NormalizeLabel, T>;
-export type NormalizeResultRecord = {
-  name: string | null;
-  totalLevel: TotalLevel | null;
-} & Record<OcrStatNameLabel, DisplayStatNameLabel | null>;
-
-export type NormalizeLogRecord = NormalizeRecord<LogDetail[]>;
+export type OcrNormalizeLogRecord = OcrRecord<LogDetail[]>;
 
 export type LogDetail =
   | {

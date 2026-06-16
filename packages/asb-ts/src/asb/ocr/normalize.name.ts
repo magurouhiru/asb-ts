@@ -1,8 +1,8 @@
 import * as v from "valibot";
 import type {
   LogDetail,
-  NormalizeResultRecord,
   OcrExtractedTextRecord,
+  OcrNormalizedTextRecord,
 } from "../types/index.js";
 import {
   PreProcessSchema,
@@ -18,7 +18,7 @@ import {
 export function normalizeName(
   texts: OcrExtractedTextRecord["name"],
   log: LogDetail[],
-): { normalizedText: NormalizeResultRecord["name"]; log: LogDetail[] } {
+): { normalizedText: OcrNormalizedTextRecord["name"]; log: LogDetail[] } {
   const result = v.safeParse(
     v.pipe(
       PreProcessSchema(preRemoveSpace, log),

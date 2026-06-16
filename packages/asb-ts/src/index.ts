@@ -3,6 +3,13 @@ import {
   calculateLevelController,
   calculateValueController,
 } from "./asb/calculator.js";
+import { cropOcrImages } from "./asb/ocr/crop.browser.js";
+import { calcCropRects } from "./asb/ocr/crop-rect.js";
+import {
+  extractOcrPromiseTexts,
+  extractOcrTexts,
+} from "./asb/ocr/extract-text.js";
+import type { OcrQueueManager } from "./asb/ocr/manager.js";
 import { searchSpecies } from "./asb/species.js";
 import {
   type CalculateLevelInputPack,
@@ -14,10 +21,8 @@ import {
   DEFAULT_CROP_RECT_OPTION,
   DEFAULT_SETTINGS,
   DEFAULT_THRESHOLD,
-  type OcrCroppedImageRecord,
-  type OcrCropRectRecord,
-  type OcrExtractedPromiseTextRecord,
-  type OcrExtractedTextRecord,
+  IMAGE_LABELS,
+  OCR_LABELS,
   type OutputPackFailure,
   type Settings,
   SettingsSchema,
@@ -25,13 +30,6 @@ import {
   type Type,
 } from "./asb/types/index.js";
 import { toOutputPackFailure } from "./asb/util.js";
-import type { OcrQueueManager } from "./asb/ocr/manager.js";
-import { calcCropRects } from "./asb/ocr/crop-rect.js";
-import { cropOcrImages } from "./asb/ocr/crop.browser.js";
-import {
-  extractOcrPromiseTexts,
-  extractOcrTexts,
-} from "./asb/ocr/extract-text.js";
 
 export * from "./asb/types/index.js";
 
@@ -142,6 +140,8 @@ export function calculateValue(
   }
 }
 
+import * as R from "remeda";
+import { normalizeTexts } from "./asb/ocr/normalize.js";
 export function calculateLevel(
   input: InputForCalculateLevel,
 ): OutputOfCalculateLevel {
@@ -165,12 +165,7 @@ export function calculateLevel(
   }
 }
 
-export interface ExtractTextsOutput {
-  cropRects: OcrCropRectRecord;
-  croppedImages: OcrCroppedImageRecord;
-  extractedPromiseTexs: OcrExtractedPromiseTextRecord;
-  extractedTexs: Promise<OcrExtractedTextRecord>;
-}
+export type ExtractTextsOutput = ReturnType<typeof extractTexts>;
 
 export function extractTexts(
   manager: OcrQueueManager,
@@ -199,10 +194,40 @@ export function extractTexts(
   );
   const croppedImages = cropOcrImages(sourceImg, threshold, cropRects);
   const extractedPromiseTexs = extractOcrPromiseTexts(manager, croppedImages);
+
+  const result = R.fromKeys(OCR_LABELS, (ocrLabel) => ({
+    cropRects: cropRects[ocrLabel],
+    croppedImages: R.fromKeys(
+      IMAGE_LABELS,
+      (imgLabel) => croppedImages[ocrLabel][imgLabel],
+    ),
+    extractedPromiseTexs: R.fromKeys(
+      IMAGE_LABELS,
+      (imgLabel) => extractedPromiseTexs[ocrLabel][imgLabel],
+    ),
+  }));
+
+  const resultPromise = extractOcrTexts(extractedPromiseTexs).then(
+    (extractedTexs) => {
+      const { normalizedTexts, logs } = normalizeTexts(extractedTexs);
+      return R.fromKeys(OCR_LABELS, (ocrLabel) => ({
+        cropRects: cropRects[ocrLabel],
+        croppedImages: R.fromKeys(
+          IMAGE_LABELS,
+          (imgLabel) => croppedImages[ocrLabel][imgLabel],
+        ),
+        extractedTexs: R.fromKeys(
+          IMAGE_LABELS,
+          (imgLabel) => extractedTexs[ocrLabel][imgLabel],
+        ),
+        normalizedTexts: normalizedTexts[ocrLabel],
+        log: logs[ocrLabel],
+      }));
+    },
+  );
+
   return {
-    cropRects,
-    croppedImages,
-    extractedPromiseTexs,
-    extractedTexs: extractOcrTexts(extractedPromiseTexs),
+    result,
+    resultPromise,
   };
 }

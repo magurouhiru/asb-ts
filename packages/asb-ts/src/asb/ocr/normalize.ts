@@ -1,50 +1,45 @@
 import * as R from "remeda";
 import {
-  type NormalizeLogRecord,
-  type NormalizeResultRecord,
   OCR_STAT_NAME_LABELS,
+  OCR_STAT_VALUE_LABELS,
   type OcrExtractedTextRecord,
+  type OcrNormalizedTextRecord,
+  type OcrNormalizeLogRecord,
 } from "../types/index.js";
 import { normalizeName } from "./normalize.name.js";
 import { normalizeStatName } from "./normalize.stat-name.js";
+import { normalizeStatValue } from "./normalize.stat-value.js";
 import { normalizeTotalLevel } from "./normalize.total-level.js";
 
 export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
-  normalizedTexts: NormalizeResultRecord;
-  logs: NormalizeLogRecord;
+  normalizedTexts: OcrNormalizedTextRecord;
+  logs: OcrNormalizeLogRecord;
 } {
   const name = normalizeName(ocrTexts.name, []);
   const totalLevel = normalizeTotalLevel(ocrTexts.level, []);
 
-  const ocr_stat_names = R.fromKeys(OCR_STAT_NAME_LABELS, (label) =>
+  const ocrStatNames = R.fromKeys(OCR_STAT_NAME_LABELS, (label) =>
     normalizeStatName(ocrTexts[label], []),
   );
 
-  // const stats_controller = getStatsController(ocr_stat_names, []);
-
-  // const stat_value_obj = Object.fromEntries(
-  //   DISPLAY_STAT_NAME_LIST.map((dsn) => {
-  //     const label = stats_controller.result?.[dsn];
-  //     if (label !== undefined && label !== null) {
-  //       return [dsn, getNormalizedTextStatValue(ocrTexts[label], [])];
-  //     } else {
-  //       return [dsn, { log: [], result: null }];
-  //     }
-  //   }),
-  // ) as StatValueObj;
+  const ocrStatValues = R.fromKeys(OCR_STAT_VALUE_LABELS, (label) =>
+    normalizeStatValue(ocrTexts[label], []),
+  );
 
   return {
     normalizedTexts: {
       name: name.normalizedText,
-      totalLevel: totalLevel.normalizedText,
+      level: totalLevel.normalizedText,
 
-      ...R.mapValues(ocr_stat_names, ({ normalizedText }) => normalizedText),
+      ...R.mapValues(ocrStatNames, ({ normalizedText }) => normalizedText),
+      ...R.mapValues(ocrStatValues, ({ normalizedText }) => normalizedText),
     },
     logs: {
       name: name.log,
-      totalLevel: totalLevel.log,
+      level: totalLevel.log,
 
-      ...R.mapValues(ocr_stat_names, ({ log }) => log),
+      ...R.mapValues(ocrStatNames, ({ log }) => log),
+      ...R.mapValues(ocrStatValues, ({ log }) => log),
     },
   };
 }

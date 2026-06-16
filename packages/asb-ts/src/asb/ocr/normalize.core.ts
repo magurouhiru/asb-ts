@@ -4,6 +4,7 @@ import {
   DISPLAY_STAT_NAME_RECORD,
   type ExtractedTextRecord,
   IMAGE_LABELS,
+  type ImageLabel,
   type LogDetail,
   WHITE_LIST,
 } from "../types/index.js";
@@ -44,8 +45,8 @@ export const PreProcessSchema = (logic: PreProcessLogic, log: LogDetail[]) =>
       log.push({
         ...result,
         isValibotError: false,
-        input: JSON.stringify(input.texts),
-        output: JSON.stringify(result.output),
+        input: JSON.stringify(input.texts, null, 2),
+        output: JSON.stringify(result.output, null, 2),
       });
       return { ...input, texts: result.output };
     }),
@@ -53,7 +54,7 @@ export const PreProcessSchema = (logic: PreProcessLogic, log: LogDetail[]) =>
 
 export type SelectProcessLogic = (input: SelectInput) => {
   action: string;
-  output: string | null;
+  output: ImageLabel | null;
   param?: string;
 };
 
@@ -65,15 +66,25 @@ export const SelectProcessSchema = (
     SelectInputSchema,
     v.transform((input: SelectInput) => {
       const result = logic(input);
-      log.push({
-        ...result,
-        isValibotError: false,
-        input: JSON.stringify(input.texts),
-        output: result.output,
-      });
-      if (result.output !== null) {
-        return { ...input, selectedText: result.output };
+      if (input.selectedText === null) {
+        log.push({
+          ...result,
+          isValibotError: false,
+          input: JSON.stringify(input.texts, null, 2),
+          output: result.output,
+        });
+        if (result.output !== null) {
+          return { ...input, selectedText: input.texts[result.output] };
+        } else {
+          return input;
+        }
       } else {
+        log.push({
+          ...result,
+          isValibotError: false,
+          input: JSON.stringify(input.texts, null, 2),
+          output: "Already selected",
+        });
         return input;
       }
     }),
@@ -149,15 +160,15 @@ function removeSplitCharCore(text: string): string {
 
 export const selectIfSameString: SelectProcessLogic = (input: SelectInput) => {
   const { original, grayscale, binary } = input.texts;
-  let output = null;
+  let output: ImageLabel | null = null;
   if (original === grayscale && original === binary) {
-    output = original;
+    output = "original";
   } else if (original === grayscale) {
-    output = original;
+    output = "original";
   } else if (grayscale === binary) {
-    output = grayscale;
+    output = "grayscale";
   } else if (binary === original) {
-    output = binary;
+    output = "binary";
   } else {
     output = null;
   }
@@ -171,14 +182,14 @@ export const selectTextIfMatchTotalLevelRegExp: SelectProcessLogic = (
   input: SelectInput,
 ) => ({
   action: "selectTextIfMatchTotalLevelRegExp",
-  output: selectIfTestSuccess(input, totalLevelRegExp.test),
+  output: selectIfTestSuccess(input, (text) => totalLevelRegExp.test(text)),
   param: totalLevelRegExp.source,
 });
 
 function selectIfTestSuccess(
   { texts }: SelectInput,
   test: (text: string) => boolean,
-): string | null {
+): ImageLabel | null {
   const successList = R.pipe(
     texts,
     R.entries(),
@@ -186,7 +197,7 @@ function selectIfTestSuccess(
     R.map(([label]) => label),
   );
   for (const label of IMAGE_LABELS) {
-    if (successList.includes(label)) return texts[label];
+    if (successList.includes(label)) return label;
   }
   return null;
 }
@@ -242,9 +253,9 @@ export const selectTextIfExactMatchStatName: SelectProcessLogic = (
   ),
 });
 
-export const selectFallback: SelectProcessLogic = (input: SelectInput) => ({
+export const selectFallback: SelectProcessLogic = (_: SelectInput) => ({
   action: "selectFallback",
-  output: input.texts.original,
+  output: "original",
 });
 
 export const selectIfExistSlashBetweenDots: SelectProcessLogic = (

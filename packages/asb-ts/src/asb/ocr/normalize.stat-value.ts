@@ -1,48 +1,46 @@
-import * as R from "remeda";
 import * as v from "valibot";
 import {
-  DISPLAY_STAT_NAME_LABELS,
-  DISPLAY_STAT_NAME_RECORD,
   type LogDetail,
   type OcrExtractedTextRecord,
   type OcrNormalizedTextRecord,
-  type OcrStatNameLabel,
+  type OcrStatValueLabel,
+  PositiveValueSchema,
 } from "../types/index.js";
 import {
+  NormalizeProcessSchema,
+  normalizeSplitIfExistSlashBetweenDots,
   PreProcessSchema,
   preRemoveSpace,
+  preRemoveSplitChar,
   SelectProcessSchema,
-  selectTextIfExactMatchStatName,
-  selectTextIfPpartialMatchStatName,
+  selectFallback,
+  selectIfExistSlashBetweenDots,
+  selectIfSameString,
   ToNormalizeInputSchema,
   ToSelectInputSchema,
   ToStringSchema,
 } from "./normalize.core.js";
 
-export function normalizeStatName(
-  texts: OcrExtractedTextRecord[OcrStatNameLabel],
+export function normalizeStatValue(
+  texts: OcrExtractedTextRecord[OcrStatValueLabel],
   log: LogDetail[],
 ): {
-  normalizedText: OcrNormalizedTextRecord[OcrStatNameLabel];
+  normalizedText: OcrNormalizedTextRecord[OcrStatValueLabel];
   log: LogDetail[];
 } {
   const result = v.safeParse(
     v.pipe(
+      PreProcessSchema(preRemoveSplitChar, log),
       PreProcessSchema(preRemoveSpace, log),
       ToSelectInputSchema,
-      SelectProcessSchema(selectTextIfPpartialMatchStatName, log),
-      SelectProcessSchema(selectTextIfExactMatchStatName, log),
+      SelectProcessSchema(selectIfExistSlashBetweenDots, log),
+      SelectProcessSchema(selectIfSameString, log),
+      SelectProcessSchema(selectFallback, log),
       ToNormalizeInputSchema,
+      NormalizeProcessSchema(normalizeSplitIfExistSlashBetweenDots, log),
       ToStringSchema,
-      v.transform(
-        (input) =>
-          R.pipe(
-            DISPLAY_STAT_NAME_RECORD,
-            R.entries(),
-            R.filter(([_, names]) => names.some((name) => name === input)),
-          )[0]?.[0],
-      ),
-      v.picklist(DISPLAY_STAT_NAME_LABELS),
+      v.toNumber(),
+      PositiveValueSchema,
     ),
     { texts },
   );

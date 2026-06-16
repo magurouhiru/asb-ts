@@ -1,8 +1,8 @@
 import * as v from "valibot";
 import {
   type LogDetail,
-  type NormalizeResultRecord,
   type OcrExtractedTextRecord,
+  type OcrNormalizedTextRecord,
   TotalLevelSchema,
 } from "../types/index.js";
 import {
@@ -20,7 +20,7 @@ import {
 export function normalizeTotalLevel(
   texts: OcrExtractedTextRecord["level"],
   log: LogDetail[],
-): { normalizedText: NormalizeResultRecord["totalLevel"]; log: LogDetail[] } {
+): { normalizedText: OcrNormalizedTextRecord["level"]; log: LogDetail[] } {
   const result = v.safeParse(
     v.pipe(
       PreProcessSchema(preRemoveSpace, log),
