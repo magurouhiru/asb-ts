@@ -2,6 +2,7 @@ import * as R from "remeda";
 import * as v from "valibot";
 import {
   DISPLAY_STAT_NAME_RECORD,
+  type DisplayStatNameLabel,
   type ExtractedTextRecord,
   IMAGE_LABELS,
   type ImageLabel,
@@ -33,7 +34,7 @@ export type NormalizeInput = v.InferOutput<typeof NormalizeInputSchema>;
 
 export type PreProcessLogic = (input: PreInput) => {
   action: string;
-  output: ExtractedTextRecord;
+  output: ExtractedTextRecord<string>;
   param?: string;
 };
 
@@ -221,26 +222,26 @@ export const selectTextIfPpartialMatchStatName: SelectProcessLogic = (
   action: "selectTextIfPpartialMatchStatName",
   output: selectIfTestSuccess(
     input,
-    (text) =>
-      R.pipe(
-        DISPLAY_STAT_NAME_RECORD,
-        R.entries(),
-        R.filter(
-          ([_, names]) =>
-            R.pipe(
-              names,
-              R.filter(
-                (name) =>
-                  name.length / 2 < text.length && text.length <= name.length,
-              ),
-              R.filter((name) =>
-                Array.from(text).every((c) => name.includes(c)),
-              ),
-            ).length > 0,
-        ),
-      ).length > 0,
+    (text) => partialMatchStatName(text) !== null,
   ),
 });
+
+const partialMatchStatName = (text: string): DisplayStatNameLabel | null =>
+  R.pipe(
+    DISPLAY_STAT_NAME_RECORD,
+    R.entries(),
+    R.filter(
+      ([_, names]) =>
+        R.pipe(
+          names,
+          R.filter(
+            (name) =>
+              name.length / 2 < text.length && text.length <= name.length,
+          ),
+          R.filter((name) => Array.from(text).every((c) => name.includes(c))),
+        ).length > 0,
+    ),
+  )[0]?.[0] ?? null;
 
 export const selectTextIfExactMatchStatName: SelectProcessLogic = (
   input: SelectInput,
@@ -267,6 +268,25 @@ export const selectFallback: SelectProcessLogic = (_: SelectInput) => ({
   action: "selectFallback",
   output: "original",
 });
+
+// なんか1425.0/1425.0が1425.0/71425.0と1425.071425.0になったりするのでそれ用
+export const selectIfDiffSlash: SelectProcessLogic = (input: SelectInput) => {
+  const removed = R.mapValues(input.texts, (text) => text.replace("/", ""));
+  const isSame = R.entries(removed).every(
+    ([_, text]) => text === removed.original,
+  );
+  if (isSame) {
+    return {
+      action: "selectIfDiffSlash",
+      output: selectIfTestSuccess(input, (text) => text === removed.original),
+    };
+  } else {
+    return {
+      action: "selectIfDiffSlash",
+      output: null,
+    };
+  }
+};
 
 const nn_dot_n_slash_nn_dot_n = /^\d+\.\d\/\d+\.\d$/;
 
@@ -318,6 +338,15 @@ const spaceString = " 　";
 function removeStringCore(input: string, param: string): string {
   return Array.from(param).reduce((acc, v) => acc.replaceAll(v, ""), input);
 }
+
+export const normalizeStatName: NormalizeProcessLogic = ({
+  normalizedText,
+}: NormalizeInput) => {
+  return {
+    action: "normalizeStatName",
+    output: partialMatchStatName(normalizedText),
+  };
+};
 
 export const normalizeSplitIf_nn_dot_n_slash_nn_dot_n: NormalizeProcessLogic =
   ({ normalizedText }: NormalizeInput) => {

@@ -2,7 +2,7 @@ import * as R from "remeda";
 import * as v from "valibot";
 import {
   DISPLAY_STAT_NAME_LABELS,
-  DISPLAY_STAT_NAME_RECORD,
+  type ExtractType,
   ImprintingSchema,
   type LogDetail,
   type NormalizeResult,
@@ -27,6 +27,9 @@ import * as c from "./normalize.core.js";
 
 export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
   normalizedTexts: OcrNormalizedTextRecord;
+  type: Type;
+  withDom: NormalizeResult<"withDom">;
+  withDomLog: LogDetail[];
   logs: OcrNormalizeLogRecord;
 } {
   const logs: OcrNormalizeLogRecord = R.fromKeys(OCR_LABELS, () => []);
@@ -35,6 +38,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
     ocrTexts.name,
     logs.name,
     "name",
+    "default",
     v.pipe(
       c.PreProcessSchema(c.preRemoveSpace, logs.name),
       c.ToSelectInputSchema,
@@ -48,6 +52,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
   const level = normalizeText(
     ocrTexts.level,
     logs.level,
+    "level",
     "level",
     v.pipe(
       c.PreProcessSchema(c.preRemoveSpace, logs.level),
@@ -67,37 +72,32 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
       ocrTexts[label],
       logs[label],
       "stat_name",
+      "statName",
       v.pipe(
         c.PreProcessSchema(c.preRemoveSpace, logs[label]),
         c.ToSelectInputSchema,
         c.SelectProcessSchema(c.selectTextIfExactMatchStatName, logs[label]),
         c.SelectProcessSchema(c.selectTextIfPpartialMatchStatName, logs[label]),
         c.ToNormalizeInputSchema,
+        c.NormalizeProcessSchema(c.normalizeStatName, logs.level),
         c.ToStringSchema,
-        v.transform(
-          (input) =>
-            R.pipe(
-              DISPLAY_STAT_NAME_RECORD,
-              R.entries(),
-              R.filter(([_, names]) => names.some((name) => name === input)),
-            )[0]?.[0],
-        ),
         v.picklist(DISPLAY_STAT_NAME_LABELS),
       ),
     ),
   );
 
-  const { comb } = selectStatsPositionCombinationName(ocrStatNames);
+  const { type, comb } = selectStatsPositionCombinationName(ocrStatNames);
 
   const ocrStatValues = R.fromKeys(OCR_STAT_VALUE_LABELS, (label) => {
     const nt = comb[label];
     return nt === null
-      ? normalizeText(ocrTexts[label], logs[label], nt, v.null())
+      ? normalizeText(ocrTexts[label], logs[label], nt, "default", v.null())
       : nt === "imprinting"
         ? normalizeText(
             ocrTexts[label],
             logs[label],
             nt,
+            "statValue",
             v.pipe(
               c.PreProcessSchema(c.preRemoveSplitChar, logs[label]),
               c.PreProcessSchema(c.preRemoveSpace, logs[label]),
@@ -110,6 +110,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
               c.NormalizeProcessSchema(c.normalizeRemoveParcet, logs[label]),
               c.ToStringSchema,
               v.toNumber(),
+              v.transform((input) => input / 100),
               ImprintingSchema,
             ),
           )
@@ -118,6 +119,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
               ocrTexts[label],
               logs[label],
               nt,
+              "statValue",
               v.pipe(
                 c.PreProcessSchema(c.preRemoveSplitChar, logs[label]),
                 c.PreProcessSchema(c.preRemoveSpace, logs[label]),
@@ -134,6 +136,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
                 ),
                 c.ToStringSchema,
                 v.toNumber(),
+                v.transform((input) => input / 100),
                 PositiveValueSchema,
               ),
             )
@@ -141,10 +144,12 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
               ocrTexts[label],
               logs[label],
               nt,
+              "statValue",
               v.pipe(
                 c.PreProcessSchema(c.preRemoveSplitChar, logs[label]),
                 c.PreProcessSchema(c.preRemoveSpace, logs[label]),
                 c.ToSelectInputSchema,
+                c.SelectProcessSchema(c.selectIfDiffSlash, logs[label]),
                 c.SelectProcessSchema(
                   c.selectIf_nn_dot_n_slash_nn_dot_n,
                   logs[label],
@@ -179,6 +184,34 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
             );
   });
 
+  const withDomLog: LogDetail[] = [];
+  const withDom =
+    type === "wild"
+      ? { type: "withDom" as const, text: null }
+      : normalizeText(
+          ocrTexts.stat_name_0,
+          withDomLog,
+          "withDom",
+          "statValue",
+          v.pipe(
+            c.PreProcessSchema(c.preRemoveSplitChar, withDomLog),
+            c.PreProcessSchema(c.preRemoveSpace, withDomLog),
+            c.ToSelectInputSchema,
+            c.SelectProcessSchema(c.selectIfDiffSlash, withDomLog),
+            c.SelectProcessSchema(
+              c.selectIf_nn_dot_n_slash_nn_dot_n,
+              withDomLog,
+            ),
+            c.SelectProcessSchema(c.selectIf_nn_dot_n_7_nn_dot_n, withDomLog),
+            c.SelectProcessSchema(c.selectIfSameString, withDomLog),
+            c.SelectProcessSchema(c.selectFallback, withDomLog),
+            c.ToNormalizeInputSchema,
+            c.ToStringSchema,
+            v.transform((input) => !/\/10\.0$/.test(input)),
+            v.boolean(),
+          ),
+        );
+
   return {
     normalizedTexts: {
       name,
@@ -187,6 +220,9 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
       ...ocrStatNames,
       ...ocrStatValues,
     },
+    type,
+    withDom,
+    withDomLog,
     logs,
   };
 }
@@ -195,18 +231,25 @@ function normalizeText<T extends NormalizeTypeLabel>(
   texts: OcrExtractedTextRecord[OcrLabel],
   log: LogDetail[],
   type: T,
+  extractType: ExtractType,
   schema: v.GenericSchema<unknown, NormalizeType<T>, v.GenericIssue>,
 ): NormalizeResult<T> {
-  const result = v.safeParse<typeof schema>(schema, { texts });
-  if (result.success) {
-    return { type, text: result.output };
-  } else {
-    const flatError = v.flatten(result.issues);
-    log.push({
-      isValibotError: true,
-      action: "valibot safeParse",
-      flatError,
+  if (texts[extractType] !== undefined) {
+    const result = v.safeParse<typeof schema>(schema, {
+      texts: texts[extractType],
     });
+    if (result.success) {
+      return { type, text: result.output };
+    } else {
+      const flatError = v.flatten(result.issues);
+      log.push({
+        isValibotError: true,
+        action: "valibot safeParse",
+        flatError,
+      });
+      return { type, text: null };
+    }
+  } else {
     return { type, text: null };
   }
 }

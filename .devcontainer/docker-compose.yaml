@@ -9,7 +9,23 @@ services:
     networks:
       - shared-ai-net
 
-networks:
-  shared-ai-net:
-    name: asb-web_ai-network
-    external: true
+# 使わないときはコメントアウト
+#   ollama:
+#     image: ollama/ollama:latest
+#     container_name: ollama
+#     volumes:
+#       - ollama_data:/root/.ollama
+#     ports:
+#       - "11434:11434"
+#     restart: unless-stopped
+#     # GPUをコンテナに認識させるための設定
+#     deploy:
+#       resources:
+#         reservations:
+#           devices:
+#             - driver: nvidia
+#               count: all
+#               capabilities: [gpu]
+
+# volumes:
+#   ollama_data:

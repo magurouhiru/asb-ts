@@ -112,12 +112,29 @@ export const WHITE_LIST = {
   statValue: "./%",
 } as const;
 
-export type OcrExtractedPromiseTextRecord =
-  OcrRecord<ExtractedPromiseTextRecord>;
-export type ExtractedPromiseTextRecord = ImageRecord<Promise<string>>;
+export const EXTRACT_TYPES = [
+  "default",
+  "level",
+  "statName",
+  "statValue",
+] as const;
+export type ExtractType = (typeof EXTRACT_TYPES)[number];
 
-export type OcrExtractedTextRecord = OcrRecord<ExtractedTextRecord>;
-export type ExtractedTextRecord = ImageRecord<string>;
+export type OcrExtractedPromiseTextRecord = Record<
+  OcrLabel,
+  ExtractTypeExtractedTextRecord<Promise<string>>
+>;
+
+export type OcrExtractedTextRecord = Record<
+  OcrLabel,
+  ExtractTypeExtractedTextRecord<string>
+>;
+
+export type ExtractTypeExtractedTextRecord<T> = Partial<
+  Record<ExtractType, Record<ImageLabel, T>>
+>;
+
+export type ExtractedTextRecord<T> = Record<ImageLabel, T>;
 
 /////////////////////////////////////////////////////////
 
@@ -125,6 +142,7 @@ export const NORMALIZE_TYPE_LABELS = [
   ...OCR_COMMON_LABELS,
   "stat_name",
   ...DISPLAY_STAT_NAME_LABELS,
+  "withDom",
   null,
 ] as const;
 export type NormalizeTypeLabel = (typeof NORMALIZE_TYPE_LABELS)[number];
@@ -139,7 +157,9 @@ export type NormalizeType<T extends NormalizeTypeLabel> = T extends "name"
         ? number
         : T extends "imprinting"
           ? Imprinting
-          : null;
+          : T extends "withDom"
+            ? boolean
+            : null;
 
 export type NormalizeResult<T extends NormalizeTypeLabel> = {
   type: T;

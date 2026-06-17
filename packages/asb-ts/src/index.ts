@@ -21,8 +21,6 @@ import {
   DEFAULT_CROP_RECT_OPTION,
   DEFAULT_SETTINGS,
   DEFAULT_THRESHOLD,
-  IMAGE_LABELS,
-  OCR_LABELS,
   type OutputPackFailure,
   type Settings,
   SettingsSchema,
@@ -140,7 +138,6 @@ export function calculateValue(
   }
 }
 
-import * as R from "remeda";
 import { normalizeTexts } from "./asb/ocr/normalize.js";
 export function calculateLevel(
   input: InputForCalculateLevel,
@@ -195,39 +192,16 @@ export function extractTexts(
   const croppedImages = cropOcrImages(sourceImg, threshold, cropRects);
   const extractedPromiseTexs = extractOcrPromiseTexts(manager, croppedImages);
 
-  const result = R.fromKeys(OCR_LABELS, (ocrLabel) => ({
-    cropRects: cropRects[ocrLabel],
-    croppedImages: R.fromKeys(
-      IMAGE_LABELS,
-      (imgLabel) => croppedImages[ocrLabel][imgLabel],
-    ),
-    extractedPromiseTexs: R.fromKeys(
-      IMAGE_LABELS,
-      (imgLabel) => extractedPromiseTexs[ocrLabel][imgLabel],
-    ),
-  }));
-
   const resultPromise = extractOcrTexts(extractedPromiseTexs).then(
-    (extractedTexs) => {
-      const { normalizedTexts, logs } = normalizeTexts(extractedTexs);
-      return R.fromKeys(OCR_LABELS, (ocrLabel) => ({
-        cropRects: cropRects[ocrLabel],
-        croppedImages: R.fromKeys(
-          IMAGE_LABELS,
-          (imgLabel) => croppedImages[ocrLabel][imgLabel],
-        ),
-        extractedTexs: R.fromKeys(
-          IMAGE_LABELS,
-          (imgLabel) => extractedTexs[ocrLabel][imgLabel],
-        ),
-        normalizedTexts: normalizedTexts[ocrLabel],
-        log: logs[ocrLabel],
-      }));
-    },
+    (extractedTexs) => normalizeTexts(extractedTexs),
   );
 
   return {
-    result,
+    result: {
+      cropRects,
+      croppedImages,
+      extractedPromiseTexs,
+    },
     resultPromise,
   };
 }

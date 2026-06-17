@@ -12,6 +12,7 @@ import {
   DEFAULT_CROP_RECT_OPTION,
   type ExtractTextsOutput,
   extractTexts,
+  OCR_LABELS,
   type OcrLabel,
 } from "asb-ts";
 import { Suspense, use, useEffect, useRef, useState } from "react";
@@ -107,8 +108,8 @@ function OcrComponent() {
           ctx.lineWidth = 5;
           ctx.strokeRect(x, y, width, height);
         };
-        Object.entries(result.result).forEach(([_, { cropRects }]) => {
-          strokeRect(cropRects);
+        Object.entries(result.result.cropRects).forEach(([_, cropRect]) => {
+          strokeRect(cropRect);
         });
 
         setOcrResult(result);
@@ -192,67 +193,89 @@ function OcrComponent() {
           </Switch.Content>
         </Switch>
         {ocrResult && (
-          <Table>
-            <Table.ScrollContainer>
-              <Table.Content aria-label="Example table">
-                <Table.Header>
-                  <Table.Column>label</Table.Column>
-                  <Table.Column>original</Table.Column>
-                  <Table.Column>grayscale</Table.Column>
-                  <Table.Column>binary</Table.Column>
-                  <Table.Column>normarized</Table.Column>
-                  {showLog && <Table.Column>log</Table.Column>}
-                </Table.Header>
-                <Table.Body>
-                  {R.entries(ocrResult.result).map(([ol, ov]) => (
-                    <Table.Row key={ol}>
-                      <Table.Cell>{ol}</Table.Cell>
-                      {R.entries(ov.croppedImages).map(([il, iv]) => (
-                        <Table.Cell key={il}>
-                          <div>
-                            <img
-                              src={iv.toDataURL()}
-                              aria-label="cropped image"
-                            />
-                            <span>
-                              <Suspense fallback={<div>抽出中...</div>}>
-                                <ShowExtractedText
-                                  textPromise={ov.extractedPromiseTexs[il]}
-                                ></ShowExtractedText>
-                              </Suspense>
-                            </span>
-                          </div>
-                        </Table.Cell>
-                      ))}
-                      <Table.Cell>
-                        <span>
-                          <Suspense fallback={<div>待機中...</div>}>
-                            <ShowNormalizedText
-                              resultPromise={ocrResult.resultPromise}
-                              ol={ol}
-                            ></ShowNormalizedText>
-                          </Suspense>
-                        </span>
-                      </Table.Cell>
-                      {showLog && (
+          <>
+            <Suspense fallback={<div>待機中...</div>}>
+              <ShowType resultPromise={ocrResult.resultPromise}></ShowType>
+            </Suspense>
+            <Suspense fallback={<div>待機中...</div>}>
+              <ShowWithDome
+                resultPromise={ocrResult.resultPromise}
+              ></ShowWithDome>
+            </Suspense>
+            <Suspense fallback={<div>待機中...</div>}>
+              <ShowWithDomeLog
+                resultPromise={ocrResult.resultPromise}
+              ></ShowWithDomeLog>
+            </Suspense>
+            <Table>
+              <Table.ScrollContainer>
+                <Table.Content aria-label="Example table">
+                  <Table.Header>
+                    <Table.Column isRowHeader>label</Table.Column>
+                    <Table.Column>original</Table.Column>
+                    <Table.Column>grayscale</Table.Column>
+                    <Table.Column>binary</Table.Column>
+                    <Table.Column>normarized</Table.Column>
+                    {showLog && <Table.Column>log</Table.Column>}
+                  </Table.Header>
+                  <Table.Body>
+                    {OCR_LABELS.map((ol) => (
+                      <Table.Row key={ol}>
+                        <Table.Cell>{ol}</Table.Cell>
+                        {R.entries(ocrResult.result.croppedImages[ol]).map(
+                          ([il, iv]) => (
+                            <Table.Cell key={il}>
+                              <div>
+                                <img
+                                  src={iv.toDataURL()}
+                                  aria-label="cropped image"
+                                />
+                                {R.entries(
+                                  ocrResult.result.extractedPromiseTexs[ol],
+                                ).map(([et, ev]) => (
+                                  <p key={et}>
+                                    {`${et}: `}
+                                    <Suspense fallback={<div>抽出中...</div>}>
+                                      <ShowExtractedText
+                                        textPromise={ev[il]}
+                                      ></ShowExtractedText>
+                                    </Suspense>
+                                  </p>
+                                ))}
+                              </div>
+                            </Table.Cell>
+                          ),
+                        )}
                         <Table.Cell>
                           <span>
                             <Suspense fallback={<div>待機中...</div>}>
-                              <ShowLog
+                              <ShowNormalizedText
                                 resultPromise={ocrResult.resultPromise}
                                 ol={ol}
-                              ></ShowLog>
+                              ></ShowNormalizedText>
                             </Suspense>
                           </span>
                         </Table.Cell>
-                      )}
-                    </Table.Row>
-                  ))}
-                </Table.Body>
-              </Table.Content>
-            </Table.ScrollContainer>
-            <Table.Footer>{/* Optional footer content */}</Table.Footer>
-          </Table>
+                        {showLog && (
+                          <Table.Cell>
+                            <span>
+                              <Suspense fallback={<div>待機中...</div>}>
+                                <ShowLog
+                                  resultPromise={ocrResult.resultPromise}
+                                  ol={ol}
+                                ></ShowLog>
+                              </Suspense>
+                            </span>
+                          </Table.Cell>
+                        )}
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table.Content>
+              </Table.ScrollContainer>
+              <Table.Footer>{/* Optional footer content */}</Table.Footer>
+            </Table>
+          </>
         )}
       </section>
     </div>
@@ -271,7 +294,7 @@ function ShowNormalizedText({
   resultPromise: ExtractTextsOutput["resultPromise"];
   ol: OcrLabel;
 }) {
-  const result = use(resultPromise)[ol].normalizedTexts;
+  const result = use(resultPromise).normalizedTexts[ol];
   return (
     <div>
       <p>{result.type}</p>
@@ -287,10 +310,47 @@ function ShowLog({
   resultPromise: ExtractTextsOutput["resultPromise"];
   ol: OcrLabel;
 }) {
-  const logList = use(resultPromise)[ol].log;
+  const logList = use(resultPromise).logs[ol];
   return (
     <div>
       {logList.map((log, i) => {
+        return (
+          <p
+            key={log.action}
+          >{`${i}| ${log.isValibotError ? `error: ${JSON.stringify(log.flatError, null, 2)}` : `action: ${log.action}, output: ${log.output}`}`}</p>
+        );
+      })}
+    </div>
+  );
+}
+
+function ShowType({
+  resultPromise,
+}: {
+  resultPromise: ExtractTextsOutput["resultPromise"];
+}) {
+  const type = use(resultPromise).type;
+  return <p>{type}</p>;
+}
+
+function ShowWithDome({
+  resultPromise,
+}: {
+  resultPromise: ExtractTextsOutput["resultPromise"];
+}) {
+  const withDom = use(resultPromise).withDom;
+  return <p>{JSON.stringify(withDom)}</p>;
+}
+
+function ShowWithDomeLog({
+  resultPromise,
+}: {
+  resultPromise: ExtractTextsOutput["resultPromise"];
+}) {
+  const withDomLog = use(resultPromise).withDomLog;
+  return (
+    <div>
+      {withDomLog.map((log, i) => {
         return (
           <p
             key={log.action}
