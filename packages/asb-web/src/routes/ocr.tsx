@@ -271,8 +271,13 @@ function ShowNormalizedText({
   resultPromise: ExtractTextsOutput["resultPromise"];
   ol: OcrLabel;
 }) {
-  const text = use(resultPromise)[ol].normalizedTexts;
-  return <span>{text}</span>;
+  const result = use(resultPromise)[ol].normalizedTexts;
+  return (
+    <div>
+      <p>{result.type}</p>
+      <p>{JSON.stringify(result.text)}</p>
+    </div>
+  );
 }
 
 function ShowLog({

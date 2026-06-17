@@ -1,6 +1,6 @@
 import type * as v from "valibot";
 import type { Imprinting, TotalLevel } from "./calculator.js";
-import { StatsNames } from "./stats-name.js";
+import { type StatsName, StatsNames } from "./stats-name.js";
 
 /////////////////////////////////////////////////////////
 
@@ -121,14 +121,36 @@ export type ExtractedTextRecord = ImageRecord<string>;
 
 /////////////////////////////////////////////////////////
 
+export const NORMALIZE_TYPE_LABELS = [
+  ...OCR_COMMON_LABELS,
+  "stat_name",
+  ...DISPLAY_STAT_NAME_LABELS,
+] as const;
+export type NormalizeTypeLabel = (typeof NORMALIZE_TYPE_LABELS)[number];
+
+export type NormalizeType<T extends NormalizeTypeLabel> = T extends "name"
+  ? string
+  : T extends "level"
+    ? TotalLevel
+    : T extends "stat_name"
+      ? DisplayStatNameLabel
+      : T extends StatsName
+        ? number
+        : Imprinting;
+
+export type NormalizeResult<T extends NormalizeTypeLabel> = {
+  type: T;
+  text: NormalizeType<T> | null;
+};
+
 export type OcrNormalizedTextRecord = {
   [K in OcrLabel]: K extends "name"
-    ? string | null
+    ? NormalizeResult<"name">
     : K extends "level"
-      ? TotalLevel | null
+      ? NormalizeResult<"level">
       : K extends OcrStatNameLabel
-        ? DisplayStatNameLabel | null
-        : (number | Imprinting) | null;
+        ? NormalizeResult<"stat_name">
+        : NormalizeResult<DisplayStatNameLabel>;
 };
 
 export type OcrNormalizeLogRecord = OcrRecord<LogDetail[]>;
