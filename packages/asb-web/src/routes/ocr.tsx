@@ -182,16 +182,18 @@ function OcrComponent() {
       <section>
         <h3>結果</h3>
         <p>{`OCRステータス: ${status}, 完了/全量 ${completeCnt}/${requestCnt}`}</p>
-        <Switch isSelected={showLog} onChange={setShowLog}>
-          <Switch.Content>
-            <Switch.Control>
-              <Switch.Thumb>
-                <Switch.Icon /> {/* Optional */}
-              </Switch.Thumb>
-            </Switch.Control>
-            logを表示する
-          </Switch.Content>
-        </Switch>
+        <div className="flex gap-2">
+          <Switch isSelected={showLog} onChange={setShowLog}>
+            <Switch.Content>
+              <Switch.Control>
+                <Switch.Thumb>
+                  <Switch.Icon /> {/* Optional */}
+                </Switch.Thumb>
+              </Switch.Control>
+            </Switch.Content>
+          </Switch>
+          <span>logを表示する</span>
+        </div>
         {ocrResult && (
           <>
             <div className="flex gap-1">
