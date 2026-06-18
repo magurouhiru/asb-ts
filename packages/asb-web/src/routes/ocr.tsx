@@ -194,8 +194,8 @@ function OcrComponent() {
         </Switch>
         {ocrResult && (
           <>
-            <div>
-              {`type: `}
+            <div className="flex gap-1">
+              {`type:`}
               <Suspense fallback={<div>待機中...</div>}>
                 <ShowType resultPromise={ocrResult.resultPromise}></ShowType>
               </Suspense>

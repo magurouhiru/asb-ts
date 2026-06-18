@@ -12,7 +12,7 @@ export function OcrProvider({ children }: { children: React.ReactNode }) {
   const [completeCnt, setCompleteCnt] = useState<number>(0);
   // useRef を使って、Reactの再描画でもインスタンスが絶対に1つに保たれるようにする
   const ocrQueueRef = useRef(
-    new OcrQueueManager(["jpn"], undefined, undefined, 4, (s, rCnt, cCnt) => {
+    new OcrQueueManager(["jpn"], undefined, undefined, 2, (s, rCnt, cCnt) => {
       setStatus(s);
       setRequestCnt(rCnt);
       setCompleteCnt(cCnt);

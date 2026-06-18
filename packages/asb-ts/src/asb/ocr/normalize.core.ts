@@ -154,18 +154,18 @@ export const preRemoveSpace: PreProcessLogic = ({ texts }: PreInput) => ({
   param: spaceString,
 });
 
-export const preRemoveSplitChar: PreProcessLogic = ({ texts }: PreInput) => ({
-  action: "preRemoveSplittedChar",
-  output: R.mapValues(texts, (text) => removeSplitCharCore(text)),
+export const preRemoveSplit1: PreProcessLogic = ({ texts }: PreInput) => ({
+  action: "preRemoveSplit1",
+  output: R.mapValues(texts, (text) => removeSplitChar1(text)),
   param: spaceString,
 });
 
-function removeSplitCharCore(text: string): string {
+function removeSplitChar1(text: string): string {
   const split = text.split(" ");
   if (split.length === 1) {
     return text;
   } else {
-    return split.filter((s) => s.length !== 1).join(" ");
+    return split.filter((s) => s !== "1").join(" ");
   }
 }
 

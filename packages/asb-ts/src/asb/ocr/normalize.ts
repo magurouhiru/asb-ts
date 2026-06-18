@@ -55,6 +55,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
     "level",
     "level",
     v.pipe(
+      c.PreProcessSchema(c.preRemoveSplit1, logs.level),
       c.PreProcessSchema(c.preRemoveSpace, logs.level),
       c.ToSelectInputSchema,
       c.SelectProcessSchema(c.selectTextIfMatchTotalLevelRegExp, logs.level),
@@ -74,6 +75,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
       "stat_name",
       "statName",
       v.pipe(
+        c.PreProcessSchema(c.preRemoveSplit1, logs[label]),
         c.PreProcessSchema(c.preRemoveSpace, logs[label]),
         c.ToSelectInputSchema,
         c.SelectProcessSchema(c.selectTextIfExactMatchStatName, logs[label]),
@@ -99,7 +101,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
             nt,
             "statValue",
             v.pipe(
-              c.PreProcessSchema(c.preRemoveSplitChar, logs[label]),
+              c.PreProcessSchema(c.preRemoveSplit1, logs[label]),
               c.PreProcessSchema(c.preRemoveSpace, logs[label]),
               c.ToSelectInputSchema,
               c.SelectProcessSchema(c.selectIf_nn_dot_n_parcent, logs[label]),
@@ -121,7 +123,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
               nt,
               "statValue",
               v.pipe(
-                c.PreProcessSchema(c.preRemoveSplitChar, logs[label]),
+                c.PreProcessSchema(c.preRemoveSplit1, logs[label]),
                 c.PreProcessSchema(c.preRemoveSpace, logs[label]),
                 c.ToSelectInputSchema,
                 c.SelectProcessSchema(c.selectIf_nn_dot_n_parcent, logs[label]),
@@ -146,7 +148,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
               nt,
               "statValue",
               v.pipe(
-                c.PreProcessSchema(c.preRemoveSplitChar, logs[label]),
+                c.PreProcessSchema(c.preRemoveSplit1, logs[label]),
                 c.PreProcessSchema(c.preRemoveSpace, logs[label]),
                 c.ToSelectInputSchema,
                 c.SelectProcessSchema(c.selectIfDiffSlash, logs[label]),
@@ -194,7 +196,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
           "withDom",
           "statValue",
           v.pipe(
-            c.PreProcessSchema(c.preRemoveSplitChar, withDomLog),
+            c.PreProcessSchema(c.preRemoveSplit1, withDomLog),
             c.PreProcessSchema(c.preRemoveSpace, withDomLog),
             c.ToSelectInputSchema,
             c.SelectProcessSchema(c.selectIfDiffSlash, withDomLog),
