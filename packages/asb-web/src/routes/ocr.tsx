@@ -226,13 +226,13 @@ function OcrComponent() {
                                 {R.entries(
                                   ocrResult.result.extractedPromiseTexs[ol],
                                 ).map(([et, ev]) => (
-                                  <p key={et}>
+                                  <div key={et}>
                                     <Suspense fallback={<div>待機中...</div>}>
                                       <ShowExtractedText
                                         textPromise={ev[il]}
                                       ></ShowExtractedText>
                                     </Suspense>
-                                  </p>
+                                  </div>
                                 ))}
                               </div>
                             </Table.Cell>
@@ -277,13 +277,13 @@ function OcrComponent() {
                               ocrResult.result.extractedPromiseTexs.stat_name_0,
                             ).map(([et, ev]) =>
                               et === "statValue" ? (
-                                <p key={et}>
+                                <div key={et}>
                                   <Suspense fallback={<div>待機中...</div>}>
                                     <ShowExtractedText
                                       textPromise={ev[il]}
                                     ></ShowExtractedText>
                                   </Suspense>
-                                </p>
+                                </div>
                               ) : undefined,
                             )}
                           </div>
@@ -337,8 +337,8 @@ function ShowNormalizedText({
   const result = use(resultPromise).normalizedTexts[ol];
   return (
     <div>
-      <p>{result.type}</p>
-      <p>{JSON.stringify(result.text)}</p>
+      <div>{result.type}</div>
+      <div>{JSON.stringify(result.text)}</div>
     </div>
   );
 }
@@ -355,9 +355,9 @@ function ShowLog({
     <div>
       {logList.map((log, i) => {
         return (
-          <p
+          <div
             key={log.action}
-          >{`${i}| ${log.isValibotError ? `error: ${JSON.stringify(log.flatError, null, 2)}` : `action: ${log.action}, output: ${log.output}`}`}</p>
+          >{`${i}| ${log.isValibotError ? `error: ${JSON.stringify(log.flatError, null, 2)}` : `action: ${log.action}, output: ${log.output}`}`}</div>
         );
       })}
     </div>
@@ -380,12 +380,10 @@ function ShowWithDome({
 }) {
   const result = use(resultPromise).withDom;
   return (
-    <p>
-      <div>
-        <p>{result.type}</p>
-        <p>{JSON.stringify(result.text)}</p>
-      </div>
-    </p>
+    <div>
+      <div>{result.type}</div>
+      <div>{JSON.stringify(result.text)}</div>
+    </div>
   );
 }
 
@@ -399,9 +397,9 @@ function ShowWithDomeLog({
     <div>
       {withDomLog.map((log, i) => {
         return (
-          <p
+          <div
             key={log.action}
-          >{`${i}| ${log.isValibotError ? `error: ${JSON.stringify(log.flatError, null, 2)}` : `action: ${log.action}, output: ${log.output}`}`}</p>
+          >{`${i}| ${log.isValibotError ? `error: ${JSON.stringify(log.flatError, null, 2)}` : `action: ${log.action}, output: ${log.output}`}`}</div>
         );
       })}
     </div>
