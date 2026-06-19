@@ -275,7 +275,7 @@ export const STATS_POSITION_NAME_COMBINATIONS: StatsPositionCombinationName[] =
       },
     },
     {
-      type: "dom",
+      type: "bred",
       hasOxygen: true,
       comb: {
         stat_name_0: null,
@@ -292,7 +292,7 @@ export const STATS_POSITION_NAME_COMBINATIONS: StatsPositionCombinationName[] =
       },
     },
     {
-      type: "dom",
+      type: "bred",
       hasOxygen: false,
       comb: {
         stat_name_0: null,

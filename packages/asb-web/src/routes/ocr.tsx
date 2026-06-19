@@ -450,7 +450,7 @@ function ShowLink({
         withDom: String(result.withDom.text),
       }}
     >
-      個体値↔レベル
+      レベル算出
     </Link>
   );
 }

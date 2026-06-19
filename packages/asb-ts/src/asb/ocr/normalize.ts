@@ -83,6 +83,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
       v.pipe(
         c.PreProcessSchema(c.preRemoveSplit1, logs[label]),
         c.PreProcessSchema(c.preRemoveSpace, logs[label]),
+        c.PreProcessSchema(c.preRemoveSameChar, logs[label]),
         c.ToSelectInputSchema,
         c.SelectProcessSchema(c.selectTextIfExactMatchStatName, logs[label]),
         c.SelectProcessSchema(c.selectTextIfPpartialMatchStatName, logs[label]),

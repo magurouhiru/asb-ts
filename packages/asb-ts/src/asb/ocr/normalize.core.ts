@@ -169,6 +169,16 @@ function removeSplitChar1(text: string): string {
   }
 }
 
+export const preRemoveSameChar: PreProcessLogic = ({ texts }: PreInput) => ({
+  action: "preRemoveSameChar",
+  output: R.mapValues(texts, (text) => removeSameChar(text)),
+  param: spaceString,
+});
+
+function removeSameChar(text: string): string {
+  return text.split("").reduce((acc, c) => acc.replaceAll(c, "") + c, text);
+}
+
 export const selectIfSameString: SelectProcessLogic = (input: SelectInput) => {
   const { original, grayscale, binary } = input.texts;
   let output: ImageLabel | null = null;
