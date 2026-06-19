@@ -6,7 +6,7 @@ import {
   Table,
   toast,
 } from "@heroui/react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   type CropRect,
   DEFAULT_CROP_RECT_OPTION,
@@ -181,6 +181,14 @@ function OcrComponent() {
 
       <section>
         <h3>結果</h3>
+        <div className="flex gap-2">
+          <span>レベル算出リンク:</span>
+          {ocrResult && (
+            <Suspense fallback={<div>待機中...</div>}>
+              <ShowLink resultPromise={ocrResult.resultPromise}></ShowLink>
+            </Suspense>
+          )}
+        </div>
         <p>{`OCRステータス: ${status}, 完了/全量 ${completeCnt}/${requestCnt}`}</p>
         <div className="flex gap-2">
           <Switch isSelected={showLog} onChange={setShowLog}>
@@ -405,5 +413,44 @@ function ShowWithDomeLog({
         );
       })}
     </div>
+  );
+}
+
+function ShowLink({
+  resultPromise,
+}: {
+  resultPromise: ExtractTextsOutput["resultPromise"];
+}) {
+  const result = use(resultPromise);
+  return (
+    <Link
+      to="/calc"
+      search={{
+        mode: "value->level",
+        type: result.type,
+        n: result.normalizedTexts.name.text ?? "",
+
+        h: result.values.health,
+        s: result.values.stamina,
+        o: result.values.oxygen,
+        f: result.values.food,
+
+        wtr: result.values.water,
+        temp: result.values.temperature,
+        w: result.values.weight,
+        m: result.values.meleeDamageMultiplier,
+
+        spd: result.values.speedMultiplier,
+        tempf: result.values.temperatureFortitude,
+        crft: result.values.craftingSpeedMultiplier,
+        t: result.values.torpidity,
+
+        i: result.imprinting,
+        level: result.normalizedTexts.level.text ?? 0,
+        withDom: String(result.withDom.text),
+      }}
+    >
+      レベル算出
+    </Link>
   );
 }

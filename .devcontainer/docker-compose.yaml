@@ -6,8 +6,6 @@ services:
     tty: true
     volumes:
       - ..:/home/vscode/app
-    networks:
-      - shared-ai-net
 
 # 使わないときはコメントアウト
 #   ollama:

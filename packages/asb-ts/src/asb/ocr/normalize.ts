@@ -3,6 +3,7 @@ import * as v from "valibot";
 import {
   DISPLAY_STAT_NAME_LABELS,
   type ExtractType,
+  type Imprinting,
   ImprintingSchema,
   type LogDetail,
   type NormalizeResult,
@@ -19,9 +20,12 @@ import {
   type OcrStatValueLabel,
   PositiveValueSchema,
   STATS_POSITION_NAME_COMBINATIONS,
+  StatsNames,
   type StatsPositionCombinationValue,
   TotalLevelSchema,
   type Type,
+  type Values,
+  WILD_IMP,
 } from "../types/index.js";
 import * as c from "./normalize.core.js";
 
@@ -30,6 +34,8 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
   type: Type;
   withDom: NormalizeResult<"withDom">;
   withDomLog: LogDetail[];
+  values: Values;
+  imprinting: Imprinting;
   logs: OcrNormalizeLogRecord;
 } {
   const logs: OcrNormalizeLogRecord = R.fromKeys(OCR_LABELS, () => []);
@@ -77,6 +83,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
       v.pipe(
         c.PreProcessSchema(c.preRemoveSplit1, logs[label]),
         c.PreProcessSchema(c.preRemoveSpace, logs[label]),
+        c.PreProcessSchema(c.preRemoveSameChar, logs[label]),
         c.ToSelectInputSchema,
         c.SelectProcessSchema(c.selectTextIfExactMatchStatName, logs[label]),
         c.SelectProcessSchema(c.selectTextIfPpartialMatchStatName, logs[label]),
@@ -90,100 +97,116 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
 
   const { type, comb } = selectStatsPositionCombinationName(ocrStatNames);
 
+  let imprinting = WILD_IMP;
+
   const ocrStatValues = R.fromKeys(OCR_STAT_VALUE_LABELS, (label) => {
     const nt = comb[label];
-    return nt === null
-      ? normalizeText(ocrTexts[label], logs[label], nt, "default", v.null())
-      : nt === "imprinting"
-        ? normalizeText(
-            ocrTexts[label],
-            logs[label],
-            nt,
-            "statValue",
-            v.pipe(
-              c.PreProcessSchema(c.preRemoveSplit1, logs[label]),
-              c.PreProcessSchema(c.preRemoveSpace, logs[label]),
-              c.ToSelectInputSchema,
-              c.SelectProcessSchema(c.selectIf_nn_dot_n_parcent, logs[label]),
-              c.SelectProcessSchema(c.selectIf_nn_parcent, logs[label]),
-              c.SelectProcessSchema(c.selectIfSameString, logs[label]),
-              c.SelectProcessSchema(c.selectFallback, logs[label]),
-              c.ToNormalizeInputSchema,
-              c.NormalizeProcessSchema(c.normalizeRemoveParcet, logs[label]),
-              c.ToStringSchema,
-              v.toNumber(),
-              v.transform((input) => input / 100),
-              ImprintingSchema,
+    switch (nt) {
+      case null: {
+        return normalizeText(
+          ocrTexts[label],
+          logs[label],
+          nt,
+          "default",
+          v.null(),
+        );
+      }
+      case "imprinting": {
+        const tmpImp = normalizeText(
+          ocrTexts[label],
+          logs[label],
+          nt,
+          "statValue",
+          v.pipe(
+            c.PreProcessSchema(c.preRemoveSplit1, logs[label]),
+            c.PreProcessSchema(c.preRemoveSpace, logs[label]),
+            c.ToSelectInputSchema,
+            c.SelectProcessSchema(c.selectIf_nn_dot_n_parcent, logs[label]),
+            c.SelectProcessSchema(c.selectIf_nn_parcent, logs[label]),
+            c.SelectProcessSchema(c.selectIfSameString, logs[label]),
+            c.SelectProcessSchema(c.selectFallback, logs[label]),
+            c.ToNormalizeInputSchema,
+            c.NormalizeProcessSchema(c.normalizeRemoveParcet, logs[label]),
+            c.ToStringSchema,
+            v.toNumber(),
+            v.transform((input) => input / 100),
+            ImprintingSchema,
+          ),
+        );
+        if (tmpImp.text !== null) {
+          imprinting = tmpImp.text;
+        }
+        return tmpImp;
+      }
+      case "meleeDamageMultiplier": {
+        return normalizeText(
+          ocrTexts[label],
+          logs[label],
+          nt,
+          "statValue",
+          v.pipe(
+            c.PreProcessSchema(c.preRemoveSplit1, logs[label]),
+            c.PreProcessSchema(c.preRemoveSpace, logs[label]),
+            c.ToSelectInputSchema,
+            c.SelectProcessSchema(c.selectIf_nn_dot_n_parcent, logs[label]),
+            c.SelectProcessSchema(c.selectIf_nn_parcent, logs[label]),
+            c.SelectProcessSchema(c.selectIfSameString, logs[label]),
+            c.SelectProcessSchema(c.selectFallback, logs[label]),
+            c.ToNormalizeInputSchema,
+            c.NormalizeProcessSchema(c.normalizeRemoveParcet, logs[label]),
+            c.NormalizeProcessSchema(
+              c.normalizeAddDotIfNotExistDot,
+              logs[label],
             ),
-          )
-        : nt === "meleeDamageMultiplier"
-          ? normalizeText(
-              ocrTexts[label],
+            c.ToStringSchema,
+            v.toNumber(),
+            v.transform((input) => input / 100),
+            PositiveValueSchema,
+          ),
+        );
+      }
+      default: {
+        return normalizeText(
+          ocrTexts[label],
+          logs[label],
+          nt,
+          "statValue",
+          v.pipe(
+            c.PreProcessSchema(c.preRemoveSplit1, logs[label]),
+            c.PreProcessSchema(c.preRemoveSpace, logs[label]),
+            c.ToSelectInputSchema,
+            c.SelectProcessSchema(c.selectIfDiffSlash, logs[label]),
+            c.SelectProcessSchema(
+              c.selectIf_nn_dot_n_slash_nn_dot_n,
               logs[label],
-              nt,
-              "statValue",
-              v.pipe(
-                c.PreProcessSchema(c.preRemoveSplit1, logs[label]),
-                c.PreProcessSchema(c.preRemoveSpace, logs[label]),
-                c.ToSelectInputSchema,
-                c.SelectProcessSchema(c.selectIf_nn_dot_n_parcent, logs[label]),
-                c.SelectProcessSchema(c.selectIf_nn_parcent, logs[label]),
-                c.SelectProcessSchema(c.selectIfSameString, logs[label]),
-                c.SelectProcessSchema(c.selectFallback, logs[label]),
-                c.ToNormalizeInputSchema,
-                c.NormalizeProcessSchema(c.normalizeRemoveParcet, logs[label]),
-                c.NormalizeProcessSchema(
-                  c.normalizeAddDotIfNotExistDot,
-                  logs[label],
-                ),
-                c.ToStringSchema,
-                v.toNumber(),
-                v.transform((input) => input / 100),
-                PositiveValueSchema,
-              ),
-            )
-          : normalizeText(
-              ocrTexts[label],
+            ),
+            c.SelectProcessSchema(c.selectIf_nn_dot_n_7_nn_dot_n, logs[label]),
+            c.SelectProcessSchema(c.selectIfSameString, logs[label]),
+            c.SelectProcessSchema(c.selectFallback, logs[label]),
+            c.ToNormalizeInputSchema,
+            c.NormalizeProcessSchema(
+              c.normalizeSplitIf_nn_dot_n_slash_nn_dot_n,
               logs[label],
-              nt,
-              "statValue",
-              v.pipe(
-                c.PreProcessSchema(c.preRemoveSplit1, logs[label]),
-                c.PreProcessSchema(c.preRemoveSpace, logs[label]),
-                c.ToSelectInputSchema,
-                c.SelectProcessSchema(c.selectIfDiffSlash, logs[label]),
-                c.SelectProcessSchema(
-                  c.selectIf_nn_dot_n_slash_nn_dot_n,
-                  logs[label],
-                ),
-                c.SelectProcessSchema(
-                  c.selectIf_nn_dot_n_7_nn_dot_n,
-                  logs[label],
-                ),
-                c.SelectProcessSchema(c.selectIfSameString, logs[label]),
-                c.SelectProcessSchema(c.selectFallback, logs[label]),
-                c.ToNormalizeInputSchema,
-                c.NormalizeProcessSchema(
-                  c.normalizeSplitIf_nn_dot_n_slash_nn_dot_n,
-                  logs[label],
-                ),
-                c.NormalizeProcessSchema(
-                  c.normalizeSplitIf_nn_dot_n_7_nn_dot_n,
-                  logs[label],
-                ),
-                c.NormalizeProcessSchema(
-                  c.normalizeSplitIf_nn_dot_n_7_nn,
-                  logs[label],
-                ),
-                c.NormalizeProcessSchema(
-                  c.normalizeAddDotIfNotExistDot,
-                  logs[label],
-                ),
-                c.ToStringSchema,
-                v.toNumber(),
-                PositiveValueSchema,
-              ),
-            );
+            ),
+            c.NormalizeProcessSchema(
+              c.normalizeSplitIf_nn_dot_n_7_nn_dot_n,
+              logs[label],
+            ),
+            c.NormalizeProcessSchema(
+              c.normalizeSplitIf_nn_dot_n_7_nn,
+              logs[label],
+            ),
+            c.NormalizeProcessSchema(
+              c.normalizeAddDotIfNotExistDot,
+              logs[label],
+            ),
+            c.ToStringSchema,
+            v.toNumber(),
+            PositiveValueSchema,
+          ),
+        );
+      }
+    }
   });
 
   const withDomLog: LogDetail[] = [];
@@ -214,6 +237,16 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
           ),
         );
 
+  const values: Values = R.fromKeys(
+    StatsNames,
+    (sn) =>
+      R.pipe(
+        ocrStatValues,
+        R.entries(),
+        R.find(([_, v]) => v.type === sn),
+      )?.[1].text ?? 0,
+  );
+
   return {
     normalizedTexts: {
       name,
@@ -225,6 +258,8 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
     type,
     withDom,
     withDomLog,
+    values,
+    imprinting,
     logs,
   };
 }
