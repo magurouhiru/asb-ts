@@ -4,7 +4,7 @@ import {
   VARIANT_DEFAULT_UNSELECTED,
   VariantSchema,
 } from "../migration/variants/index.js";
-import { StatsNames } from "./stats-name.js";
+import { STAT_LABELS } from "./stat-name.js";
 
 export type StatMultiplierItem = v.InferOutput<typeof StatMultiplierItemSchema>;
 export const StatMultiplierItemSchema = v.object({
@@ -16,11 +16,11 @@ export const StatMultiplierItemSchema = v.object({
 
 export type StatMultiplier = v.InferOutput<typeof StatMultiplierSchema>;
 export const StatMultiplierSchema = v.object(
-  v.entriesFromList(StatsNames, StatMultiplierItemSchema),
+  v.entriesFromList(STAT_LABELS, StatMultiplierItemSchema),
 );
 
-export type Lang = (typeof Langs)[number];
-export const Langs = ["ja"] as const;
+export type Lang = (typeof LANGS)[number];
+export const LANGS = ["ja"] as const;
 
 export type Settings = v.InferOutput<typeof SettingsSchema>;
 export const SettingsSchema = v.object({
@@ -29,7 +29,7 @@ export const SettingsSchema = v.object({
   variants: v.array(VariantSchema),
   variantsUnselected: v.array(VariantSchema),
   mods: v.array(ModNameSchema),
-  lang: v.picklist(Langs),
+  lang: v.picklist(LANGS),
 });
 
 // asbのデフォルト

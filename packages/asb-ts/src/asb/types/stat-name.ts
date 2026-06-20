@@ -1,5 +1,5 @@
-export type StatsName = (typeof StatsNames)[number];
-export const StatsNames = [
+export type StatLabel = (typeof STAT_LABELS)[number];
+export const STAT_LABELS = [
   "health",
   "stamina",
   "oxygen",

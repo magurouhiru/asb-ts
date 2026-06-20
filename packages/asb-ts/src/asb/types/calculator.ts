@@ -1,47 +1,50 @@
 import * as v from "valibot";
-import { PositiveValueSchema } from "./common.js";
+import {
+  PositiveIntegerSchema,
+  type PositiveNumber,
+  PositiveNumberSchema,
+} from "./common.js";
 import { SettingsSchema } from "./settings.js";
 import { SpeciesSchema } from "./species.js";
-import { type StatsName, StatsNames } from "./stats-name.js";
-
-export const LevelSchema = v.pipe(v.number(), v.integer(), v.minValue(0));
+import { STAT_LABELS, type StatLabel } from "./stat-name.js";
 
 export type LevelDetail = v.InferOutput<typeof LevelDetailSchema>;
 export const LevelDetailSchema = v.object({
-  wild: LevelSchema,
-  mut: LevelSchema,
-  dom: LevelSchema,
+  wild: PositiveIntegerSchema,
+  mut: PositiveIntegerSchema,
+  dom: PositiveIntegerSchema,
 });
 
-export type Levels = v.InferOutput<typeof LevelsSchema>;
-export const LevelsSchema = v.object(
-  v.entriesFromList(StatsNames, LevelDetailSchema),
+export type StatLevelsUnsafe = v.InferInput<typeof StatLevelsSchema>;
+export type StatLevels = v.InferOutput<typeof StatLevelsSchema>;
+export const StatLevelsSchema = v.object(
+  v.entriesFromList(STAT_LABELS, v.undefinedable(LevelDetailSchema)),
 );
 
-export type Values = v.InferOutput<typeof ValuesSchema>;
-export const ValuesSchema = v.object(
-  v.entriesFromList(StatsNames, PositiveValueSchema),
+export type StatValuesUnsafe = v.InferInput<typeof StatValuesSchema>;
+export type StatValues = v.InferOutput<typeof StatValuesSchema>;
+export const StatValuesSchema = v.object(
+  v.entriesFromList(STAT_LABELS, v.undefinedable(PositiveNumberSchema)),
 );
 
-export type Type = (typeof Types)[number];
-export const Types = ["wild", "dom", "bred"] as const;
+export type StatsType = v.InferOutput<typeof StatsTypeSchema>;
+export const STATS_TYPES = ["wild", "dom", "bred"] as const;
+export const StatsTypeSchema = v.picklist(STATS_TYPES);
 
 export type TameEffectiveness = v.InferOutput<typeof TameEffectivenessSchema>;
-export const TE_MIN = 0;
-export const TE_MAX = 1;
+export const TE_MIN = 0 as PositiveNumber;
+export const TE_MAX = 1 as PositiveNumber;
 export const TameEffectivenessSchema = v.pipe(
-  v.number(),
-  v.minValue(TE_MIN),
+  PositiveNumberSchema,
   v.maxValue(TE_MAX),
   v.brand("" as "TameEffectivenessSchema"), // 単品で使いそうなので、v.brandする
 );
 
 export type Imprinting = v.InferOutput<typeof ImprintingSchema>;
-export const IMP_MIN = 0;
-export const IMP_MAX = 1;
+export const IMP_MIN = 0 as PositiveNumber;
+export const IMP_MAX = 1 as PositiveNumber;
 export const ImprintingSchema = v.pipe(
-  v.number(),
-  v.minValue(IMP_MIN),
+  PositiveNumberSchema,
   v.maxValue(IMP_MAX),
   v.brand("" as "ImprintingSchema"), // 単品で使いそうなので、v.brandする
 );
@@ -49,9 +52,7 @@ export const ImprintingSchema = v.pipe(
 export type TotalLevel = v.InferOutput<typeof TotalLevelSchema>;
 export const TL_MIN = 0;
 export const TotalLevelSchema = v.pipe(
-  v.number(),
-  v.integer(),
-  v.minValue(TL_MIN),
+  PositiveIntegerSchema,
   v.brand("" as "TotalLevelSchema"), // 単品で使いそうなので、v.brandする
 );
 
@@ -70,61 +71,75 @@ export const DOM_IMP = IMP_MIN as Imprinting;
 // ブリはテイム効果1で計算する。
 export const BRED_TE = TE_MAX as TameEffectiveness;
 
+export type CalculateValueInputPackUnsafe = v.InferInput<
+  typeof CalculateValueInputPackSchema
+>;
 export type CalculateValueInputPack = v.InferOutput<
   typeof CalculateValueInputPackSchema
 >;
 export const CalculateValueInputPackSchema = v.variant("type", [
   v.object({
-    type: v.literal("wild" satisfies Type),
-    levels: LevelsSchema,
-    tameEffectiveness: TameEffectivenessSchema,
-    imprinting: ImprintingSchema,
+    type: v.literal("wild" satisfies StatsType),
+    levels: StatLevelsSchema,
+    tameEffectiveness: v.pipe(
+      v.number(),
+      v.literal(WILD_TE),
+      TameEffectivenessSchema,
+    ),
+    imprinting: v.pipe(v.number(), v.literal(WILD_IMP), ImprintingSchema),
     species: SpeciesSchema,
     settings: SettingsSchema,
   }),
   v.object({
-    type: v.literal("dom" satisfies Type),
-    levels: LevelsSchema,
+    type: v.literal("dom" satisfies StatsType),
+    levels: StatLevelsSchema,
     tameEffectiveness: TameEffectivenessSchema,
-    imprinting: ImprintingSchema,
+    imprinting: v.pipe(v.number(), v.literal(DOM_IMP), ImprintingSchema),
     species: SpeciesSchema,
     settings: SettingsSchema,
   }),
   v.object({
-    type: v.literal("bred" satisfies Type),
-    levels: LevelsSchema,
-    tameEffectiveness: TameEffectivenessSchema,
+    type: v.literal("bred" satisfies StatsType),
+    levels: StatLevelsSchema,
+    tameEffectiveness: v.pipe(
+      v.literal(BRED_TE),
+      v.toNumber(),
+      TameEffectivenessSchema,
+    ),
     imprinting: ImprintingSchema,
     species: SpeciesSchema,
     settings: SettingsSchema,
   }),
 ]);
 
+export type CalculateLevelInputPackUnsafe = v.InferInput<
+  typeof CalculateLevelInputPackSchema
+>;
 export type CalculateLevelInputPack = v.InferOutput<
   typeof CalculateLevelInputPackSchema
 >;
 export const CalculateLevelInputPackSchema = v.variant("type", [
   v.object({
-    type: v.literal("wild" satisfies Type),
-    values: ValuesSchema,
+    type: v.literal("wild" satisfies StatsType),
+    values: StatValuesSchema,
     withDom: WithDomSchema,
     totalLevel: TotalLevelSchema,
-    imprinting: ImprintingSchema,
+    imprinting: v.pipe(v.number(), v.literal(WILD_IMP), ImprintingSchema),
     species: SpeciesSchema,
     settings: SettingsSchema,
   }),
   v.object({
-    type: v.literal("dom" satisfies Type),
-    values: ValuesSchema,
+    type: v.literal("dom" satisfies StatsType),
+    values: StatValuesSchema,
     withDom: WithDomSchema,
     totalLevel: TotalLevelSchema,
-    imprinting: ImprintingSchema,
+    imprinting: v.pipe(v.number(), v.literal(DOM_IMP), ImprintingSchema),
     species: SpeciesSchema,
     settings: SettingsSchema,
   }),
   v.object({
-    type: v.literal("bred" satisfies Type),
-    values: ValuesSchema,
+    type: v.literal("bred" satisfies StatsType),
+    values: StatValuesSchema,
     withDom: WithDomSchema,
     totalLevel: TotalLevelSchema,
     imprinting: ImprintingSchema,
@@ -132,59 +147,15 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
     settings: SettingsSchema,
   }),
 ]);
-export interface StatsMetaDetail {
-  valueDiff?: number;
-  equalWildMutationRates?: boolean;
-  isMutLevelCalculatedAsZero?: boolean;
-  isDomLevelCalculatedAsZero?: boolean;
-  hasMissingStatsForCalculation?: boolean;
-}
-export type StatsMeta = Partial<Record<StatsName, StatsMetaDetail>>;
 
-export interface Meta {
-  statsMeta: StatsMeta;
-  isTameEffectivenessCalculatedAsZero?: boolean;
-  isTameEffectivenessCalculatedAsOne?: boolean;
-  isImprintingCalculatedAsZero?: boolean;
-  totalLevelDiff?: number;
-  wildLevelDiff?: number;
+export type StatDiff = Record<StatLabel, number | undefined>;
+
+export interface CalculateValueOutputPack {
+  values: StatValues;
 }
 
-export type ErrorType = ["input_error", "internal_error"][number];
-
-export interface ASBError {
-  path: string;
-  message: string;
-}
-
-export interface OutputPackSuccess {
-  status: "success";
-  meta: Meta;
-}
-
-export interface OutputPackFailure {
-  status: "failure";
-  errorType: ErrorType;
-  errors: ASBError[];
-}
-
-export type CalculateValueOutputPack =
-  | CalculateValueOutputPackSuccess
-  | CalculateValueOutputPackFailure;
-
-export interface CalculateValueOutputPackSuccess extends OutputPackSuccess {
-  values: Values;
-}
-
-export interface CalculateValueOutputPackFailure extends OutputPackFailure {}
-
-export type CalculateLevelOutputPack =
-  | CalculateLevelOutputPackSuccess
-  | CalculateLevelOutputPackFailure;
-
-export interface CalculateLevelOutputPackSuccess extends OutputPackSuccess {
-  levels: Levels;
+export interface CalculateLevelOutputPack {
+  levels: StatLevels;
   tameEffectiveness: TameEffectiveness;
+  diffs: StatDiff;
 }
-
-export interface CalculateLevelOutputPackFailure extends OutputPackFailure {}

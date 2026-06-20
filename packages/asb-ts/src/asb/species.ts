@@ -172,8 +172,8 @@ function toStats([
   } satisfies v.InferInput<typeof StatsSchema>);
 }
 
-function toSpeciesStat(row: StatsRow | null): SpeciesStat | null {
-  if (!row) return null;
+function toSpeciesStat(row: StatsRow | null): SpeciesStat | undefined {
+  if (!row) return undefined;
   return v.parse(SpeciesStatSchema, {
     baseValue: row[StatsRawIndexBase],
     incPerWildLevel: row[StatsRawIndexIncPerWildLevel],

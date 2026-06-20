@@ -1,6 +1,6 @@
 import type * as v from "valibot";
-import type { Imprinting, TotalLevel, Type } from "./calculator.js";
-import { type StatsName, StatsNames } from "./stats-name.js";
+import type { Imprinting, StatsType, TotalLevel } from "./calculator.js";
+import { STAT_LABELS, type StatLabel } from "./stat-name.js";
 
 /////////////////////////////////////////////////////////
 
@@ -48,7 +48,7 @@ export type ImageLabel = (typeof IMAGE_LABELS)[number];
 export type OcrRecord<T> = Record<OcrLabel, T>;
 export type ImageRecord<T> = Record<ImageLabel, T>;
 
-export const DISPLAY_STAT_NAME_LABELS = [...StatsNames, "imprinting"] as const;
+export const DISPLAY_STAT_NAME_LABELS = [...STAT_LABELS, "imprinting"] as const;
 export type DisplayStatNameLabel = (typeof DISPLAY_STAT_NAME_LABELS)[number];
 
 export const DISPLAY_STAT_NAME_RECORD: Record<DisplayStatNameLabel, string[]> =
@@ -153,7 +153,7 @@ export type NormalizeType<T extends NormalizeTypeLabel> = T extends "name"
     ? TotalLevel
     : T extends "stat_name"
       ? DisplayStatNameLabel
-      : T extends StatsName
+      : T extends StatLabel
         ? number
         : T extends "imprinting"
           ? Imprinting
@@ -193,13 +193,13 @@ export type LogDetail =
     };
 
 export type StatsPositionCombinationName = {
-  type: Type;
+  type: StatsType;
   hasOxygen: boolean;
   comb: Record<OcrStatNameLabel, DisplayStatNameLabel | null>;
 };
 
 export type StatsPositionCombinationValue = {
-  type: Type;
+  type: StatsType;
   hasOxygen: boolean;
   comb: Record<OcrStatValueLabel, DisplayStatNameLabel | null>;
 };
