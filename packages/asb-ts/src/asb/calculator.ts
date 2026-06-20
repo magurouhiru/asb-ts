@@ -56,7 +56,7 @@ function calculateValueWild(
 ): StatValuesUnsafe {
   return R.mapValues(ip.levels, (ld, sl) => {
     const stat = ip.species.stats[sl];
-    if (ld === undefined || stat === undefined) {
+    if (ld === undefined || stat === undefined || stat.incPerWildLevel === 0) {
       return undefined;
     } else {
       return cVw(
@@ -75,7 +75,7 @@ function calculateValueDomBred(
 ): StatValuesUnsafe {
   return R.mapValues(ip.levels, (ld, sl) => {
     const stat = ip.species.stats[sl];
-    if (ld === undefined || stat === undefined) {
+    if (ld === undefined || stat === undefined || stat.incPerWildLevel === 0) {
       return undefined;
     } else {
       return cV(
@@ -218,7 +218,12 @@ function calculateLevelWild(
 ): [StatLevels, StatDiff] {
   const results = R.mapValues(ip.values, (value, sl) => {
     const stat = ip.species.stats[sl];
-    if (value === undefined || value === 0 || stat === undefined) {
+    if (
+      value === undefined ||
+      value === 0 ||
+      stat === undefined ||
+      stat.incPerWildLevel === 0
+    ) {
       return undefined;
     } else {
       return cLw(sl, value, stat, ip);
@@ -286,7 +291,12 @@ function calculateLevelDomBred(
 ): [StatLevels, StatDiff, number] {
   const cLptResult = R.mapValues(ip.values, (value, sl) => {
     const stat = ip.species.stats[sl];
-    if (value === undefined || stat === undefined) {
+    if (
+      value === undefined ||
+      value === 0 ||
+      stat === undefined ||
+      stat.incPerWildLevel === 0
+    ) {
       return undefined;
     } else {
       return cLpt(sl, value, stat, te, ip);
@@ -318,7 +328,7 @@ function calculateLevelDomBred(
     );
   const [minTotalLevelDiff, minTotalLevelDiffResults] = flatResults.reduce(
     (acc, fr): [number, FlatResult[]] => {
-      const tmpDiff = ip.totalLevel - 1 - calcTotalLevel(fr);
+      const tmpDiff = Math.abs(ip.totalLevel - 1 - calcTotalLevel(fr));
       if (tmpDiff === acc[0]) return [tmpDiff, [...acc[1], fr]];
       else if (tmpDiff < acc[0]) return [tmpDiff, [fr]];
       else return acc;
@@ -364,6 +374,7 @@ function calculateLevelDomBred(
     },
     [Number.MAX_SAFE_INTEGER, []],
   );
+  // targetResults.forEach((result) => console.log(result));
 
   const target = targetResults[0];
   if (target === undefined) {
@@ -492,8 +503,7 @@ function cLpt(
     const tmpDiff = value - round(tmpVpt, sl);
     if (Math.abs(tmpDiff) === Math.abs(buffDiff)) {
       buff.push({ ld: ld, diff: tmpDiff });
-    }
-    if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
+    } else if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
       buffDiff = tmpDiff;
       buff = [{ ld: ld, diff: tmpDiff }];
     }
