@@ -6,50 +6,46 @@ export type ASBTSErrorObject =
   | ASBTSErrorUnknownObject;
 
 export interface ASBTSErrorValibotObject {
-  _tag: "ASBTSError";
-  type: "valibot";
-  flatError: v.FlatErrors<v.GenericSchema>;
+  readonly _tag: "ASBTSError";
+  readonly type: "valibot";
+  readonly flatError: v.FlatErrors<v.GenericSchema>;
 }
 
 export interface ASBTSErrorCommonObject {
-  _tag: "ASBTSError";
-  type: "common";
-  functionName: string;
-  input: object;
-  context?: object;
+  readonly _tag: "ASBTSError";
+  readonly type: "common";
+  readonly functionName: string;
+  readonly input: object;
+  readonly context?: object | undefined;
 }
 
 export interface ASBTSErrorUnknownObject {
-  _tag: "ASBTSError";
-  type: "unknown";
+  readonly _tag: "ASBTSError";
+  readonly type: "unknown";
   // biome-ignore lint/suspicious/noExplicitAny: ちゃんとできていたら使わないけど、念のためanyにして受け取れるようにする。
-  error: any;
+  readonly error: any;
 }
 
-export class ASBTSErrorCommon extends Error {
-  readonly #functionName: string;
-  readonly #input: object;
-  readonly #context?: object;
+export class ASBTSErrorCommon extends Error implements ASBTSErrorCommonObject {
+  public readonly _tag = "ASBTSError";
+  public readonly type = "common";
 
   constructor(
     message: string,
-    functionName: string,
-    input: object,
-    context?: object,
+    public readonly functionName: string,
+    public readonly input: object,
+    public readonly context?: object | undefined,
   ) {
     super(message);
-    this.#functionName = functionName;
-    this.#input = input;
-    if (context !== undefined) this.#context = context;
   }
 
   toObject(): ASBTSErrorCommonObject {
     return {
-      _tag: "ASBTSError",
-      type: "common",
-      functionName: this.#functionName,
-      input: this.#input,
-      ...(this.#context !== undefined ? { context: this.#context } : {}),
+      _tag: this._tag,
+      type: this.type,
+      functionName: this.functionName,
+      input: this.input,
+      ...(this.context !== undefined ? { context: this.context } : {}),
     };
   }
 
@@ -59,4 +55,26 @@ export class ASBTSErrorCommon extends Error {
   }
 }
 
-export function isASBTSErrorCommon(error: any) {}
+export function isASBTSErrorCommonObject(
+  // biome-ignore lint/suspicious/noExplicitAny: 型判定のためなんでも受け取れるようにanyにする
+  error: any,
+): error is ASBTSErrorCommonObject {
+  return (
+    error &&
+    typeof error === "object" &&
+    error._tag === "ASBTSError" &&
+    error.type === "common"
+  );
+}
+
+export function isASBTSErrorCommon(
+  // biome-ignore lint/suspicious/noExplicitAny: 型判定のためなんでも受け取れるようにanyにする
+  error: any,
+): typeof isASBTSErrorCommon {
+  return (
+    error &&
+    typeof error === "object" &&
+    error._tag === "ASBTSError" &&
+    error.type === "common"
+  );
+}
