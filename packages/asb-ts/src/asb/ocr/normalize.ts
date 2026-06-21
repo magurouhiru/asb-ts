@@ -19,23 +19,23 @@ import {
   type OcrNormalizeLogRecord,
   type OcrStatNameLabel,
   type OcrStatValueLabel,
-  PositiveValueSchema,
+  PositiveNumberSchema,
+  STAT_LABELS,
   STATS_POSITION_NAME_COMBINATIONS,
-  StatsNames,
   type StatsPositionCombinationValue,
+  type StatsType,
+  type StatValuesUnsafe,
   TotalLevelSchema,
-  type Type,
-  type Values,
   WILD_IMP,
 } from "../types/index.js";
 import * as c from "./normalize.core.js";
 
 export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
   normalizedTexts: OcrNormalizedTextRecord;
-  type: Type;
+  type: StatsType;
   withDom: NormalizeResult<"withDom">;
   withDomLog: LogDetail[];
-  values: Values;
+  values: StatValuesUnsafe;
   imprinting: Imprinting;
   logs: OcrNormalizeLogRecord;
 } {
@@ -162,7 +162,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
             c.ToStringSchema,
             v.toNumber(),
             v.transform((input) => input / 100),
-            PositiveValueSchema,
+            PositiveNumberSchema,
           ),
         );
       }
@@ -203,7 +203,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
             ),
             c.ToStringSchema,
             v.toNumber(),
-            PositiveValueSchema,
+            PositiveNumberSchema,
           ),
         );
       }
@@ -238,8 +238,8 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
           ),
         );
 
-  const values: Values = R.fromKeys(
-    StatsNames,
+  const values: StatValuesUnsafe = R.fromKeys(
+    STAT_LABELS,
     (sn) =>
       R.pipe(
         ocrStatValues,
