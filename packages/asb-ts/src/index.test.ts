@@ -5,10 +5,31 @@ import {
   createSettings,
   createSpeciesList,
   DEFAULT_SETTINGS,
+  type CalculateLevelInputPackUnsafe,
+  type CalculateLevelOutputPack,
   type StatsType,
 } from "./index.js";
 
 describe("calculateLevel", () => {
+  it.each([[{
+    name:""
+    ip:{
+      type:"wild",
+      values:{        
+        health: 825.0,
+        stamina: 300.0,
+        oxygen: 225.0,
+        food: 6300.0,
+        weight: 445.3,
+        meleeDamageMultiplier: 1.3,
+        torpidity: 985.0,
+      },
+      imprinting:0,
+    }
+  }]] satisfies [
+    { name: string; ip: Pick<CalculateLevelInputPackUnsafe, "values"> },
+    CalculateLevelOutputPack,
+  ][])("calculateLevel - wild - $type:$name", (inputs, expected) => {});
   it.each([
     [
       {

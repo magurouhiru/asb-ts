@@ -17,14 +17,16 @@ export const LevelDetailSchema = v.object({
 
 export type StatLevelsUnsafe = v.InferInput<typeof StatLevelsSchema>;
 export type StatLevels = v.InferOutput<typeof StatLevelsSchema>;
-export const StatLevelsSchema = v.object(
-  v.entriesFromList(STAT_LABELS, v.undefinedable(LevelDetailSchema)),
+export const StatLevelsSchema = v.record(
+  v.picklist(STAT_LABELS),
+  v.undefinedable(LevelDetailSchema),
 );
 
 export type StatValuesUnsafe = v.InferInput<typeof StatValuesSchema>;
 export type StatValues = v.InferOutput<typeof StatValuesSchema>;
-export const StatValuesSchema = v.object(
-  v.entriesFromList(STAT_LABELS, v.undefinedable(PositiveNumberSchema)),
+export const StatValuesSchema = v.record(
+  v.picklist(STAT_LABELS),
+  v.undefinedable(PositiveNumberSchema),
 );
 
 export type StatsType = v.InferOutput<typeof StatsTypeSchema>;
@@ -148,7 +150,7 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
   }),
 ]);
 
-export type StatDiff = Record<StatLabel, number | undefined>;
+export type StatDiff = Partial<Record<StatLabel, number | undefined>>;
 
 export interface CalculateValueOutputPack {
   values: StatValues;
