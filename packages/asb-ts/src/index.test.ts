@@ -248,7 +248,10 @@ describe("calculateLevel", () => {
       withDom: true,
     });
 
-    const { levels, tameEffectiveness } = result;
+    if (!result.isSuccess) {
+      throw new Error();
+    }
+    const { levels, tameEffectiveness } = result.result;
 
     expect(levels.health?.wild).toBe(expected[0]);
     expect(levels.stamina?.wild).toBe(expected[1]);
@@ -506,7 +509,10 @@ describe("calculateLevel", () => {
       withDom: true,
     });
 
-    const { levels, tameEffectiveness } = result;
+    if (!result.isSuccess) {
+      throw new Error();
+    }
+    const { levels, tameEffectiveness } = result.result;
 
     expect(levels.health?.wild).toBe(expected[0]);
     expect(levels.health?.mut).toBe(expected[1]);

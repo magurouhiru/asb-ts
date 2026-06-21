@@ -11,14 +11,20 @@ import {
 } from "./asb/ocr/extract-text.js";
 import type { OcrQueueManager } from "./asb/ocr/manager.js";
 import {
+  type ASBTSErrorCommonObject,
+  type ASBTSErrorObject,
+  type ASBTSErrorUnknownObject,
+  type ASBTSErrorValibotObject,
   CalculateLevelInputPackSchema,
   type CalculateLevelInputPackUnsafe,
   type CalculateLevelOutputPack,
   CalculateValueInputPackSchema,
   type CalculateValueInputPackUnsafe,
+  type CalculateValueOutputPack,
   DEFAULT_CROP_RECT_OPTION,
   DEFAULT_SETTINGS,
   DEFAULT_THRESHOLD,
+  isASBTSErrorCommon,
   type Settings,
   SettingsSchema,
 } from "./asb/types/index.js";
@@ -33,15 +39,76 @@ export * from "./asb/ocr/manager.js";
 export * from "./asb/ocr/normalize.js";
 export { createSpeciesList } from "./asb/species.js";
 
-export function calculateValue(ip: CalculateValueInputPackUnsafe) {
-  return calculateValueController(v.parse(CalculateValueInputPackSchema, ip));
+export type ASBResult<T> = ASBResultSuccess<T> | ASBResultFailure;
+export type ASBResultSuccess<T> = {
+  isSuccess: true;
+  result: T;
+};
+export type ASBResultFailure = {
+  isSuccess: false;
+  error: ASBTSErrorObject;
+};
+
+// biome-ignore lint/suspicious/noExplicitAny: 型判定のためなんでも受け取れるようにanyにする
+function toASBResultFailure(e: any): ASBResultFailure {
+  if (v.isValiError(e)) {
+    return {
+      isSuccess: false,
+      error: {
+        _tag: "ASBTSError",
+        type: "valibot",
+        flatError: v.flatten(e.issues),
+        valiError: e,
+      } satisfies ASBTSErrorValibotObject,
+    };
+  } else if (isASBTSErrorCommon(e)) {
+    return {
+      isSuccess: false,
+      error: {
+        ...e,
+      } satisfies ASBTSErrorCommonObject,
+    };
+  } else {
+    return {
+      isSuccess: false,
+      error: {
+        _tag: "ASBTSError",
+        type: "unknown",
+        error: e,
+      } satisfies ASBTSErrorUnknownObject,
+    };
+  }
+}
+
+export function calculateValue(
+  ip: CalculateValueInputPackUnsafe,
+): ASBResult<CalculateValueOutputPack> {
+  try {
+    return {
+      isSuccess: true,
+      result: calculateValueController(
+        v.parse(CalculateValueInputPackSchema, ip),
+      ),
+    };
+  } catch (e) {
+    return toASBResultFailure(e);
+  }
 }
 
 import { normalizeTexts } from "./asb/ocr/normalize.js";
 export function calculateLevel(
   ip: CalculateLevelInputPackUnsafe,
-): CalculateLevelOutputPack {
-  return calculateLevelController(v.parse(CalculateLevelInputPackSchema, ip));
+): ASBResult<CalculateLevelOutputPack> {
+  try {
+    return {
+      isSuccess: true,
+      result: calculateLevelController(
+        v.parse(CalculateLevelInputPackSchema, ip),
+      ),
+    };
+  } catch (e) {
+    return toASBResultFailure(e);
+  }
 }
 
 export type ExtractTextsOutput = ReturnType<typeof extractTexts>;
@@ -58,32 +125,46 @@ export function extractTexts(
   drmS = DEFAULT_CROP_RECT_OPTION.drmS,
   dhmS = DEFAULT_CROP_RECT_OPTION.dhmS,
   threshold = DEFAULT_THRESHOLD,
-) {
-  const cropRects = calcCropRects(
-    sourceImg.width,
-    sourceImg.height,
-    ymNL,
-    dlmNL,
-    drmNL,
-    dhmNL,
-    ymS,
-    dlmS,
-    drmS,
-    dhmS,
-  );
-  const croppedImages = cropOcrImages(sourceImg, threshold, cropRects);
-  const extractedPromiseTexs = extractOcrPromiseTexts(manager, croppedImages);
-
-  const resultPromise = extractOcrTexts(extractedPromiseTexs).then(
-    (extractedTexs) => normalizeTexts(extractedTexs),
-  );
-
-  return {
-    result: {
-      cropRects,
-      croppedImages,
-      extractedPromiseTexs,
-    },
-    resultPromise,
+): ASBResult<{
+  result: {
+    cropRects: ReturnType<typeof calcCropRects>;
+    croppedImages: ReturnType<typeof cropOcrImages>;
+    extractedPromiseTexs: ReturnType<typeof extractOcrPromiseTexts>;
   };
+  resultPromise: Promise<ReturnType<typeof normalizeTexts>>;
+}> {
+  try {
+    const cropRects = calcCropRects(
+      sourceImg.width,
+      sourceImg.height,
+      ymNL,
+      dlmNL,
+      drmNL,
+      dhmNL,
+      ymS,
+      dlmS,
+      drmS,
+      dhmS,
+    );
+    const croppedImages = cropOcrImages(sourceImg, threshold, cropRects);
+    const extractedPromiseTexs = extractOcrPromiseTexts(manager, croppedImages);
+
+    const resultPromise = extractOcrTexts(extractedPromiseTexs).then(
+      (extractedTexs) => normalizeTexts(extractedTexs),
+    );
+
+    return {
+      isSuccess: true,
+      result: {
+        result: {
+          cropRects,
+          croppedImages,
+          extractedPromiseTexs,
+        },
+        resultPromise,
+      },
+    };
+  } catch (e) {
+    return toASBResultFailure(e);
+  }
 }

@@ -9,6 +9,7 @@ export interface ASBTSErrorValibotObject {
   readonly _tag: "ASBTSError";
   readonly type: "valibot";
   readonly flatError: v.FlatErrors<v.GenericSchema>;
+  readonly valiError: v.ValiError<v.GenericSchema | v.GenericSchemaAsync>;
 }
 
 export interface ASBTSErrorCommonObject {
@@ -22,8 +23,6 @@ export interface ASBTSErrorCommonObject {
 export interface ASBTSErrorUnknownObject {
   readonly _tag: "ASBTSError";
   readonly type: "unknown";
-  readonly functionName: string;
-  readonly input: object;
   // biome-ignore lint/suspicious/noExplicitAny: ちゃんとできていたら使わないけど、念のためanyにして受け取れるようにする。
   readonly error: any;
 }

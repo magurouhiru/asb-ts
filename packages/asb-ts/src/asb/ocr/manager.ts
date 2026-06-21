@@ -101,8 +101,6 @@ export class OcrQueueManager {
         throw {
           _tag: "ASBTSError",
           type: "unknown",
-          functionName: "OcrQueueManager.process",
-          input: { img, params },
           error,
         } satisfies ASBTSErrorUnknownObject;
       });
