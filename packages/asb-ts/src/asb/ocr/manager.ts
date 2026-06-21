@@ -7,7 +7,10 @@ import {
   type WorkerOptions,
   type WorkerParams,
 } from "tesseract.js";
-import type { OcrQueueManagerStatus } from "../types/index.js";
+import type {
+  ASBTSErrorUnknownObject,
+  OcrQueueManagerStatus,
+} from "../types/index.js";
 
 export class OcrQueueManager {
   private queue: Promise<string>[] = [
@@ -95,7 +98,13 @@ export class OcrQueueManager {
         return text;
       })
       .catch((error) => {
-        throw error;
+        throw {
+          _tag: "ASBTSError",
+          type: "unknown",
+          functionName: "OcrQueueManager.process",
+          input: { img, params },
+          error,
+        } satisfies ASBTSErrorUnknownObject;
       });
 
     return this.queue[index];

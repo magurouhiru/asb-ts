@@ -22,6 +22,8 @@ export interface ASBTSErrorCommonObject {
 export interface ASBTSErrorUnknownObject {
   readonly _tag: "ASBTSError";
   readonly type: "unknown";
+  readonly functionName: string;
+  readonly input: object;
   // biome-ignore lint/suspicious/noExplicitAny: ちゃんとできていたら使わないけど、念のためanyにして受け取れるようにする。
   readonly error: any;
 }
@@ -56,6 +58,18 @@ export class ASBTSErrorCommon extends Error implements ASBTSErrorCommonObject {
   }
 }
 
+export function isASBTSErrorValibot(
+  // biome-ignore lint/suspicious/noExplicitAny: 型判定のためなんでも受け取れるようにanyにする
+  error: any,
+): error is ASBTSErrorValibotObject {
+  return (
+    error &&
+    typeof error === "object" &&
+    error._tag === "ASBTSError" &&
+    error.type === "valibot"
+  );
+}
+
 export function isASBTSErrorCommon(
   // biome-ignore lint/suspicious/noExplicitAny: 型判定のためなんでも受け取れるようにanyにする
   error: any,
@@ -65,5 +79,17 @@ export function isASBTSErrorCommon(
     typeof error === "object" &&
     error._tag === "ASBTSError" &&
     error.type === "common"
+  );
+}
+
+export function isASBTSErrorUnknown(
+  // biome-ignore lint/suspicious/noExplicitAny: 型判定のためなんでも受け取れるようにanyにする
+  error: any,
+): error is ASBTSErrorUnknownObject {
+  return (
+    error &&
+    typeof error === "object" &&
+    error._tag === "ASBTSError" &&
+    error.type === "unknown"
   );
 }

@@ -1,5 +1,6 @@
 import * as R from "remeda";
 import * as v from "valibot";
+import { ASBTSErrorCommon } from "./types/error.js";
 import {
   BRED_TE,
   type CalculateLevelInputPack,
@@ -240,6 +241,7 @@ const TARGET_TE_LIST = Array.from(
   { length: TE_MAX * TARGET_TE_LIST_SIZE + 1 },
   (_, i) => v.parse(TameEffectivenessSchema, i / TARGET_TE_LIST_SIZE),
 );
+
 function calculateLevelDom(
   ip: Extract<CalculateLevelInputPack, { type: "dom" }>,
 ): [StatLevels, StatDiff, TameEffectiveness] {
@@ -281,7 +283,11 @@ function calculateLevelDom(
     }
   }
   if (buffLevels === null || buffTe === null || buffDiffs === null)
-    throw new Error("calculateLevelDom で失敗しました。", { cause: "root" });
+    throw new ASBTSErrorCommon(
+      "いい感じのテイム効果が見つからなかったです。",
+      "calculateLevelDom",
+      { ip },
+    );
   return [buffLevels, buffDiffs, buffTe];
 }
 
@@ -378,12 +384,11 @@ function calculateLevelDomBred(
 
   const target = targetResults[0];
   if (target === undefined) {
-    throw new Error("バグです", {
-      cause: {
-        function: "calculateLevelDomBredCore",
-        input: { cLptResult, flatResults, minTotalLevelDiffResults },
-      },
-    });
+    throw new ASBTSErrorCommon(
+      "いい感じのレベルが見つからなかったです。",
+      "calculateLevelDomBred",
+      { te, ip },
+    );
   }
 
   return [
@@ -465,9 +470,11 @@ function cLw(
     }
   }
   if (buffLd === null) {
-    throw new Error("バグです", {
-      cause: { function: "cLw", input: { sl, ip } },
-    });
+    throw new ASBTSErrorCommon(
+      "いい感じの野生のレベルが見つからなかったです。",
+      "calculateLevelDom",
+      { sl, value, stat, ip },
+    );
   }
   return { ld: buffLd, diff: buffDiff };
 }
@@ -512,8 +519,10 @@ function cLpt(
   if (first) {
     return [first, ...buff];
   } else {
-    throw new Error("バグです", {
-      cause: { function: "cLpt", input: { sl, te, ip } },
-    });
+    throw new ASBTSErrorCommon(
+      "いい感じのレベルが見つからなかったです。",
+      "calculateLevelDom",
+      { sl, value, stat, te, ip },
+    );
   }
 }

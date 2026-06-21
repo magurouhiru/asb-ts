@@ -1,4 +1,5 @@
 import * as R from "remeda";
+import { ASBTSErrorCommon } from "../types/error.js";
 import type {
   CroppedImageRecord,
   CropRect,
@@ -13,7 +14,13 @@ export function cropOcrImages(
 ): OcrCroppedImageRecord {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error();
+  if (!ctx) {
+    throw new ASBTSErrorCommon(
+      "Canvas要素のコンテキスト取得に失敗しました。",
+      "cropOcrImages",
+      { sourceImg, threshold, cropRects },
+    );
+  }
   canvas.width = sourceImg.width;
   canvas.height = sourceImg.height;
   ctx.drawImage(sourceImg, 0, 0);
@@ -26,8 +33,9 @@ export function cropOcrImages(
 function cropImages(
   sourceCanvas: HTMLCanvasElement,
   threshold: number,
-  { x, y, width, height }: CropRect,
+  cropRect: CropRect,
 ): CroppedImageRecord {
+  const { x, y, width, height } = cropRect;
   // 1. 各Canvas要素と2Dコンテキストを作成する共通処理
   const createTargetCanvas = (): [
     HTMLCanvasElement,
@@ -37,7 +45,13 @@ function cropImages(
     canvas.width = width;
     canvas.height = height;
     const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("canvas のctx を取得できませんでした。");
+    if (!ctx) {
+      throw new ASBTSErrorCommon(
+        "Canvas要素のコンテキスト取得に失敗しました。",
+        "cropImages",
+        { sourceCanvas, threshold, cropRect },
+      );
+    }
     return [canvas, ctx];
   };
 
@@ -72,7 +86,12 @@ function cropImages(
       b === undefined ||
       orininalVal === undefined
     ) {
-      throw new Error("なんか変");
+      throw new ASBTSErrorCommon(
+        "Canvas要素のコンテキスト取得に失敗しました。",
+        "cropImages",
+        { sourceCanvas, threshold, cropRect },
+        { dataLength: data.length, r, g, b, orininalVal },
+      );
     }
 
     // 輝度（グレースケール値）の計算 (BT.601)

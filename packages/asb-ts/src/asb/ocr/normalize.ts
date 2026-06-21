@@ -1,6 +1,7 @@
 import * as R from "remeda";
 import * as v from "valibot";
 import {
+  ASBTSErrorCommon,
   DISPLAY_STAT_NAME_LABELS,
   type ExtractType,
   type Imprinting,
@@ -305,7 +306,13 @@ function selectStatsPositionCombinationName(
       R.reduce((acc, v) => acc && v, true),
     ),
   );
-  if (!found) throw new Error("miss match type");
+  if (!found) {
+    throw new ASBTSErrorCommon(
+      "一致するステータスのタイプがありません。",
+      "selectStatsPositionCombinationName",
+      { ocrStatNames },
+    );
+  }
   return {
     type: found.type,
     hasOxygen: found.hasOxygen,
