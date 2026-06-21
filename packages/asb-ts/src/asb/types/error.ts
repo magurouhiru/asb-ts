@@ -1,6 +1,9 @@
 import * as v from "valibot";
 
-export type ASBTSErrorObject = ASBTSErrorValibotObject | ASBTSErrorCommonObject;
+export type ASBTSErrorObject =
+  | ASBTSErrorValibotObject
+  | ASBTSErrorCommonObject
+  | ASBTSErrorUnknownObject;
 
 export interface ASBTSErrorValibotObject {
   _tag: "ASBTSError";
@@ -14,6 +17,13 @@ export interface ASBTSErrorCommonObject {
   functionName: string;
   input: object;
   context?: object;
+}
+
+export interface ASBTSErrorUnknownObject {
+  _tag: "ASBTSError";
+  type: "unknown";
+  // biome-ignore lint/suspicious/noExplicitAny: ちゃんとできていたら使わないけど、念のためanyにして受け取れるようにする。
+  error: any;
 }
 
 export class ASBTSErrorCommon extends Error {
@@ -48,3 +58,5 @@ export class ASBTSErrorCommon extends Error {
     return this.toObject();
   }
 }
+
+export function isASBTSErrorCommon(error: any) {}
