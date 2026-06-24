@@ -20,7 +20,6 @@ import {
 } from "asb-ts";
 import { useEffect, useRef, useState } from "react";
 import * as R from "remeda";
-import { file } from "valibot";
 import { useOcrQueue } from "@/contexts";
 
 export const Route = createFileRoute("/ocr")({
@@ -30,6 +29,7 @@ export const Route = createFileRoute("/ocr")({
 const allowedFileTypes = ["image/png", "image/jpeg"];
 
 function OcrComponent() {
+  const [fileName, setFileName] = useState<string>("");
   const [img, setImg] = useState<HTMLImageElement | null>(null);
   const canvasReff = useRef<HTMLCanvasElement | null>(null);
 
@@ -67,15 +67,18 @@ function OcrComponent() {
   const ImageSetter = (files: FileList | null) => {
     const file = files?.[0];
     if (file) {
-      if (allowedFileTypes.includes(file.type)) {
-        const image = new Image();
-        image.onload = () => {
-          setImg(image);
-        };
-        image.src = URL.createObjectURL(files[0]);
-      } else {
-        toast.danger("画像ファイルを指定してください");
-      }
+      ocrQueue.cansel().then(() => {
+        if (allowedFileTypes.includes(file.type)) {
+          const image = new Image();
+          image.onload = () => {
+            setImg(image);
+          };
+          image.src = URL.createObjectURL(files[0]);
+          setFileName(files[0].name);
+        } else {
+          toast.danger("画像ファイルを指定してください");
+        }
+      });
     }
   };
 
@@ -234,7 +237,7 @@ function OcrComponent() {
                                   <span>{et}:</span>
                                   <ShowExtractedText
                                     key={et}
-                                    fileName={file.name}
+                                    fileName={fileName}
                                     ocrResult={ocrResult}
                                     ol={ol}
                                     et={et}
@@ -248,7 +251,7 @@ function OcrComponent() {
                         ))}
                         <Table.Cell>
                           <ShowNormalizedText
-                            fileName={file.name}
+                            fileName={fileName}
                             ocrResult={ocrResult}
                             ol={ol}
                           />
@@ -256,7 +259,7 @@ function OcrComponent() {
                             <>
                               <Separator />
                               <ShowNormalizedTextWithDom
-                                fileName={file.name}
+                                fileName={fileName}
                                 ocrResult={ocrResult}
                               />
                             </>
@@ -265,7 +268,7 @@ function OcrComponent() {
                         {showLog && (
                           <Table.Cell>
                             <ShowLog
-                              fileName={file.name}
+                              fileName={fileName}
                               ocrResult={ocrResult}
                               ol={ol}
                             />
@@ -273,7 +276,7 @@ function OcrComponent() {
                               <>
                                 <Separator />
                                 <ShowLogWithDom
-                                  fileName={file.name}
+                                  fileName={fileName}
                                   ocrResult={ocrResult}
                                 />
                               </>

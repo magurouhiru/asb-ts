@@ -38,18 +38,31 @@ export class OcrQueueManager {
   private maxNumberOfWorker = this.queue.length;
   private numberOfWorker = 2;
 
+  private isCansel = false;
+
   constructor(
     langs: string | string[] | Lang[] = ["jpn"],
     oem: OEM = OEM.LSTM_ONLY,
     options: Partial<WorkerOptions> = {},
     numberOfWorker = 2,
-    callBack: typeof this.callBack,
+    callBack?: (
+      status: OcrQueueManagerStatus,
+      requestCnt: number,
+      completeCnt: number,
+    ) => void,
   ) {
     this.langs = langs;
     this.oem = oem;
     this.options = options;
     this.numberOfWorker = Math.min(numberOfWorker, this.maxNumberOfWorker);
     if (callBack) this.callBack = callBack;
+  }
+
+  cansel() {
+    if (this.requestCnt !== this.completeCnt) {
+      this.isCansel = true;
+    }
+    return Promise.all(this.queue);
   }
 
   private ensureInitialized(): Promise<Worker>[] {
@@ -80,25 +93,41 @@ export class OcrQueueManager {
     // 毎回paramsを変えたいので、数珠つなぎにして、順番が変にならないようにする
     this.queue[index] = (this.queue[index] as Promise<string>)
       .then(() => {
+        if (this.isCansel) {
+          throw undefined;
+        } else {
+          return;
+        }
+      })
+      .then(() => {
         this.status = "Running";
-        if (this.callBack)
+        if (this.callBack) {
           this.callBack(this.status, this.requestCnt, this.completeCnt);
+        }
       })
       .then(() => this.ensureInitialized()[index] as Promise<Worker>)
       .then((worker) => this.executeOcr(worker, img, params))
+      .catch((error?) => {
+        if (error === undefined) {
+          return "";
+        } else {
+          throw {
+            _tag: "ASBTSError",
+            type: "unknown",
+            error,
+          } satisfies ASBTSErrorUnknownObject;
+        }
+      })
       .then((text) => {
         this.status = "Suspended";
         this.completeCnt = this.completeCnt + 1;
-        if (this.callBack)
+        if (this.callBack) {
           this.callBack(this.status, this.requestCnt, this.completeCnt);
+        }
+        if (this.requestCnt === this.completeCnt) {
+          this.isCansel = false;
+        }
         return text;
-      })
-      .catch((error) => {
-        throw {
-          _tag: "ASBTSError",
-          type: "unknown",
-          error,
-        } satisfies ASBTSErrorUnknownObject;
       });
 
     return this.queue[index];
