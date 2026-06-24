@@ -10,6 +10,7 @@ import {
   DEFAULT_MUTATION_MULTIPLIER,
   DEFAULT_STAT_IMPRINT_MULTIPLIER,
   DEFAULT_TBHM,
+  DOM_IMP,
   type Imprinting,
   type LevelDetail,
   LevelDetailSchema,
@@ -83,8 +84,8 @@ function calculateValueDomBred(
         sl,
         ld,
         stat,
-        ip.tameEffectiveness,
-        ip.imprinting,
+        ip.type === "dom" ? ip.tameEffectiveness : BRED_TE,
+        ip.type === "dom" ? DOM_IMP : ip.imprinting,
         ip.species,
         ip.settings,
       );
@@ -506,7 +507,15 @@ function cLpt(
             ? TARGET_LEVEL_DETAIL_LIST_WILD
             : TARGET_LEVEL_DETAIL_LIST_WILD_MUT;
   for (const ld of targetLevel) {
-    const tmpVpt = cV(sl, ld, stat, te, ip.imprinting, ip.species, ip.settings);
+    const tmpVpt = cV(
+      sl,
+      ld,
+      stat,
+      te,
+      ip.type === "dom" ? DOM_IMP : ip.imprinting,
+      ip.species,
+      ip.settings,
+    );
     const tmpDiff = value - round(tmpVpt, sl);
     if (Math.abs(tmpDiff) === Math.abs(buffDiff)) {
       buff.push({ ld: ld, diff: tmpDiff });

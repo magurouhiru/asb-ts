@@ -111,7 +111,14 @@ export function calculateLevel(
   }
 }
 
-export type ExtractTextsOutput = ReturnType<typeof extractTexts>;
+export type ExtractTextsOutput = {
+  result: {
+    cropRects: ReturnType<typeof calcCropRects>;
+    croppedImages: ReturnType<typeof cropOcrImages>;
+    extractedPromiseTexs: ReturnType<typeof extractOcrPromiseTexts>;
+  };
+  resultPromise: Promise<ReturnType<typeof normalizeTexts>>;
+};
 
 export function extractTexts(
   manager: OcrQueueManager,
@@ -125,14 +132,7 @@ export function extractTexts(
   drmS = DEFAULT_CROP_RECT_OPTION.drmS,
   dhmS = DEFAULT_CROP_RECT_OPTION.dhmS,
   threshold = DEFAULT_THRESHOLD,
-): ASBResult<{
-  result: {
-    cropRects: ReturnType<typeof calcCropRects>;
-    croppedImages: ReturnType<typeof cropOcrImages>;
-    extractedPromiseTexs: ReturnType<typeof extractOcrPromiseTexts>;
-  };
-  resultPromise: Promise<ReturnType<typeof normalizeTexts>>;
-}> {
+): ASBResult<ExtractTextsOutput> {
   try {
     const cropRects = calcCropRects(
       sourceImg.width,

@@ -6,17 +6,21 @@ import {
   Table,
   toast,
 } from "@heroui/react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
 import {
+  type ASBTSErrorObject,
   type CropRect,
   DEFAULT_CROP_RECT_OPTION,
   type ExtractTextsOutput,
+  type ExtractType,
   extractTexts,
-  OCR_LABELS,
+  type ImageLabel,
   type OcrLabel,
 } from "asb-ts";
-import { Suspense, use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as R from "remeda";
+import { file } from "valibot";
 import { useOcrQueue } from "@/contexts";
 
 export const Route = createFileRoute("/ocr")({
@@ -39,6 +43,7 @@ function OcrComponent() {
   const [dhmS, setDhmS] = useState<number>(DEFAULT_CROP_RECT_OPTION.dhmS);
 
   const [ocrResult, setOcrResult] = useState<ExtractTextsOutput | null>(null);
+  const [_error, setError] = useState<ASBTSErrorObject | null>(null);
 
   const [showLog, setShowLog] = useState<boolean>(false);
 
@@ -81,19 +86,20 @@ function OcrComponent() {
 
   useEffect(() => {
     if (img && canvasReff.current) {
-      const execute = async () => {
-        const result = extractTexts(
-          ocrQueue,
-          img,
-          ymNL,
-          dlmNL,
-          drmNL,
-          dhmNL,
-          ymS,
-          dlmS,
-          drmS,
-          dhmS,
-        );
+      const result = extractTexts(
+        ocrQueue,
+        img,
+        ymNL,
+        dlmNL,
+        drmNL,
+        dhmNL,
+        ymS,
+        dlmS,
+        drmS,
+        dhmS,
+      );
+      if (result.isSuccess) {
+        setOcrResult(result.result);
         const canvas = canvasReff.current;
         if (!canvas) return;
         const ctx = canvas.getContext("2d");
@@ -108,13 +114,14 @@ function OcrComponent() {
           ctx.lineWidth = 5;
           ctx.strokeRect(x, y, width, height);
         };
-        Object.entries(result.result.cropRects).forEach(([_, cropRect]) => {
-          strokeRect(cropRect);
-        });
-
-        setOcrResult(result);
-      };
-      execute();
+        Object.entries(result.result.result.cropRects).forEach(
+          ([_, cropRect]) => {
+            strokeRect(cropRect);
+          },
+        );
+      } else {
+        setError(result.error);
+      }
     }
   }, [ocrQueue, img, ymNL, dlmNL, drmNL, dhmNL, ymS, dlmS, drmS, dhmS]);
 
@@ -181,14 +188,6 @@ function OcrComponent() {
 
       <section>
         <h3>結果</h3>
-        <div className="flex gap-2">
-          <span>レベル算出リンク:</span>
-          {ocrResult && (
-            <Suspense fallback={<div>待機中...</div>}>
-              <ShowLink resultPromise={ocrResult.resultPromise}></ShowLink>
-            </Suspense>
-          )}
-        </div>
         <p>{`OCRステータス: ${status}, 完了/全量 ${completeCnt}/${requestCnt}`}</p>
         <div className="flex gap-2">
           <Switch isSelected={showLog} onChange={setShowLog}>
@@ -202,255 +201,159 @@ function OcrComponent() {
           </Switch>
           <span>logを表示する</span>
         </div>
-        {ocrResult && (
-          <>
-            <div className="flex gap-1">
-              {`type:`}
-              <Suspense fallback={<div>待機中...</div>}>
-                <ShowType resultPromise={ocrResult.resultPromise}></ShowType>
-              </Suspense>
-            </div>
-            <Table>
-              <Table.ScrollContainer>
-                <Table.Content aria-label="Example table">
-                  <Table.Header>
-                    <Table.Column isRowHeader>label</Table.Column>
-                    <Table.Column>original</Table.Column>
-                    <Table.Column>grayscale</Table.Column>
-                    <Table.Column>binary</Table.Column>
-                    <Table.Column>normarized</Table.Column>
-                    {showLog && <Table.Column>log</Table.Column>}
-                  </Table.Header>
-                  <Table.Body>
-                    {OCR_LABELS.map((ol) => (
+        {ocrResult !== null && (
+          <Table>
+            <Table.ScrollContainer>
+              <Table.Content aria-label="Example table">
+                <Table.Header>
+                  <Table.Column isRowHeader>label</Table.Column>
+                  <Table.Column>original</Table.Column>
+                  <Table.Column>grayscale</Table.Column>
+                  <Table.Column>binary</Table.Column>
+                  <Table.Column>normarized</Table.Column>
+                  {showLog && <Table.Column>log</Table.Column>}
+                </Table.Header>
+                <Table.Body>
+                  {R.entries(ocrResult.result.croppedImages).map(
+                    ([ol, images]) => (
                       <Table.Row key={ol}>
                         <Table.Cell>{ol}</Table.Cell>
-                        {R.entries(ocrResult.result.croppedImages[ol]).map(
-                          ([il, iv]) => (
-                            <Table.Cell key={il}>
-                              <div>
-                                <img
-                                  src={iv.toDataURL()}
-                                  aria-label="cropped image"
-                                />
-                                {R.entries(
-                                  ocrResult.result.extractedPromiseTexs[ol],
-                                ).map(([et, ev]) => (
-                                  <div key={et}>
-                                    <Suspense fallback={<div>待機中...</div>}>
-                                      <ShowExtractedText
-                                        textPromise={ev[il]}
-                                      ></ShowExtractedText>
-                                    </Suspense>
-                                  </div>
-                                ))}
-                              </div>
-                            </Table.Cell>
-                          ),
-                        )}
-                        <Table.Cell>
-                          <span>
-                            <Suspense fallback={<div>待機中...</div>}>
-                              <ShowNormalizedText
-                                resultPromise={ocrResult.resultPromise}
+                        {R.entries(images).map(([il, img]) => (
+                          <Table.Cell key={il}>
+                            <div>
+                              <img
+                                src={img.toDataURL()}
+                                aria-label="cropped image"
+                              />
+                            </div>
+                            {R.keys(
+                              ocrResult.result.extractedPromiseTexs[ol],
+                            ).map((et) => (
+                              <ShowExtractedText
+                                key={et}
+                                fileName={file.name}
+                                ocrResult={ocrResult}
                                 ol={ol}
-                              ></ShowNormalizedText>
-                            </Suspense>
-                          </span>
+                                et={et}
+                                il={il}
+                              />
+                            ))}
+                          </Table.Cell>
+                        ))}
+                        <Table.Cell>
+                          <ShowNormalizedText
+                            fileName={file.name}
+                            ocrResult={ocrResult}
+                            ol={ol}
+                          />
                         </Table.Cell>
                         {showLog && (
                           <Table.Cell>
-                            <span>
-                              <Suspense fallback={<div>待機中...</div>}>
-                                <ShowLog
-                                  resultPromise={ocrResult.resultPromise}
-                                  ol={ol}
-                                ></ShowLog>
-                              </Suspense>
-                            </span>
+                            <ShowLog
+                              fileName={file.name}
+                              ocrResult={ocrResult}
+                              ol={ol}
+                            />
                           </Table.Cell>
                         )}
                       </Table.Row>
-                    ))}
-                    <Table.Row>
-                      <Table.Cell>withDom</Table.Cell>
-                      {R.entries(
-                        ocrResult.result.croppedImages.stat_name_0,
-                      ).map(([il, iv]) => (
-                        <Table.Cell key={il}>
-                          <div>
-                            <img
-                              src={iv.toDataURL()}
-                              aria-label="cropped image"
-                            />
-                            {R.entries(
-                              ocrResult.result.extractedPromiseTexs.stat_name_0,
-                            ).map(([et, ev]) =>
-                              et === "statValue" ? (
-                                <div key={et}>
-                                  <Suspense fallback={<div>待機中...</div>}>
-                                    <ShowExtractedText
-                                      textPromise={ev[il]}
-                                    ></ShowExtractedText>
-                                  </Suspense>
-                                </div>
-                              ) : undefined,
-                            )}
-                          </div>
-                        </Table.Cell>
-                      ))}
-                      <Table.Cell>
-                        <span>
-                          <Suspense fallback={<div>待機中...</div>}>
-                            <ShowWithDome
-                              resultPromise={ocrResult.resultPromise}
-                            ></ShowWithDome>
-                          </Suspense>
-                        </span>
-                      </Table.Cell>
-                      {showLog && (
-                        <Table.Cell>
-                          <span>
-                            <Suspense fallback={<div>待機中...</div>}>
-                              <ShowWithDomeLog
-                                resultPromise={ocrResult.resultPromise}
-                              ></ShowWithDomeLog>
-                            </Suspense>
-                          </span>
-                        </Table.Cell>
-                      )}
-                    </Table.Row>
-                  </Table.Body>
-                </Table.Content>
-              </Table.ScrollContainer>
-              <Table.Footer>{/* Optional footer content */}</Table.Footer>
-            </Table>
-          </>
+                    ),
+                  )}
+                </Table.Body>
+              </Table.Content>
+            </Table.ScrollContainer>
+            <Table.Footer>{/* Optional footer content */}</Table.Footer>
+          </Table>
         )}
       </section>
     </div>
   );
 }
 
-function ShowExtractedText({ textPromise }: { textPromise: Promise<string> }) {
-  const text = use(textPromise);
-  return <span>{text}</span>;
+function ShowExtractedText({
+  fileName,
+  ocrResult,
+  ol,
+  et,
+  il,
+}: {
+  fileName: string;
+  ocrResult: ExtractTextsOutput;
+  ol: OcrLabel;
+  et: ExtractType;
+  il: ImageLabel;
+}) {
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["ExtractedText", fileName, ol, et, il],
+    queryFn: () =>
+      ocrResult.result.extractedPromiseTexs[ol][et]?.[il] ??
+      Promise.resolve(null),
+  });
+  if (isError) {
+    return <div>エラーが発生しました。</div>;
+  } else if (isPending) {
+    return <div>待機中...</div>;
+  } else {
+    return <div>{data}</div>;
+  }
 }
 
 function ShowNormalizedText({
-  resultPromise,
+  fileName,
+  ocrResult,
   ol,
 }: {
-  resultPromise: ExtractTextsOutput["resultPromise"];
+  fileName: string;
+  ocrResult: ExtractTextsOutput;
   ol: OcrLabel;
 }) {
-  const result = use(resultPromise).normalizedTexts[ol];
-  return (
-    <div>
-      <div>{result.type}</div>
-      <div>{JSON.stringify(result.text)}</div>
-    </div>
-  );
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["normalizedTexts", fileName, ol],
+    queryFn: () =>
+      ocrResult.resultPromise.then((p) => p.normalizedTexts[ol] ?? null),
+  });
+  if (isError) {
+    return <div>エラーが発生しました。</div>;
+  } else if (isPending) {
+    return <div>待機中...</div>;
+  } else {
+    return (
+      <div>
+        <div>{data.type}</div>
+        <div>{data.text}</div>
+      </div>
+    );
+  }
 }
 
 function ShowLog({
-  resultPromise,
+  fileName,
+  ocrResult,
   ol,
 }: {
-  resultPromise: ExtractTextsOutput["resultPromise"];
+  fileName: string;
+  ocrResult: ExtractTextsOutput;
   ol: OcrLabel;
 }) {
-  const logList = use(resultPromise).logs[ol];
-  return (
-    <div>
-      {logList.map((log, i) => {
-        return (
-          <div
-            key={log.action}
-          >{`${i}| ${log.isValibotError ? `error: ${JSON.stringify(log.flatError, null, 2)}` : `action: ${log.action}, output: ${log.output}`}`}</div>
-        );
-      })}
-    </div>
-  );
-}
-
-function ShowType({
-  resultPromise,
-}: {
-  resultPromise: ExtractTextsOutput["resultPromise"];
-}) {
-  const type = use(resultPromise).type;
-  return <span>{type}</span>;
-}
-
-function ShowWithDome({
-  resultPromise,
-}: {
-  resultPromise: ExtractTextsOutput["resultPromise"];
-}) {
-  const result = use(resultPromise).withDom;
-  return (
-    <div>
-      <div>{result.type}</div>
-      <div>{JSON.stringify(result.text)}</div>
-    </div>
-  );
-}
-
-function ShowWithDomeLog({
-  resultPromise,
-}: {
-  resultPromise: ExtractTextsOutput["resultPromise"];
-}) {
-  const withDomLog = use(resultPromise).withDomLog;
-  return (
-    <div>
-      {withDomLog.map((log, i) => {
-        return (
-          <div
-            key={log.action}
-          >{`${i}| ${log.isValibotError ? `error: ${JSON.stringify(log.flatError, null, 2)}` : `action: ${log.action}, output: ${log.output}`}`}</div>
-        );
-      })}
-    </div>
-  );
-}
-
-function ShowLink({
-  resultPromise,
-}: {
-  resultPromise: ExtractTextsOutput["resultPromise"];
-}) {
-  const result = use(resultPromise);
-  return (
-    <Link
-      to="/calc"
-      search={{
-        mode: "value->level",
-        type: result.type,
-        n: result.normalizedTexts.name.text ?? "",
-
-        h: result.values.health,
-        s: result.values.stamina,
-        o: result.values.oxygen,
-        f: result.values.food,
-
-        wtr: result.values.water,
-        temp: result.values.temperature,
-        w: result.values.weight,
-        m: result.values.meleeDamageMultiplier,
-
-        spd: result.values.speedMultiplier,
-        tempf: result.values.temperatureFortitude,
-        crft: result.values.craftingSpeedMultiplier,
-        t: result.values.torpidity,
-
-        i: result.imprinting,
-        level: result.normalizedTexts.level.text ?? 0,
-        withDom: String(result.withDom.text),
-      }}
-    >
-      レベル算出
-    </Link>
-  );
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["logs", fileName, ol],
+    queryFn: () => ocrResult.resultPromise.then((p) => p.logs[ol] ?? []),
+  });
+  if (isError) {
+    return <div>エラーが発生しました。</div>;
+  } else if (isPending) {
+    return <div>待機中...</div>;
+  } else {
+    return (
+      <ol>
+        {data.map((log) => (
+          <li key={JSON.stringify(log)}>
+            {log.isValibotError
+              ? `action: ${log.action}, flatError: ${JSON.stringify(log.flatError, null, 2)},`
+              : `action: ${log.action}, output: ${log.output}${log.param !== undefined ? "" : `, param: ${log.param}`}}`}
+          </li>
+        ))}
+      </ol>
+    );
+  }
 }

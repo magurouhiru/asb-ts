@@ -11,6 +11,7 @@ import "./index.css";
 import { Toast } from "@heroui/react";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import NotFound from "./components/404";
 import { OcrProvider } from "./contexts";
@@ -38,6 +39,8 @@ declare module "@tanstack/react-router" {
   }
 }
 
+const queryClient = new QueryClient();
+
 const rootElement = document.getElementById("app");
 
 if (rootElement && !rootElement.innerHTML) {
@@ -46,9 +49,14 @@ if (rootElement && !rootElement.innerHTML) {
     <StrictMode>
       <I18nProvider i18n={i18n}>
         <Toast.Provider />
-        <OcrProvider>
-          <RouterProvider router={router} defaultNotFoundComponent={NotFound} />
-        </OcrProvider>
+        <QueryClientProvider client={queryClient}>
+          <OcrProvider>
+            <RouterProvider
+              router={router}
+              defaultNotFoundComponent={NotFound}
+            />
+          </OcrProvider>
+        </QueryClientProvider>
       </I18nProvider>
     </StrictMode>,
   );

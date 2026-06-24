@@ -1,5 +1,6 @@
 import type * as v from "valibot";
 import type { Imprinting, StatsType, TotalLevel } from "./calculator.js";
+import type { PositiveNumber } from "./common.js";
 import { STAT_LABELS, type StatLabel } from "./stat-name.js";
 
 /////////////////////////////////////////////////////////
@@ -154,7 +155,7 @@ export type NormalizeType<T extends NormalizeTypeLabel> = T extends "name"
     : T extends "stat_name"
       ? DisplayStatNameLabel
       : T extends StatLabel
-        ? number
+        ? PositiveNumber
         : T extends "imprinting"
           ? Imprinting
           : T extends "withDom"

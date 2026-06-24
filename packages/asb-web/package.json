@@ -25,6 +25,7 @@
     "@tanstack/react-devtools": "^0.10.1",
     "@tanstack/react-form": "^1.28.6",
     "@tanstack/react-form-devtools": "^0.2.20",
+    "@tanstack/react-query": "^5.101.0",
     "@tanstack/react-router": "^1.168.10",
     "@tanstack/react-router-devtools": "^1.166.11",
     "asb-ts": "workspace:*",
