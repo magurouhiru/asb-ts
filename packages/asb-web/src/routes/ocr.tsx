@@ -8,14 +8,23 @@ import {
 } from "@heroui/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
+  type ASBTSErrorObject,
   type CropRect,
   DEFAULT_CROP_RECT_OPTION,
   type ExtractTextsOutput,
+  type ExtractType,
   extractTexts,
-  OCR_LABELS,
+  type ImageLabel,
   type OcrLabel,
 } from "asb-ts";
-import { Suspense, use, useEffect, useRef, useState } from "react";
+import {
+  type ReactNode,
+  Suspense,
+  use,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import * as R from "remeda";
 import { useOcrQueue } from "@/contexts";
 
@@ -26,6 +35,7 @@ export const Route = createFileRoute("/ocr")({
 const allowedFileTypes = ["image/png", "image/jpeg"];
 
 function OcrComponent() {
+  const [_fileName, setFileName] = useState<string>("");
   const [img, setImg] = useState<HTMLImageElement | null>(null);
   const canvasReff = useRef<HTMLCanvasElement | null>(null);
 
@@ -39,6 +49,7 @@ function OcrComponent() {
   const [dhmS, setDhmS] = useState<number>(DEFAULT_CROP_RECT_OPTION.dhmS);
 
   const [ocrResult, setOcrResult] = useState<ExtractTextsOutput | null>(null);
+  const [_error, setError] = useState<ASBTSErrorObject | null>(null);
 
   const [showLog, setShowLog] = useState<boolean>(false);
 
@@ -62,15 +73,18 @@ function OcrComponent() {
   const ImageSetter = (files: FileList | null) => {
     const file = files?.[0];
     if (file) {
-      if (allowedFileTypes.includes(file.type)) {
-        const image = new Image();
-        image.onload = () => {
-          setImg(image);
-        };
-        image.src = URL.createObjectURL(files[0]);
-      } else {
-        toast.danger("画像ファイルを指定してください");
-      }
+      ocrQueue.cansel().then(() => {
+        if (allowedFileTypes.includes(file.type)) {
+          const image = new Image();
+          image.onload = () => {
+            setImg(image);
+          };
+          image.src = URL.createObjectURL(files[0]);
+          setFileName(files[0].name);
+        } else {
+          toast.danger("画像ファイルを指定してください");
+        }
+      });
     }
   };
 
@@ -81,19 +95,20 @@ function OcrComponent() {
 
   useEffect(() => {
     if (img && canvasReff.current) {
-      const execute = async () => {
-        const result = extractTexts(
-          ocrQueue,
-          img,
-          ymNL,
-          dlmNL,
-          drmNL,
-          dhmNL,
-          ymS,
-          dlmS,
-          drmS,
-          dhmS,
-        );
+      const result = extractTexts(
+        ocrQueue,
+        img,
+        ymNL,
+        dlmNL,
+        drmNL,
+        dhmNL,
+        ymS,
+        dlmS,
+        drmS,
+        dhmS,
+      );
+      if (result.isSuccess) {
+        setOcrResult(result.result);
         const canvas = canvasReff.current;
         if (!canvas) return;
         const ctx = canvas.getContext("2d");
@@ -108,13 +123,14 @@ function OcrComponent() {
           ctx.lineWidth = 5;
           ctx.strokeRect(x, y, width, height);
         };
-        Object.entries(result.result.cropRects).forEach(([_, cropRect]) => {
-          strokeRect(cropRect);
-        });
-
-        setOcrResult(result);
-      };
-      execute();
+        Object.entries(result.result.result.cropRects).forEach(
+          ([_, cropRect]) => {
+            strokeRect(cropRect);
+          },
+        );
+      } else {
+        setError(result.error);
+      }
     }
   }, [ocrQueue, img, ymNL, dlmNL, drmNL, dhmNL, ymS, dlmS, drmS, dhmS]);
 
@@ -181,15 +197,7 @@ function OcrComponent() {
 
       <section>
         <h3>結果</h3>
-        <div className="flex gap-2">
-          <span>レベル算出リンク:</span>
-          {ocrResult && (
-            <Suspense fallback={<div>待機中...</div>}>
-              <ShowLink resultPromise={ocrResult.resultPromise}></ShowLink>
-            </Suspense>
-          )}
-        </div>
-        <p>{`OCRステータス: ${status}, 完了/全量 ${completeCnt}/${requestCnt}`}</p>
+        <p>{`OCRステータス: ${status}, 残タスク: ${requestCnt - completeCnt}`}</p>
         <div className="flex gap-2">
           <Switch isSelected={showLog} onChange={setShowLog}>
             <Switch.Content>
@@ -202,13 +210,19 @@ function OcrComponent() {
           </Switch>
           <span>logを表示する</span>
         </div>
-        {ocrResult && (
+        {ocrResult !== null && (
           <>
-            <div className="flex gap-1">
-              {`type:`}
-              <Suspense fallback={<div>待機中...</div>}>
-                <ShowType resultPromise={ocrResult.resultPromise}></ShowType>
-              </Suspense>
+            <div className="flex gap-2">
+              <span>リンク:</span>
+              <CustomSuspense>
+                <ShowLink ocrResult={ocrResult} />
+              </CustomSuspense>
+            </div>
+            <div className="flex gap-2">
+              <span>type:</span>
+              <CustomSuspense>
+                <ShowNormalizedTextType ocrResult={ocrResult} />
+              </CustomSuspense>
             </div>
             <Table>
               <Table.ScrollContainer>
@@ -222,104 +236,75 @@ function OcrComponent() {
                     {showLog && <Table.Column>log</Table.Column>}
                   </Table.Header>
                   <Table.Body>
-                    {OCR_LABELS.map((ol) => (
-                      <Table.Row key={ol}>
-                        <Table.Cell>{ol}</Table.Cell>
-                        {R.entries(ocrResult.result.croppedImages[ol]).map(
-                          ([il, iv]) => (
+                    {R.entries(ocrResult.result.croppedImages).map(
+                      ([ol, images]) => (
+                        <Table.Row key={ol}>
+                          <Table.Cell>{ol}</Table.Cell>
+                          {R.entries(images).map(([il, img]) => (
                             <Table.Cell key={il}>
                               <div>
                                 <img
-                                  src={iv.toDataURL()}
+                                  src={img.toDataURL()}
                                   aria-label="cropped image"
                                 />
-                                {R.entries(
-                                  ocrResult.result.extractedPromiseTexs[ol],
-                                ).map(([et, ev]) => (
-                                  <div key={et}>
-                                    <Suspense fallback={<div>待機中...</div>}>
-                                      <ShowExtractedText
-                                        textPromise={ev[il]}
-                                      ></ShowExtractedText>
-                                    </Suspense>
-                                  </div>
-                                ))}
                               </div>
+                              {R.keys(
+                                ocrResult.result.extractedPromiseTexs[ol],
+                              ).map((et, i, array) => (
+                                <>
+                                  <div className="flex gap-2">
+                                    <span>{et}:</span>
+                                    <CustomSuspense>
+                                      <ShowExtractedText
+                                        key={et}
+                                        ocrResult={ocrResult}
+                                        ol={ol}
+                                        et={et}
+                                        il={il}
+                                      />
+                                    </CustomSuspense>
+                                  </div>
+                                  {i + 1 !== array.length && <Separator />}
+                                </>
+                              ))}
                             </Table.Cell>
-                          ),
-                        )}
-                        <Table.Cell>
-                          <span>
-                            <Suspense fallback={<div>待機中...</div>}>
-                              <ShowNormalizedText
-                                resultPromise={ocrResult.resultPromise}
-                                ol={ol}
-                              ></ShowNormalizedText>
-                            </Suspense>
-                          </span>
-                        </Table.Cell>
-                        {showLog && (
+                          ))}
                           <Table.Cell>
-                            <span>
-                              <Suspense fallback={<div>待機中...</div>}>
-                                <ShowLog
-                                  resultPromise={ocrResult.resultPromise}
-                                  ol={ol}
-                                ></ShowLog>
-                              </Suspense>
-                            </span>
-                          </Table.Cell>
-                        )}
-                      </Table.Row>
-                    ))}
-                    <Table.Row>
-                      <Table.Cell>withDom</Table.Cell>
-                      {R.entries(
-                        ocrResult.result.croppedImages.stat_name_0,
-                      ).map(([il, iv]) => (
-                        <Table.Cell key={il}>
-                          <div>
-                            <img
-                              src={iv.toDataURL()}
-                              aria-label="cropped image"
-                            />
-                            {R.entries(
-                              ocrResult.result.extractedPromiseTexs.stat_name_0,
-                            ).map(([et, ev]) =>
-                              et === "statValue" ? (
-                                <div key={et}>
-                                  <Suspense fallback={<div>待機中...</div>}>
-                                    <ShowExtractedText
-                                      textPromise={ev[il]}
-                                    ></ShowExtractedText>
-                                  </Suspense>
-                                </div>
-                              ) : undefined,
+                            <CustomSuspense>
+                              <ShowNormalizedText
+                                ocrResult={ocrResult}
+                                ol={ol}
+                              />
+                            </CustomSuspense>
+                            {ol === "stat_name_0" && (
+                              <>
+                                <Separator />
+                                <CustomSuspense>
+                                  <ShowNormalizedTextWithDom
+                                    ocrResult={ocrResult}
+                                  />
+                                </CustomSuspense>
+                              </>
                             )}
-                          </div>
-                        </Table.Cell>
-                      ))}
-                      <Table.Cell>
-                        <span>
-                          <Suspense fallback={<div>待機中...</div>}>
-                            <ShowWithDome
-                              resultPromise={ocrResult.resultPromise}
-                            ></ShowWithDome>
-                          </Suspense>
-                        </span>
-                      </Table.Cell>
-                      {showLog && (
-                        <Table.Cell>
-                          <span>
-                            <Suspense fallback={<div>待機中...</div>}>
-                              <ShowWithDomeLog
-                                resultPromise={ocrResult.resultPromise}
-                              ></ShowWithDomeLog>
-                            </Suspense>
-                          </span>
-                        </Table.Cell>
-                      )}
-                    </Table.Row>
+                          </Table.Cell>
+                          {showLog && (
+                            <Table.Cell>
+                              <CustomSuspense>
+                                <ShowLog ocrResult={ocrResult} ol={ol} />
+                              </CustomSuspense>
+                              {ol === "stat_name_0" && (
+                                <>
+                                  <Separator />
+                                  <CustomSuspense>
+                                    <ShowLogWithDom ocrResult={ocrResult} />
+                                  </CustomSuspense>
+                                </>
+                              )}
+                            </Table.Cell>
+                          )}
+                        </Table.Row>
+                      ),
+                    )}
                   </Table.Body>
                 </Table.Content>
               </Table.ScrollContainer>
@@ -332,96 +317,107 @@ function OcrComponent() {
   );
 }
 
-function ShowExtractedText({ textPromise }: { textPromise: Promise<string> }) {
-  const text = use(textPromise);
-  return <span>{text}</span>;
+function CustomSuspense({ children }: { children: ReactNode }) {
+  return <Suspense fallback={<div>待機中...</div>}>{children}</Suspense>;
+}
+
+function ShowExtractedText({
+  ocrResult,
+  ol,
+  et,
+  il,
+}: {
+  ocrResult: ExtractTextsOutput;
+  ol: OcrLabel;
+  et: ExtractType;
+  il: ImageLabel;
+}) {
+  const text = use(
+    ocrResult.result.extractedPromiseTexs[ol][et]?.[il] ??
+      Promise.resolve(null),
+  );
+  return <div>{text}</div>;
 }
 
 function ShowNormalizedText({
-  resultPromise,
+  ocrResult,
   ol,
 }: {
-  resultPromise: ExtractTextsOutput["resultPromise"];
+  ocrResult: ExtractTextsOutput;
   ol: OcrLabel;
 }) {
-  const result = use(resultPromise).normalizedTexts[ol];
+  const data = use(
+    ocrResult.resultPromise.then((p) => p.normalizedTexts[ol] ?? null),
+  );
   return (
     <div>
-      <div>{result.type}</div>
-      <div>{JSON.stringify(result.text)}</div>
+      <div>{data.type}</div>
+      <div>{JSON.stringify(data.text)}</div>
     </div>
   );
 }
 
 function ShowLog({
-  resultPromise,
+  ocrResult,
   ol,
 }: {
-  resultPromise: ExtractTextsOutput["resultPromise"];
+  ocrResult: ExtractTextsOutput;
   ol: OcrLabel;
 }) {
-  const logList = use(resultPromise).logs[ol];
+  const data = use(ocrResult.resultPromise.then((p) => p.logs[ol] ?? []));
+  return (
+    <ol>
+      {data.map((log) => (
+        <li key={JSON.stringify(log)}>
+          {log.isValibotError
+            ? `action: ${log.action}, flatError: ${JSON.stringify(log.flatError, null, 2)},`
+            : `action: ${log.action}, output: ${log.output}${log.param !== undefined ? "" : `, param: ${log.param}`}}`}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function ShowNormalizedTextWithDom({
+  ocrResult,
+}: {
+  ocrResult: ExtractTextsOutput;
+}) {
+  const data = use(ocrResult.resultPromise.then((p) => p.withDom ?? null));
   return (
     <div>
-      {logList.map((log, i) => {
-        return (
-          <div
-            key={log.action}
-          >{`${i}| ${log.isValibotError ? `error: ${JSON.stringify(log.flatError, null, 2)}` : `action: ${log.action}, output: ${log.output}`}`}</div>
-        );
-      })}
+      <div>{data.type}</div>
+      <div>{JSON.stringify(data.text)}</div>
     </div>
   );
 }
 
-function ShowType({
-  resultPromise,
-}: {
-  resultPromise: ExtractTextsOutput["resultPromise"];
-}) {
-  const type = use(resultPromise).type;
-  return <span>{type}</span>;
-}
-
-function ShowWithDome({
-  resultPromise,
-}: {
-  resultPromise: ExtractTextsOutput["resultPromise"];
-}) {
-  const result = use(resultPromise).withDom;
+function ShowLogWithDom({ ocrResult }: { ocrResult: ExtractTextsOutput }) {
+  const data = use(ocrResult.resultPromise.then((p) => p.withDomLog ?? []));
   return (
-    <div>
-      <div>{result.type}</div>
-      <div>{JSON.stringify(result.text)}</div>
-    </div>
+    <ol>
+      {data.map((log) => (
+        <li key={JSON.stringify(log)}>
+          {log.isValibotError
+            ? `action: ${log.action}, flatError: ${JSON.stringify(log.flatError, null, 2)},`
+            : `action: ${log.action}, output: ${log.output}${log.param !== undefined ? "" : `, param: ${log.param}`}}`}
+        </li>
+      ))}
+    </ol>
   );
 }
 
-function ShowWithDomeLog({
-  resultPromise,
+function ShowNormalizedTextType({
+  ocrResult,
 }: {
-  resultPromise: ExtractTextsOutput["resultPromise"];
+  ocrResult: ExtractTextsOutput;
 }) {
-  const withDomLog = use(resultPromise).withDomLog;
-  return (
-    <div>
-      {withDomLog.map((log, i) => {
-        return (
-          <div
-            key={log.action}
-          >{`${i}| ${log.isValibotError ? `error: ${JSON.stringify(log.flatError, null, 2)}` : `action: ${log.action}, output: ${log.output}`}`}</div>
-        );
-      })}
-    </div>
-  );
+  const data = use(ocrResult.resultPromise.then((p) => p.type ?? null));
+  return <div>{data}</div>;
 }
 
-function ShowLink({
-  resultPromise,
-}: {
-  resultPromise: ExtractTextsOutput["resultPromise"];
-}) {
-  const result = use(resultPromise);
+function ShowLink({ ocrResult }: { ocrResult: ExtractTextsOutput }) {
+  const result = use(ocrResult.resultPromise);
   return (
     <Link
       to="/calc"
@@ -430,20 +426,20 @@ function ShowLink({
         type: result.type,
         n: result.normalizedTexts.name.text ?? "",
 
-        h: result.values.health,
-        s: result.values.stamina,
-        o: result.values.oxygen,
-        f: result.values.food,
+        h: result.values.health ?? 0,
+        s: result.values.stamina ?? 0,
+        o: result.values.oxygen ?? 0,
+        f: result.values.food ?? 0,
 
-        wtr: result.values.water,
-        temp: result.values.temperature,
-        w: result.values.weight,
-        m: result.values.meleeDamageMultiplier,
+        wtr: result.values.water ?? 0,
+        temp: result.values.temperature ?? 0,
+        w: result.values.weight ?? 0,
+        m: result.values.meleeDamageMultiplier ?? 0,
 
-        spd: result.values.speedMultiplier,
-        tempf: result.values.temperatureFortitude,
-        crft: result.values.craftingSpeedMultiplier,
-        t: result.values.torpidity,
+        spd: result.values.speedMultiplier ?? 0,
+        tempf: result.values.temperatureFortitude ?? 0,
+        crft: result.values.craftingSpeedMultiplier ?? 0,
+        t: result.values.torpidity ?? 0,
 
         i: result.imprinting,
         level: result.normalizedTexts.level.text ?? 0,

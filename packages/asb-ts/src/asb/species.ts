@@ -10,6 +10,7 @@ import {
   type StatsRow,
 } from "./migration/values/index.js";
 import type { Variant } from "./migration/variants/index.js";
+import { ASBTSErrorCommon } from "./types/error.js";
 import {
   type MutationMultiplier,
   MutationMultiplierSchema,
@@ -120,7 +121,13 @@ export function searchSpecies(
     },
   );
   const hit = fuse.search(name).at(0)?.item;
-  if (!hit) throw new Error(`Species not found: ${name}`);
+  if (!hit) {
+    throw new ASBTSErrorCommon(
+      "生物が見つかりませんでした。",
+      "searchSpecies",
+      { speciesList, name, settings },
+    );
+  }
 
   const found = speciesList
     .filter((s) => s.name === hit)
@@ -134,7 +141,13 @@ export function searchSpecies(
     });
 
   const result = found[0];
-  if (!result) throw new Error(`Species not found: ${name}`);
+  if (!result) {
+    throw new ASBTSErrorCommon(
+      "生物が見つかりませんでした。",
+      "searchSpecies",
+      { speciesList, name, settings },
+    );
+  }
   return result;
 }
 
@@ -172,8 +185,8 @@ function toStats([
   } satisfies v.InferInput<typeof StatsSchema>);
 }
 
-function toSpeciesStat(row: StatsRow | null): SpeciesStat | null {
-  if (!row) return null;
+function toSpeciesStat(row: StatsRow | null): SpeciesStat | undefined {
+  if (!row) return undefined;
   return v.parse(SpeciesStatSchema, {
     baseValue: row[StatsRawIndexBase],
     incPerWildLevel: row[StatsRawIndexIncPerWildLevel],

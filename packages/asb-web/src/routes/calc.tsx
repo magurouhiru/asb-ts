@@ -4,7 +4,6 @@ import {
   Alert,
   Autocomplete,
   Chip,
-  Description,
   EmptyState,
   ErrorMessage,
   FieldError,
@@ -20,28 +19,28 @@ import {
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
 import {
+  type ASBTSErrorObject,
+  type CalculateLevelOutputPack,
+  type CalculateValueOutputPack,
   calculateLevel,
   calculateValue,
   createSettings,
   createSpeciesList,
-  type Levels,
-  type Meta,
-  type OutputOfCalculateLevel,
-  type OutputOfCalculateValue,
-  type OutputPackFailure,
-  type StatsName,
-  StatsNames,
-  searchBP,
-  type Type,
-  Types,
-  type Values,
+  STAT_LABELS,
+  STATS_TYPES,
+  type StatLabel,
+  type StatLevelsUnsafe,
+  type StatsType,
+  type StatValuesUnsafe,
 } from "asb-ts";
+import { searchSpecies } from "asb-ts/dist/asb/species";
 import { useEffect, useState } from "react";
+import * as R from "remeda";
 import * as v from "valibot";
 
 const MODE_LIST = ["value->level", "level->value"] as const;
 
-const DISPLAY_STATS_NAME_LIST = [
+const DISPLAY_STAT_LABEL_LIST = [
   "health",
   "stamina",
   "oxygen",
@@ -56,13 +55,13 @@ const DISPLAY_STATS_NAME_LIST = [
   // "temperatureFortitude",
   // "craftingSpeedMultiplier",
   "torpidity",
-] satisfies StatsName[];
+] satisfies StatLabel[];
 
 const toTrue = ["true", "True", "TRUE", "1", "on", "On", "ON"];
 const searchSchema = v.pipe(
   v.object({
     mode: v.fallback(v.picklist(MODE_LIST), "value->level"),
-    type: v.fallback(v.picklist(Types), "wild"),
+    type: v.fallback(v.picklist(STATS_TYPES), "wild"),
     n: v.fallback(v.string(), ""),
 
     h: v.fallback(v.number(), 0),
@@ -140,15 +139,15 @@ function CalcComponent() {
   const settings = createSettings();
   const speciesList = createSpeciesList(settings);
 
-  const [opcl, setOpcl] = useState<OutputOfCalculateLevel | null>(null);
-  const [opcv, setOpcv] = useState<OutputOfCalculateValue | null>(null);
-  const [meta, setMeta] = useState<Meta | null>(null);
+  const [clop, setClop] = useState<CalculateLevelOutputPack | null>(null);
+  const [cvop, setCvop] = useState<CalculateValueOutputPack | null>(null);
+  const [error, setError] = useState<ASBTSErrorObject | null>(null);
 
   const defaultValues = {
     // 共通的なもの
     mode: mode,
     type,
-    bp: n ? searchBP(speciesList, n, settings) : "",
+    bp: n ? searchSpecies(speciesList, n, settings).blueprintPath : "",
     tameEffectiveness: 0,
     imprinting: i,
     totalLevel: level,
@@ -170,7 +169,7 @@ function CalcComponent() {
       temperatureFortitude: tempf,
       craftingSpeedMultiplier: crft,
       torpidity: t,
-    } satisfies Values,
+    } satisfies StatValuesUnsafe,
 
     // レベル
     levels: {
@@ -188,7 +187,7 @@ function CalcComponent() {
       temperatureFortitude: { wild: 0, mut: 0, dom: 0 }, // 無視
       craftingSpeedMultiplier: { wild: 0, mut: 0, dom: 0 }, // 無視
       torpidity: { wild: 0, mut: 0, dom: 0 },
-    } satisfies Levels,
+    } satisfies StatLevelsUnsafe,
   };
 
   const form = useAppForm({
@@ -202,60 +201,69 @@ function CalcComponent() {
       },
     },
     onSubmit: ({ value }) => {
-      setOpcl(null);
-      setOpcv(null);
+      setClop(null);
+      setCvop(null);
+      setError(null);
       if (!value.bp) return;
+      const species = speciesList.find((s) => s.blueprintPath === value.bp);
+      if (!species) return;
       if (value.mode === "value->level") {
-        setOpcl(
-          calculateLevel({
-            ...value,
-            speciesList,
-            settings,
-          }),
-        );
+        const result = calculateLevel({
+          ...value,
+          species,
+          settings,
+        });
+        if (result.isSuccess) {
+          setClop(result.result);
+        } else {
+          setError(result.error);
+        }
       }
       if (value.mode === "level->value") {
-        setOpcv(
-          calculateValue({
-            ...value,
-            speciesList,
-            settings,
-          }),
-        );
+        const result = calculateValue({
+          ...value,
+          species,
+          settings,
+        });
+        if (result.isSuccess) {
+          setCvop(result.result);
+        } else {
+          setError(result.error);
+        }
       }
     },
   });
 
   useEffect(() => {
-    if (opcl?.status === "success") {
-      Object.entries(opcl.levels).forEach(([sn, { wild, mut, dom }]) => {
-        form.setFieldValue(`levels.${sn as StatsName}.wild`, wild, {
-          dontValidate: true,
+    if (clop !== null) {
+      R.entries(clop.levels)
+        .filter(([, v]) => v !== undefined)
+        .forEach(([sl, { wild, mut, dom }]) => {
+          form.setFieldValue(`levels.${sl as StatLabel}.wild`, wild, {
+            dontValidate: true,
+          });
+          form.setFieldValue(`levels.${sl as StatLabel}.mut`, mut, {
+            dontValidate: true,
+          });
+          form.setFieldValue(`levels.${sl as StatLabel}.dom`, dom, {
+            dontValidate: true,
+          });
         });
-        form.setFieldValue(`levels.${sn as StatsName}.mut`, mut, {
-          dontValidate: true,
-        });
-        form.setFieldValue(`levels.${sn as StatsName}.dom`, dom, {
-          dontValidate: true,
-        });
-      });
-      form.setFieldValue("tameEffectiveness", opcl.tameEffectiveness, {
+      form.setFieldValue("tameEffectiveness", clop.tameEffectiveness, {
         dontValidate: true,
       });
-      setMeta(opcl.meta);
     }
-  }, [form, opcl]);
+  }, [form, clop]);
 
   useEffect(() => {
-    if (opcv?.status === "success") {
-      Object.entries(opcv.values).forEach(([sn, value]) => {
-        form.setFieldValue(`values.${sn as StatsName}`, value, {
+    if (cvop !== null) {
+      R.entries(cvop.values).forEach(([sl, value]) => {
+        form.setFieldValue(`values.${sl as StatLabel}`, value, {
           dontValidate: true,
         });
       });
-      setMeta(opcv.meta);
     }
-  }, [form, opcv]);
+  }, [form, cvop]);
 
   const { contains } = useFilter({ sensitivity: "base" });
   const items = speciesList.map((s) => ({
@@ -265,19 +273,13 @@ function CalcComponent() {
     mod: s.mod,
   }));
 
-  const alert = (opf: OutputPackFailure) => (
+  const alert = (error: ASBTSErrorObject) => (
     <Alert status="danger">
       <Alert.Indicator />
       <Alert.Content>
-        <Alert.Title>{opf.errorType}</Alert.Title>
+        <Alert.Title>{error.type}</Alert.Title>
         <Alert.Description>
-          <ul>
-            {opf.errors.map((e) => (
-              <li key={e.path + e.message}>
-                {e.path}: {e.message}
-              </li>
-            ))}
-          </ul>
+          <div>{JSON.stringify(error, null, 2)}</div>
         </Alert.Description>
       </Alert.Content>
     </Alert>
@@ -285,15 +287,12 @@ function CalcComponent() {
 
   return (
     <form className="grid grid-flow-row gap-1">
-      {opcl?.status === "failure" && alert(opcl)}
-      {opcv?.status === "failure" && alert(opcv)}
+      {error !== null && alert(error)}
       {form.state.values.mode === "value->level" &&
         form.state.values.type === "dom" &&
-        opcl?.status === "success" &&
-        StatsNames.reduce(
-          (acc, sn) => acc + opcl.levels[sn].mut + opcl.levels[sn].dom,
-          0,
-        ) !== 0 && (
+        clop !== null &&
+        R.values(clop.levels).reduce((acc, ld) => acc + ld.mut + ld.dom, 0) !==
+          0 && (
           <Alert status="warning">
             <Alert.Indicator />
             <Alert.Content>
@@ -340,13 +339,13 @@ function CalcComponent() {
           <field.RadioGroup
             defaultValue={field.form.options.defaultValues?.type}
             value={field.state.value}
-            onChange={(e) => field.setValue(e as Type)}
+            onChange={(e) => field.setValue(e as StatsType)}
             name="mode"
             orientation="horizontal"
             className="gap-y-1"
           >
             <Label className="w-full">type</Label>
-            {Types.map((v) => (
+            {STATS_TYPES.map((v) => (
               <Radio
                 key={v}
                 value={v}
@@ -467,9 +466,6 @@ function CalcComponent() {
               <NumberField.DecrementButton />
               <NumberField.Input />
               <NumberField.IncrementButton />
-              {meta?.totalLevelDiff && (
-                <ErrorMessage>{toDiffStr(meta?.totalLevelDiff)}</ErrorMessage>
-              )}
             </NumberField.Group>
           </field.NumberField>
         )}
@@ -478,22 +474,17 @@ function CalcComponent() {
       <Accordion
         allowsMultipleExpanded
         className="w-full"
-        defaultExpandedKeys={DISPLAY_STATS_NAME_LIST}
+        defaultExpandedKeys={DISPLAY_STAT_LABEL_LIST}
       >
-        {StatsNames.map((sn) => {
-          const tmp = meta?.statsMeta[sn]?.valueDiff ?? 0;
-          const diff = toDiffStr(tmp, sn);
+        {STAT_LABELS.map((sl) => {
+          const tmp = clop !== null ? (clop.diffs[sl] ?? 0) : 0;
+          const diff = toDiffStr(tmp, sl);
           return (
-            <Accordion.Item key={sn} id={sn}>
+            <Accordion.Item key={sl} id={sl}>
               <Accordion.Heading>
                 <Accordion.Trigger className="p-0">
                   <div className="flex gap-2">
-                    <Label>{sn}</Label>
-                    {meta?.statsMeta[sn]?.hasMissingStatsForCalculation && (
-                      <ErrorMessage>
-                        計算に必要な値がないので計算できませんでした
-                      </ErrorMessage>
-                    )}
+                    <Label>{sl}</Label>
                   </div>
                   <Accordion.Indicator />
                 </Accordion.Trigger>
@@ -502,11 +493,11 @@ function CalcComponent() {
                 <Accordion.Panel>
                   <div className="grid grid-cols-1 gap-x-1 px-0.5 pb-1 sm:grid-cols-3">
                     <div className="col-span-1 grow">
-                      <form.AppField name={`values.${sn}`}>
+                      <form.AppField name={`values.${sl}`}>
                         {(field) => (
                           <field.NumberField
                             defaultValue={
-                              field.form.options.defaultValues?.values[sn]
+                              field.form.options.defaultValues?.values[sl]
                             }
                             value={field.state.value}
                             onChange={(e) => field.setValue(e)}
@@ -518,7 +509,7 @@ function CalcComponent() {
                               maximumFractionDigits: 1,
                               minimumFractionDigits: 1,
                               style:
-                                sn === "meleeDamageMultiplier"
+                                sl === "meleeDamageMultiplier"
                                   ? "percent"
                                   : undefined,
                             }}
@@ -539,11 +530,11 @@ function CalcComponent() {
                     <div className="col-span-2">
                       <div className="flex gap-x-1">
                         <div className="flex-1 grow">
-                          <form.AppField name={`levels.${sn}.wild`}>
+                          <form.AppField name={`levels.${sl}.wild`}>
                             {(field) => (
                               <field.NumberField
                                 defaultValue={
-                                  field.form.options.defaultValues?.levels[sn]
+                                  field.form.options.defaultValues?.levels[sl]
                                     .wild
                                 }
                                 value={field.state.value}
@@ -569,11 +560,11 @@ function CalcComponent() {
                           </form.AppField>
                         </div>
                         <div className="flex-1 grow">
-                          <form.AppField name={`levels.${sn}.mut`}>
+                          <form.AppField name={`levels.${sl}.mut`}>
                             {(field) => (
                               <field.NumberField
                                 defaultValue={
-                                  field.form.options.defaultValues?.levels[sn]
+                                  field.form.options.defaultValues?.levels[sl]
                                     .mut
                                 }
                                 value={field.state.value}
@@ -596,30 +587,16 @@ function CalcComponent() {
                                   <NumberField.Input />
                                   <NumberField.IncrementButton className="max-sm:hidden" />
                                 </NumberField.Group>
-                                {meta?.statsMeta[sn]
-                                  ?.equalWildMutationRates && (
-                                  <Description>
-                                    野生と上昇率が同じ
-                                    <br />
-                                    {field.form.state.values.mode ===
-                                      "value->level" &&
-                                      "なので、野生にまとめてます"}
-                                  </Description>
-                                )}
-                                {meta?.statsMeta[sn]
-                                  ?.isMutLevelCalculatedAsZero && (
-                                  <Description>0として計算</Description>
-                                )}
                               </field.NumberField>
                             )}
                           </form.AppField>
                         </div>
                         <div className="flex-1 grow">
-                          <form.AppField name={`levels.${sn}.dom`}>
+                          <form.AppField name={`levels.${sl}.dom`}>
                             {(field) => (
                               <field.NumberField
                                 defaultValue={
-                                  field.form.options.defaultValues?.levels[sn]
+                                  field.form.options.defaultValues?.levels[sl]
                                     .dom
                                 }
                                 value={field.state.value}
@@ -641,10 +618,6 @@ function CalcComponent() {
                                   <NumberField.Input />
                                   <NumberField.IncrementButton className="max-sm:hidden" />
                                 </NumberField.Group>
-                                {meta?.statsMeta[sn]
-                                  ?.isDomLevelCalculatedAsZero && (
-                                  <Description>0として計算</Description>
-                                )}
                               </field.NumberField>
                             )}
                           </form.AppField>
@@ -684,12 +657,6 @@ function CalcComponent() {
               <NumberField.Input />
               <NumberField.IncrementButton />
             </NumberField.Group>
-            {meta?.isTameEffectivenessCalculatedAsZero && (
-              <Description>0%として計算</Description>
-            )}
-            {meta?.isTameEffectivenessCalculatedAsOne && (
-              <Description>100%として計算</Description>
-            )}
           </field.NumberField>
         )}
       </form.AppField>
@@ -715,9 +682,6 @@ function CalcComponent() {
               <NumberField.Input />
               <NumberField.IncrementButton />
             </NumberField.Group>
-            {meta?.isImprintingCalculatedAsZero && (
-              <Description>0%として計算</Description>
-            )}
           </field.NumberField>
         )}
       </form.AppField>
@@ -725,12 +689,12 @@ function CalcComponent() {
   );
 }
 
-function toDiffStr(n: number, sn?: StatsName): string | undefined {
+function toDiffStr(n: number, sl?: StatLabel): string | undefined {
   const sign = n >= 0 ? "+" : "-";
   const value = (
-    sn === "meleeDamageMultiplier" ? Math.abs(n * 100) : Math.abs(n)
+    sl === "meleeDamageMultiplier" ? Math.abs(n * 100) : Math.abs(n)
   ).toFixed(1);
   return n === 0
     ? undefined
-    : `diff: ${sign} ${value} ${sn === "meleeDamageMultiplier" ? "%" : ""}`;
+    : `diff: ${sign} ${value} ${sl === "meleeDamageMultiplier" ? "%" : ""}`;
 }

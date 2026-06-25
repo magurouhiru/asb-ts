@@ -1,19 +1,19 @@
 import * as v from "valibot";
 import { ModNameSchema } from "../migration/values/index.js";
 import { VariantSchema } from "../migration/variants/index.js";
-import { PositiveValueSchema } from "./common.js";
-import { StatsNames } from "./stats-name.js";
+import { PositiveNumberSchema } from "./common.js";
+import { STAT_LABELS } from "./stat-name.js";
 
 /**
  * packages/asb-ts/ARKStatsExtractor/ARKBreedingStats/species/SpeciesStat.cs
  */
 export type SpeciesStat = v.InferOutput<typeof SpeciesStatSchema>;
 export const SpeciesStatSchema = v.object({
-  baseValue: PositiveValueSchema,
-  incPerWildLevel: PositiveValueSchema,
-  incPerDomLevel: PositiveValueSchema,
+  baseValue: PositiveNumberSchema,
+  incPerWildLevel: PositiveNumberSchema,
+  incPerDomLevel: PositiveNumberSchema,
   additiveBonus: v.number(),
-  multiplicativeBonus: PositiveValueSchema,
+  multiplicativeBonus: PositiveNumberSchema,
 });
 
 /**
@@ -21,7 +21,7 @@ export const SpeciesStatSchema = v.object({
  */
 export type Stats = v.InferOutput<typeof StatsSchema>;
 export const StatsSchema = v.object(
-  v.entriesFromList(StatsNames, v.nullable(SpeciesStatSchema)),
+  v.entriesFromList(STAT_LABELS, v.undefinedable(SpeciesStatSchema)),
 );
 
 export type StatImprintMultDetail = v.InferOutput<
@@ -29,26 +29,34 @@ export type StatImprintMultDetail = v.InferOutput<
 >;
 export const StatImprintMultDetailSchema = v.pipe(
   v.number(),
-  v.brand("StatImprintMultDetailSchema"),
+  v.brand("" as "StatImprintMultDetailSchema"),
 );
 
 export type StatsImprintMultiplier = v.InferOutput<
   typeof StatsImprintMultiplierSchema
 >;
 export const StatsImprintMultiplierSchema = v.object(
-  v.entriesFromList(StatsNames, StatImprintMultDetailSchema),
+  v.entriesFromList(STAT_LABELS, StatImprintMultDetailSchema),
 );
 
 export type BlueprintPath = v.InferOutput<typeof BlueprintPathSchema>;
 export const BlueprintPathSchema = v.pipe(
   v.string(),
   v.minLength(1),
-  v.brand("SpeciesSchema/blueprintPath"),
+  v.brand("" as "BlueprintPathSchema"),
+);
+
+export type MutationMultiplierItem = v.InferOutput<
+  typeof MutationMultiplierItemSchema
+>;
+export const MutationMultiplierItemSchema = v.pipe(
+  v.number(),
+  v.brand("" as "MutationMultiplierItemSchema"),
 );
 
 export type MutationMultiplier = v.InferOutput<typeof MutationMultiplierSchema>;
 export const MutationMultiplierSchema = v.object(
-  v.entriesFromList(StatsNames, v.number()),
+  v.entriesFromList(STAT_LABELS, MutationMultiplierItemSchema),
 );
 
 export type TamedBaseHealthMultiplier = v.InferOutput<
@@ -56,7 +64,7 @@ export type TamedBaseHealthMultiplier = v.InferOutput<
 >;
 export const TamedBaseHealthMultiplierSchema = v.pipe(
   v.number(),
-  v.brand("SpeciesSchema/TamedBaseHealthMultiplier"),
+  v.brand("" as "TamedBaseHealthMultiplierSchema"),
 );
 
 export type Species = v.InferOutput<typeof SpeciesSchema>;
@@ -66,9 +74,9 @@ export const SpeciesSchema = v.object({
   variants: v.array(VariantSchema),
   mod: v.nullable(ModNameSchema),
   stats: StatsSchema,
-  statImprintMultiplier: v.optional(StatsImprintMultiplierSchema),
-  mutationMultiplier: v.optional(MutationMultiplierSchema),
-  tamedBaseHealthMultiplier: v.optional(TamedBaseHealthMultiplierSchema),
+  statImprintMultiplier: v.undefinedable(StatsImprintMultiplierSchema),
+  mutationMultiplier: v.undefinedable(MutationMultiplierSchema),
+  tamedBaseHealthMultiplier: v.undefinedable(TamedBaseHealthMultiplierSchema),
 });
 
 // Default values for the stat imprint multipliers in ASE
