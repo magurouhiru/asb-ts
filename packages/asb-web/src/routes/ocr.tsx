@@ -6,8 +6,7 @@ import {
   Table,
   toast,
 } from "@heroui/react";
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   type ASBTSErrorObject,
   type CropRect,
@@ -18,7 +17,14 @@ import {
   type ImageLabel,
   type OcrLabel,
 } from "asb-ts";
-import { useEffect, useRef, useState } from "react";
+import {
+  type ReactNode,
+  Suspense,
+  use,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import * as R from "remeda";
 import { useOcrQueue } from "@/contexts";
 
@@ -29,7 +35,7 @@ export const Route = createFileRoute("/ocr")({
 const allowedFileTypes = ["image/png", "image/jpeg"];
 
 function OcrComponent() {
-  const [fileName, setFileName] = useState<string>("");
+  const [_fileName, setFileName] = useState<string>("");
   const [img, setImg] = useState<HTMLImageElement | null>(null);
   const canvasReff = useRef<HTMLCanvasElement | null>(null);
 
@@ -205,237 +211,242 @@ function OcrComponent() {
           <span>logを表示する</span>
         </div>
         {ocrResult !== null && (
-          <Table>
-            <Table.ScrollContainer>
-              <Table.Content aria-label="Example table">
-                <Table.Header>
-                  <Table.Column isRowHeader>label</Table.Column>
-                  <Table.Column>original</Table.Column>
-                  <Table.Column>grayscale</Table.Column>
-                  <Table.Column>binary</Table.Column>
-                  <Table.Column>normarized</Table.Column>
-                  {showLog && <Table.Column>log</Table.Column>}
-                </Table.Header>
-                <Table.Body>
-                  {R.entries(ocrResult.result.croppedImages).map(
-                    ([ol, images]) => (
-                      <Table.Row key={ol}>
-                        <Table.Cell>{ol}</Table.Cell>
-                        {R.entries(images).map(([il, img]) => (
-                          <Table.Cell key={il}>
-                            <div>
-                              <img
-                                src={img.toDataURL()}
-                                aria-label="cropped image"
-                              />
-                            </div>
-                            {R.keys(
-                              ocrResult.result.extractedPromiseTexs[ol],
-                            ).map((et, i, array) => (
-                              <>
-                                <div className="flex gap-2">
-                                  <span>{et}:</span>
-                                  <ShowExtractedText
-                                    key={et}
-                                    fileName={fileName}
-                                    ocrResult={ocrResult}
-                                    ol={ol}
-                                    et={et}
-                                    il={il}
-                                  />
-                                </div>
-                                {i + 1 !== array.length && <Separator />}
-                              </>
-                            ))}
-                          </Table.Cell>
-                        ))}
-                        <Table.Cell>
-                          <ShowNormalizedText
-                            fileName={fileName}
-                            ocrResult={ocrResult}
-                            ol={ol}
-                          />
-                          {ol === "stat_name_0" && (
-                            <>
-                              <Separator />
-                              <ShowNormalizedTextWithDom
-                                fileName={fileName}
-                                ocrResult={ocrResult}
-                              />
-                            </>
-                          )}
-                        </Table.Cell>
-                        {showLog && (
+          <>
+            <div className="flex gap-2">
+              <span>リンク:</span>
+              <CustomSuspense>
+                <ShowLink ocrResult={ocrResult} />
+              </CustomSuspense>
+            </div>
+            <div className="flex gap-2">
+              <span>type:</span>
+              <CustomSuspense>
+                <ShowNormalizedTextType ocrResult={ocrResult} />
+              </CustomSuspense>
+            </div>
+            <Table>
+              <Table.ScrollContainer>
+                <Table.Content aria-label="Example table">
+                  <Table.Header>
+                    <Table.Column isRowHeader>label</Table.Column>
+                    <Table.Column>original</Table.Column>
+                    <Table.Column>grayscale</Table.Column>
+                    <Table.Column>binary</Table.Column>
+                    <Table.Column>normarized</Table.Column>
+                    {showLog && <Table.Column>log</Table.Column>}
+                  </Table.Header>
+                  <Table.Body>
+                    {R.entries(ocrResult.result.croppedImages).map(
+                      ([ol, images]) => (
+                        <Table.Row key={ol}>
+                          <Table.Cell>{ol}</Table.Cell>
+                          {R.entries(images).map(([il, img]) => (
+                            <Table.Cell key={il}>
+                              <div>
+                                <img
+                                  src={img.toDataURL()}
+                                  aria-label="cropped image"
+                                />
+                              </div>
+                              {R.keys(
+                                ocrResult.result.extractedPromiseTexs[ol],
+                              ).map((et, i, array) => (
+                                <>
+                                  <div className="flex gap-2">
+                                    <span>{et}:</span>
+                                    <CustomSuspense>
+                                      <ShowExtractedText
+                                        key={et}
+                                        ocrResult={ocrResult}
+                                        ol={ol}
+                                        et={et}
+                                        il={il}
+                                      />
+                                    </CustomSuspense>
+                                  </div>
+                                  {i + 1 !== array.length && <Separator />}
+                                </>
+                              ))}
+                            </Table.Cell>
+                          ))}
                           <Table.Cell>
-                            <ShowLog
-                              fileName={fileName}
-                              ocrResult={ocrResult}
-                              ol={ol}
-                            />
+                            <CustomSuspense>
+                              <ShowNormalizedText
+                                ocrResult={ocrResult}
+                                ol={ol}
+                              />
+                            </CustomSuspense>
                             {ol === "stat_name_0" && (
                               <>
                                 <Separator />
-                                <ShowLogWithDom
-                                  fileName={fileName}
-                                  ocrResult={ocrResult}
-                                />
+                                <CustomSuspense>
+                                  <ShowNormalizedTextWithDom
+                                    ocrResult={ocrResult}
+                                  />
+                                </CustomSuspense>
                               </>
                             )}
                           </Table.Cell>
-                        )}
-                      </Table.Row>
-                    ),
-                  )}
-                </Table.Body>
-              </Table.Content>
-            </Table.ScrollContainer>
-            <Table.Footer>{/* Optional footer content */}</Table.Footer>
-          </Table>
+                          {showLog && (
+                            <Table.Cell>
+                              <CustomSuspense>
+                                <ShowLog ocrResult={ocrResult} ol={ol} />
+                              </CustomSuspense>
+                              {ol === "stat_name_0" && (
+                                <>
+                                  <Separator />
+                                  <CustomSuspense>
+                                    <ShowLogWithDom ocrResult={ocrResult} />
+                                  </CustomSuspense>
+                                </>
+                              )}
+                            </Table.Cell>
+                          )}
+                        </Table.Row>
+                      ),
+                    )}
+                  </Table.Body>
+                </Table.Content>
+              </Table.ScrollContainer>
+              <Table.Footer>{/* Optional footer content */}</Table.Footer>
+            </Table>
+          </>
         )}
       </section>
     </div>
   );
 }
 
+function CustomSuspense({ children }: { children: ReactNode }) {
+  return <Suspense fallback={<div>待機中...</div>}>{children}</Suspense>;
+}
+
 function ShowExtractedText({
-  fileName,
   ocrResult,
   ol,
   et,
   il,
 }: {
-  fileName: string;
   ocrResult: ExtractTextsOutput;
   ol: OcrLabel;
   et: ExtractType;
   il: ImageLabel;
 }) {
-  const { data, isPending, isError } = useQuery({
-    queryKey: ["ExtractedText", fileName, ol, et, il],
-    queryFn: () =>
-      ocrResult.result.extractedPromiseTexs[ol][et]?.[il] ??
+  const text = use(
+    ocrResult.result.extractedPromiseTexs[ol][et]?.[il] ??
       Promise.resolve(null),
-  });
-  if (isError) {
-    return <div>エラーが発生しました。</div>;
-  } else if (isPending) {
-    return <div>待機中...</div>;
-  } else {
-    return <div>{data}</div>;
-  }
+  );
+  return <div>{text}</div>;
 }
 
 function ShowNormalizedText({
-  fileName,
   ocrResult,
   ol,
 }: {
-  fileName: string;
   ocrResult: ExtractTextsOutput;
   ol: OcrLabel;
 }) {
-  const { data, isPending, isError } = useQuery({
-    queryKey: ["normalizedTexts", fileName, ol],
-    queryFn: () =>
-      ocrResult.resultPromise.then((p) => p.normalizedTexts[ol] ?? null),
-  });
-  if (isError) {
-    return <div>エラーが発生しました。</div>;
-  } else if (isPending) {
-    return <div>待機中...</div>;
-  } else {
-    return (
-      <div>
-        <div>{data.type}</div>
-        <div>{JSON.stringify(data.text)}</div>
-      </div>
-    );
-  }
+  const data = use(
+    ocrResult.resultPromise.then((p) => p.normalizedTexts[ol] ?? null),
+  );
+  return (
+    <div>
+      <div>{data.type}</div>
+      <div>{JSON.stringify(data.text)}</div>
+    </div>
+  );
 }
 
 function ShowLog({
-  fileName,
   ocrResult,
   ol,
 }: {
-  fileName: string;
   ocrResult: ExtractTextsOutput;
   ol: OcrLabel;
 }) {
-  const { data, isPending, isError } = useQuery({
-    queryKey: ["logs", fileName, ol],
-    queryFn: () => ocrResult.resultPromise.then((p) => p.logs[ol] ?? []),
-  });
-  if (isError) {
-    return <div>エラーが発生しました。</div>;
-  } else if (isPending) {
-    return <div>待機中...</div>;
-  } else {
-    return (
-      <ol>
-        {data.map((log) => (
-          <li key={JSON.stringify(log)}>
-            {log.isValibotError
-              ? `action: ${log.action}, flatError: ${JSON.stringify(log.flatError, null, 2)},`
-              : `action: ${log.action}, output: ${log.output}${log.param !== undefined ? "" : `, param: ${log.param}`}}`}
-          </li>
-        ))}
-      </ol>
-    );
-  }
+  const data = use(ocrResult.resultPromise.then((p) => p.logs[ol] ?? []));
+  return (
+    <ol>
+      {data.map((log) => (
+        <li key={JSON.stringify(log)}>
+          {log.isValibotError
+            ? `action: ${log.action}, flatError: ${JSON.stringify(log.flatError, null, 2)},`
+            : `action: ${log.action}, output: ${log.output}${log.param !== undefined ? "" : `, param: ${log.param}`}}`}
+        </li>
+      ))}
+    </ol>
+  );
 }
 
 function ShowNormalizedTextWithDom({
-  fileName,
   ocrResult,
 }: {
-  fileName: string;
   ocrResult: ExtractTextsOutput;
 }) {
-  const { data, isPending, isError } = useQuery({
-    queryKey: ["normalizedTextsWithDom", fileName],
-    queryFn: () => ocrResult.resultPromise.then((p) => p.withDom ?? null),
-  });
-  if (isError) {
-    return <div>エラーが発生しました。</div>;
-  } else if (isPending) {
-    return <div>待機中...</div>;
-  } else {
-    return (
-      <div>
-        <div>{data.type}</div>
-        <div>{JSON.stringify(data.text)}</div>
-      </div>
-    );
-  }
+  const data = use(ocrResult.resultPromise.then((p) => p.withDom ?? null));
+  return (
+    <div>
+      <div>{data.type}</div>
+      <div>{JSON.stringify(data.text)}</div>
+    </div>
+  );
 }
 
-function ShowLogWithDom({
-  fileName,
+function ShowLogWithDom({ ocrResult }: { ocrResult: ExtractTextsOutput }) {
+  const data = use(ocrResult.resultPromise.then((p) => p.withDomLog ?? []));
+  return (
+    <ol>
+      {data.map((log) => (
+        <li key={JSON.stringify(log)}>
+          {log.isValibotError
+            ? `action: ${log.action}, flatError: ${JSON.stringify(log.flatError, null, 2)},`
+            : `action: ${log.action}, output: ${log.output}${log.param !== undefined ? "" : `, param: ${log.param}`}}`}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function ShowNormalizedTextType({
   ocrResult,
 }: {
-  fileName: string;
   ocrResult: ExtractTextsOutput;
 }) {
-  const { data, isPending, isError } = useQuery({
-    queryKey: ["logsWithDom", fileName],
-    queryFn: () => ocrResult.resultPromise.then((p) => p.withDomLog ?? []),
-  });
-  if (isError) {
-    return <div>エラーが発生しました。</div>;
-  } else if (isPending) {
-    return <div>待機中...</div>;
-  } else {
-    return (
-      <ol>
-        {data.map((log) => (
-          <li key={JSON.stringify(log)}>
-            {log.isValibotError
-              ? `action: ${log.action}, flatError: ${JSON.stringify(log.flatError, null, 2)},`
-              : `action: ${log.action}, output: ${log.output}${log.param !== undefined ? "" : `, param: ${log.param}`}}`}
-          </li>
-        ))}
-      </ol>
-    );
-  }
+  const data = use(ocrResult.resultPromise.then((p) => p.type ?? null));
+  return <div>{data}</div>;
+}
+
+function ShowLink({ ocrResult }: { ocrResult: ExtractTextsOutput }) {
+  const result = use(ocrResult.resultPromise);
+  return (
+    <Link
+      to="/calc"
+      search={{
+        mode: "value->level",
+        type: result.type,
+        n: result.normalizedTexts.name.text ?? "",
+
+        h: result.values.health ?? 0,
+        s: result.values.stamina ?? 0,
+        o: result.values.oxygen ?? 0,
+        f: result.values.food ?? 0,
+
+        wtr: result.values.water ?? 0,
+        temp: result.values.temperature ?? 0,
+        w: result.values.weight ?? 0,
+        m: result.values.meleeDamageMultiplier ?? 0,
+
+        spd: result.values.speedMultiplier ?? 0,
+        tempf: result.values.temperatureFortitude ?? 0,
+        crft: result.values.craftingSpeedMultiplier ?? 0,
+        t: result.values.torpidity ?? 0,
+
+        i: result.imprinting,
+        level: result.normalizedTexts.level.text ?? 0,
+        withDom: String(result.withDom.text),
+      }}
+    >
+      レベル算出
+    </Link>
+  );
 }

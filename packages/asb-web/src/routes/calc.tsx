@@ -236,17 +236,19 @@ function CalcComponent() {
 
   useEffect(() => {
     if (clop !== null) {
-      Object.entries(clop.levels).forEach(([sl, { wild, mut, dom }]) => {
-        form.setFieldValue(`levels.${sl as StatLabel}.wild`, wild, {
-          dontValidate: true,
+      R.entries(clop.levels)
+        .filter(([, v]) => v !== undefined)
+        .forEach(([sl, { wild, mut, dom }]) => {
+          form.setFieldValue(`levels.${sl as StatLabel}.wild`, wild, {
+            dontValidate: true,
+          });
+          form.setFieldValue(`levels.${sl as StatLabel}.mut`, mut, {
+            dontValidate: true,
+          });
+          form.setFieldValue(`levels.${sl as StatLabel}.dom`, dom, {
+            dontValidate: true,
+          });
         });
-        form.setFieldValue(`levels.${sl as StatLabel}.mut`, mut, {
-          dontValidate: true,
-        });
-        form.setFieldValue(`levels.${sl as StatLabel}.dom`, dom, {
-          dontValidate: true,
-        });
-      });
       form.setFieldValue("tameEffectiveness", clop.tameEffectiveness, {
         dontValidate: true,
       });
@@ -255,7 +257,7 @@ function CalcComponent() {
 
   useEffect(() => {
     if (cvop !== null) {
-      Object.entries(cvop.values).forEach(([sl, value]) => {
+      R.entries(cvop.values).forEach(([sl, value]) => {
         form.setFieldValue(`values.${sl as StatLabel}`, value, {
           dontValidate: true,
         });
