@@ -152,56 +152,56 @@ const DATA_SET: {
   //     torpidity: { wild: 139, mut: 0, dom: 0 },
   //   },
   // },
-  {
-    name: "5ひ79%28下ルキガノトサウルス",
-    type: "bred",
-    values: {
-      health: 18840,
-      stamina: 409.8,
-      oxygen: 169.9,
-      food: 4440,
-      weight: 1001,
-      meleeDamageMultiplier: 2.35,
-      torpidity: 176800,
-    },
-    withDom: false,
-    totalLevel: 0,
-    imprinting: 0,
-    levels: {
-      health: { wild: 46, mut: 0, dom: 0 },
-      stamina: { wild: 49, mut: 0, dom: 0 },
-      oxygen: { wild: 53, mut: 0, dom: 0 },
-      food: { wild: 44, mut: 0, dom: 0 },
-      weight: { wild: 43, mut: 0, dom: 0 },
-      meleeDamageMultiplier: { wild: 43, mut: 0, dom: 0 },
-      torpidity: { wild: 278, mut: 0, dom: 0 },
-    },
-  },
   // {
-  //   name: "ベロナサウルス",
-  //   type: "dom",
+  //   name: "5ひ79%28下ルキガノトサウルス",
+  //   type: "bred",
   //   values: {
-  //     health: 2024.1,
-  //     stamina: 1267.5,
-  //     oxygen: 742.5,
-  //     food: 5175.0,
-  //     weight: 461.5,
-  //     meleeDamageMultiplier: 2.552,
-  //     torpidity: 3424.5,
+  //     health: 18840,
+  //     stamina: 409.8,
+  //     oxygen: 169.9,
+  //     food: 4440,
+  //     weight: 1001,
+  //     meleeDamageMultiplier: 2.35,
+  //     torpidity: 176800,
   //   },
   //   withDom: false,
-  //   totalLevel: 127,
-  //   imprinting: Math.random(), // bred 以外であればインプリントは関係ないはず
+  //   totalLevel: 0,
+  //   imprinting: 0,
   //   levels: {
-  //     health: { wild: 18, mut: 0, dom: 0 },
-  //     stamina: { wild: 29, mut: 0, dom: 0 },
-  //     oxygen: { wild: 23, mut: 0, dom: 0 },
-  //     food: { wild: 13, mut: 0, dom: 0 },
-  //     weight: { wild: 21, mut: 0, dom: 0 },
-  //     meleeDamageMultiplier: { wild: 22, mut: 0, dom: 0 },
-  //     torpidity: { wild: 126, mut: 0, dom: 0 },
+  //     health: { wild: 46, mut: 0, dom: 0 },
+  //     stamina: { wild: 49, mut: 0, dom: 0 },
+  //     oxygen: { wild: 53, mut: 0, dom: 0 },
+  //     food: { wild: 44, mut: 0, dom: 0 },
+  //     weight: { wild: 43, mut: 0, dom: 0 },
+  //     meleeDamageMultiplier: { wild: 43, mut: 0, dom: 0 },
+  //     torpidity: { wild: 278, mut: 0, dom: 0 },
   //   },
   // },
+  {
+    name: "ベロナサウルス",
+    type: "dom",
+    values: {
+      health: 2024.1,
+      stamina: 1267.5,
+      oxygen: 742.5,
+      food: 5175.0,
+      weight: 461.5,
+      meleeDamageMultiplier: 2.552,
+      torpidity: 3424.5,
+    },
+    withDom: false,
+    totalLevel: 127,
+    imprinting: Math.random(), // bred 以外であればインプリントは関係ないはず
+    levels: {
+      health: { wild: 18, mut: 0, dom: 0 },
+      stamina: { wild: 29, mut: 0, dom: 0 },
+      oxygen: { wild: 23, mut: 0, dom: 0 },
+      food: { wild: 13, mut: 0, dom: 0 },
+      weight: { wild: 21, mut: 0, dom: 0 },
+      meleeDamageMultiplier: { wild: 22, mut: 0, dom: 0 },
+      torpidity: { wild: 126, mut: 0, dom: 0 },
+    },
+  },
   // {
   //   name: "",
   //     type: "wild",
@@ -223,7 +223,7 @@ const DATA_SET: {
 ] as const;
 
 describe("calculateLevel", () => {
-  it.each(DATA_SET)("calculateLevel - $ip.type - $name", (data) => {
+  it.each(DATA_SET)("calculateLevel - $type - $name", (data) => {
     const settings = createSettings();
 
     const speciesList = createSpeciesList(settings);

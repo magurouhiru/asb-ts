@@ -364,9 +364,9 @@ function toValidTeRange(result: FlatResult): TeRange | null {
   let teMaxTmp = TE_MAX;
   let flag = true;
   for (const item of R.values(result)) {
-    if (teMinTmp <= item.teMin && item.teMax <= teMaxTmp) {
-      teMinTmp = item.teMin;
-      teMaxTmp = item.teMax;
+    if (item.teMin <= teMaxTmp && teMinTmp <= item.teMax) {
+      teMinTmp = Math.max(item.teMin, teMinTmp) as TameEffectiveness;
+      teMaxTmp = Math.min(item.teMax, teMaxTmp) as TameEffectiveness;
     } else {
       flag = false;
       break;
@@ -526,7 +526,7 @@ function cLpt(
   }
   const first = buff[0];
   if (first) {
-    return [first, ...buff];
+    return [first, ...buff.slice(1)];
   } else {
     throw new ASBTSErrorCommon(
       "いい感じのレベルが見つからなかったです。",
@@ -582,14 +582,18 @@ function binarySearchMin(
     if (check(left)) {
       result = left;
     }
+  } else if (check(teMin)) {
+    result = teMin;
+  } else if (check(teMax)) {
+    result = teMax;
   } else {
     while (left <= right) {
       const mid = ((left + right) / 2) as TameEffectiveness;
       if (check(mid)) {
         result = mid; // midは条件を満たすので、一旦キープ
-        right = (mid - teRange / range) as TameEffectiveness; // midが条件を満たさないので、より小さい範囲（左側）を探す
-      } else {
         left = (mid + teRange / range) as TameEffectiveness; // さらに大きい値（右側）に満たすものがないか探す
+      } else {
+        right = (mid - teRange / range) as TameEffectiveness; // midが条件を満たさないので、より小さい範囲（左側）を探す
       }
     }
   }

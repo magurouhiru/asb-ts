@@ -138,7 +138,7 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
 
 export type TeRange = { teMin: TameEffectiveness; teMax: TameEffectiveness };
 
-export const TE_DIGIT = 10000;
+export const TE_DIGIT = 6;
 
 export interface CalculateValueOutputPack {
   values: StatValues;
