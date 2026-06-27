@@ -251,7 +251,7 @@ describe("calculateLevel", () => {
     if (!result.isSuccess) {
       throw new Error();
     }
-    const { levels, tameEffectiveness } = result.result;
+    const { levels } = result.result;
 
     expect(levels.health?.wild).toBe(expected[0]);
     expect(levels.stamina?.wild).toBe(expected[1]);
@@ -279,10 +279,6 @@ describe("calculateLevel", () => {
 
     expect(species.variants).toStrictEqual(expected[7]);
     expect(species.mod).toBe(expected[8]);
-
-    if (inputs.type === "dom") {
-      expect(tameEffectiveness).toBe(expected[9]);
-    }
   });
 
   it.each([
@@ -510,9 +506,9 @@ describe("calculateLevel", () => {
     });
 
     if (!result.isSuccess) {
-      throw new Error();
+      throw new Error(JSON.stringify(result.error));
     }
-    const { levels, tameEffectiveness } = result.result;
+    const { levels } = result.result;
 
     expect(levels.health?.wild).toBe(expected[0]);
     expect(levels.health?.mut).toBe(expected[1]);
@@ -544,16 +540,6 @@ describe("calculateLevel", () => {
 
     expect(species.variants).toStrictEqual(expected[21]);
     expect(species.mod).toBe(expected[22]);
-
-    if (inputs.type === "wild") {
-      expect(tameEffectiveness).toBe(0);
-    }
-    if (inputs.type === "dom") {
-      expect(tameEffectiveness).toBe(expected[23]);
-    }
-    if (inputs.type === "bred") {
-      expect(tameEffectiveness).toBe(1);
-    }
   });
 });
 

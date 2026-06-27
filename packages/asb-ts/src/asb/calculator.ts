@@ -431,20 +431,24 @@ function cLw(
   stat: SpeciesStat,
   ip: Extract<CalculateLevelInputPack, { type: "wild" }>,
 ): { ld: LevelDetail; diff: number } {
+  const roundValue = round(value, sl);
   let buffLd: LevelDetail | null = null;
   let buffDiff = Number.MAX_SAFE_INTEGER;
 
   for (const ld of sl === "torpidity"
     ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
     : TARGET_LEVEL_DETAIL_LIST_WILD) {
-    const tmpVw = cVw(
+    const tmpVw = round(
+      cVw(
+        sl,
+        ld,
+        stat,
+        ip.species.mutationMultiplier,
+        ip.settings.statMultipliers[sl],
+      ),
       sl,
-      ld,
-      stat,
-      ip.species.mutationMultiplier,
-      ip.settings.statMultipliers[sl],
     );
-    const tmpDiff = value - round(tmpVw, sl);
+    const tmpDiff = roundValue - round(tmpVw, sl);
     if (Math.abs(tmpDiff) < Math.abs(buffDiff)) {
       buffLd = ld;
       buffDiff = tmpDiff;
@@ -453,7 +457,7 @@ function cLw(
   if (buffLd === null) {
     throw new ASBTSErrorCommon(
       "いい感じの野生のレベルが見つからなかったです。",
-      "calculateLevelDom",
+      "cLw",
       { sl, value, stat, ip },
     );
   }
@@ -474,6 +478,7 @@ function cLpt(
   teMax: TameEffectiveness,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
 ): [CLptResultItem, ...CLptResultItem[]] {
+  const roundValue = round(value, sl);
   const buff: CLptResultItem[] = [];
 
   const mm = (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sl];
@@ -493,26 +498,29 @@ function cLpt(
             : TARGET_LEVEL_DETAIL_LIST_WILD_MUT;
   for (const ld of targetLevel) {
     const fnCV = (te: TameEffectiveness) =>
-      cV(
+      round(
+        cV(
+          sl,
+          ld,
+          stat,
+          te,
+          ip.type === "dom" ? DOM_IMP : ip.imprinting,
+          ip.species,
+          ip.settings,
+        ),
         sl,
-        ld,
-        stat,
-        te,
-        ip.type === "dom" ? DOM_IMP : ip.imprinting,
-        ip.species,
-        ip.settings,
       );
     const teMinTmp = binarySearchMax(
       TE_DIGIT,
       teMin,
       teMax,
-      (te) => fnCV(te) <= value,
+      (te) => fnCV(te) <= roundValue,
     );
     const teMaxTmp = binarySearchMin(
       TE_DIGIT,
       teMin,
       teMax,
-      (te) => fnCV(te) >= value,
+      (te) => fnCV(te) >= roundValue,
     );
     if (teMinTmp !== null && teMaxTmp !== null) {
       buff.push({ ld, teMin: teMinTmp, teMax: teMaxTmp });
@@ -524,7 +532,7 @@ function cLpt(
   } else {
     throw new ASBTSErrorCommon(
       "いい感じのレベルが見つからなかったです。",
-      "calculateLevelDom",
+      "cLpt",
       { sl, value, stat, teMin, teMax, ip },
     );
   }
