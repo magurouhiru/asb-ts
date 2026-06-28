@@ -253,7 +253,7 @@ function calculateLevelDomBred(
     ) {
       return undefined;
     } else {
-      return cLpt(sl, value, stat, teRange, ip);
+      return cL(sl, value, stat, teRange, ip);
     }
   });
   const cLptEntries = R.entries(cLptResult);
@@ -306,9 +306,9 @@ function calculateLevelDomBred(
         R.filter(([sl]) => sl !== "torpidity"),
         R.filter(
           ([, { ld }]) =>
-            ld.wild === POSITIVE_INTEGER_0 &&
-            ld.mut === POSITIVE_INTEGER_0 &&
-            ld.dom === POSITIVE_INTEGER_0,
+            ld.wild !== POSITIVE_INTEGER_0 ||
+            ld.mut !== POSITIVE_INTEGER_0 ||
+            ld.dom !== POSITIVE_INTEGER_0,
         ),
       );
       const tmpMeanWildLevel = tmpTotalLevel / tmpFiltered.length;
@@ -470,9 +470,10 @@ function cLw(
 type CLptResultItem = {
   ld: LevelDetail;
   teRange: TeRange;
+  diff: number;
 };
 
-function cLpt(
+function cL(
   sl: StatLabel,
   value: PositiveNumber,
   stat: SpeciesStat,
@@ -480,7 +481,8 @@ function cLpt(
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
 ): [CLptResultItem, ...CLptResultItem[]] {
   const roundedValue = round(value, sl);
-  const buff: CLptResultItem[] = [];
+  let resultBuff: CLptResultItem[] = [];
+  let diffBuff = Number.MAX_SAFE_INTEGER;
 
   const mm = (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sl];
   const targetLevel =
@@ -511,14 +513,22 @@ function cLpt(
         ),
         sl,
       );
-    const teRangeTmp = searchTeRange(TE_DIGIT, teRange, fnCV, roundedValue);
-    if (teRangeTmp !== null) {
-      buff.push({ ld, teRange: teRangeTmp });
+    const [teRangeTmp, diffTmp] = searchTeRange(
+      TE_DIGIT,
+      teRange,
+      fnCV,
+      roundedValue,
+    );
+    if (Math.abs(diffTmp) < Math.abs(diffBuff)) {
+      resultBuff = [{ ld, teRange: teRangeTmp, diff: diffTmp }];
+      diffBuff = diffTmp;
+    } else if (Math.abs(diffTmp) === Math.abs(diffBuff)) {
+      resultBuff.push({ ld, teRange: teRangeTmp, diff: diffTmp });
     }
   }
-  const first = buff[0];
+  const first = resultBuff[0];
   if (first) {
-    return [first, ...buff.slice(1)];
+    return [first, ...resultBuff.slice(1)];
   } else {
     throw new ASBTSErrorCommon(
       "いい感じのレベルが見つからなかったです。",
@@ -533,7 +543,7 @@ function searchTeRange(
   teRange: TeRange,
   fn: (te: TameEffectiveness) => number,
   target: number,
-): TeRange | null {
+): [TeRange, number] {
   const teRangeTarget = teRange.teMax - teRange.teMin;
   if (teRangeTarget < 0) {
     throw new ASBTSErrorCommon(
@@ -543,19 +553,22 @@ function searchTeRange(
     );
   } else if (teRangeTarget === 0) {
     if (fn(teRange.teMin) === target) {
-      return teRange;
+      return [teRange, 0];
     }
   }
   const min = fn(teRange.teMin);
   const max = fn(teRange.teMax);
   if (target < min || max < target) {
-    return null;
+    return [
+      { teMin: teRange.teMin, teMax: teRange.teMax },
+      target - (min + max) / 2,
+    ];
   } else if (min === max) {
-    return { teMin: teRange.teMin, teMax: teRange.teMax };
+    return [{ teMin: teRange.teMin, teMax: teRange.teMax }, target - min];
   } else if (min === target) {
-    return { teMin: teRange.teMin, teMax: teRange.teMin };
+    return [{ teMin: teRange.teMin, teMax: teRange.teMin }, 0];
   } else if (max === target) {
-    return { teMin: teRange.teMax, teMax: teRange.teMax };
+    return [{ teMin: teRange.teMax, teMax: teRange.teMax }, 0];
   }
 
   const teRangeBuff = { ...teRange };
@@ -586,5 +599,5 @@ function searchTeRange(
       right = mid - 1;
     }
   }
-  return teRangeBuff;
+  return [teRangeBuff, 0];
 }

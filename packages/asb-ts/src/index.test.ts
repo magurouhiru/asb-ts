@@ -382,7 +382,8 @@ const DATA_SET: {
     name: "せり田山隊長(カマキリ)",
     type: "bred",
     values: {
-      health: 5060.3,
+      health: 5060.0,
+      // health: 5060.3,
       stamina: 975.0,
       oxygen: 720.0,
       food: 5616.0,
