@@ -6,7 +6,7 @@ import {
 } from "./common.js";
 import { SettingsSchema } from "./settings.js";
 import { SpeciesSchema } from "./species.js";
-import { STAT_LABELS } from "./stat-name.js";
+import { STAT_LABELS, type StatLabel } from "./stat-name.js";
 
 export type LevelDetail = v.InferOutput<typeof LevelDetailSchema>;
 export const LevelDetailSchema = v.object({
@@ -136,6 +136,13 @@ export const CalculateLevelInputPackSchema = v.variant("type", [
   }),
 ]);
 
+export type Diffs = {
+  totalLevelDiff: number;
+  statDiffs: StatDiffs;
+};
+
+export type StatDiffs = Record<StatLabel, number | undefined>;
+
 export type TeRange = { teMin: TameEffectiveness; teMax: TameEffectiveness };
 
 export const TE_DIGIT = 6;
@@ -147,4 +154,5 @@ export interface CalculateValueOutputPack {
 export interface CalculateLevelOutputPack {
   levels: StatLevels;
   teRange: TeRange | null;
+  diffs: Diffs;
 }

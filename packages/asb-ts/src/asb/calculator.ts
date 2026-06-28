@@ -10,6 +10,7 @@ import {
   DEFAULT_MUTATION_MULTIPLIER,
   DEFAULT_STAT_IMPRINT_MULTIPLIER,
   DEFAULT_TBHM,
+  type Diffs,
   DOM_IMP,
   type Imprinting,
   type LevelDetail,
@@ -190,21 +191,22 @@ export function calculateLevelController(
 ): CalculateLevelOutputPack {
   let levels: StatLevels | null = null;
   let teRange: TeRange | null = null;
+  let diffs: Diffs | null = null;
 
   switch (ip.type) {
     case "wild": {
-      [levels] = calculateLevelWild(ip);
+      [levels, diffs] = calculateLevelWild(ip);
       break;
     }
     case "dom": {
-      [levels, teRange] = calculateLevelDomBred(
+      [levels, teRange, diffs] = calculateLevelDomBred(
         { teMin: TE_MIN, teMax: TE_MAX } as TeRange,
         ip,
       );
       break;
     }
     case "bred": {
-      [levels, teRange] = calculateLevelDomBred(
+      [levels, teRange, diffs] = calculateLevelDomBred(
         { teMin: BRED_TE, teMax: BRED_TE },
         ip,
       );
@@ -215,12 +217,13 @@ export function calculateLevelController(
   return {
     levels: v.parse(StatLevelsSchema, levels),
     teRange,
+    diffs,
   };
 }
 
 function calculateLevelWild(
   ip: Extract<CalculateLevelInputPack, { type: "wild" }>,
-): [StatLevels] {
+): [StatLevels, Diffs] {
   const results = R.mapValues(ip.values, (value, sl) => {
     const stat = ip.species.stats[sl];
     if (
@@ -234,7 +237,13 @@ function calculateLevelWild(
       return cLw(sl, value, stat, ip);
     }
   });
-  return [R.mapValues(results, (result) => result?.ld)];
+  return [
+    R.mapValues(results, (result) => result?.ld),
+    {
+      totalLevelDiff: ip.totalLevel - 1 - calcTotalLevel(results),
+      statDiffs: R.fromKeys(STAT_LABELS, (sl) => results[sl]?.diff),
+    },
+  ];
 }
 
 type FlatResult = Partial<Record<StatLabel, CLptResultItem>>;
@@ -242,7 +251,7 @@ type FlatResult = Partial<Record<StatLabel, CLptResultItem>>;
 function calculateLevelDomBred(
   teRange: TeRange,
   ip: Exclude<CalculateLevelInputPack, { type: "wild" }>,
-): [StatLevels, TeRange, number] {
+): [StatLevels, TeRange, Diffs] {
   const cLptResult = R.mapValues(ip.values, (value, sl) => {
     const stat = ip.species.stats[sl];
     if (
@@ -277,13 +286,6 @@ function calculateLevelDomBred(
     R.filter((result) => toValidTeRange(result) !== null),
   );
 
-  const calcTotalLevel = (fr: FlatResult) =>
-    R.pipe(
-      R.pickBy(fr, R.isDefined),
-      R.entries(),
-      R.filter(([sl]) => sl !== "torpidity"),
-      R.reduce((acc, [, { ld }]) => acc + ld.wild + ld.mut + ld.dom, 0),
-    );
   const [minTotalLevelDiff, minTotalLevelDiffResults] =
     removedInvalidTerange.reduce(
       (acc, fr): [number, FlatResult[]] => {
@@ -333,7 +335,6 @@ function calculateLevelDomBred(
     },
     [Number.MAX_SAFE_INTEGER, []],
   );
-  // targetResults.forEach((result) => console.log(result));
 
   const target = targetResults[0];
   if (target === undefined) {
@@ -355,8 +356,22 @@ function calculateLevelDomBred(
   return [
     R.fromKeys(STAT_LABELS, (sl) => target[sl]?.ld),
     { ...teRangeTmp },
-    minTotalLevelDiff,
+    {
+      totalLevelDiff: minTotalLevelDiff,
+      statDiffs: R.fromKeys(STAT_LABELS, (sl) => target[sl]?.diff),
+    },
   ];
+}
+
+function calcTotalLevel(
+  fr: Partial<Record<StatLabel, { ld: LevelDetail } | undefined>>,
+): number {
+  return R.pipe(
+    R.pickBy(fr, R.isDefined),
+    R.entries(),
+    R.filter(([sl]) => sl !== "torpidity"),
+    R.reduce((acc, [, { ld }]) => acc + ld.wild + ld.mut + ld.dom, 0),
+  );
 }
 
 function toValidTeRange(result: FlatResult): TeRange | null {
