@@ -249,9 +249,6 @@ function CalcComponent() {
             dontValidate: true,
           });
         });
-      form.setFieldValue("tameEffectiveness", clop.tameEffectiveness, {
-        dontValidate: true,
-      });
     }
   }, [form, clop]);
 
@@ -477,7 +474,7 @@ function CalcComponent() {
         defaultExpandedKeys={DISPLAY_STAT_LABEL_LIST}
       >
         {STAT_LABELS.map((sl) => {
-          const tmp = clop !== null ? (clop.diffs[sl] ?? 0) : 0;
+          const tmp = clop !== null ? (clop.diffs.statDiffs[sl] ?? 0) : 0;
           const diff = toDiffStr(tmp, sl);
           return (
             <Accordion.Item key={sl} id={sl}>
