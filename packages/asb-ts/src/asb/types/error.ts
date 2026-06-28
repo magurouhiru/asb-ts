@@ -33,7 +33,7 @@ export class ASBTSErrorCommon extends Error implements ASBTSErrorCommonObject {
   public readonly type = "common";
 
   constructor(
-    message: string,
+    readonly message: string,
     public readonly functionName: string,
     public readonly input: object,
     public readonly context?: object | undefined,

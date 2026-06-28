@@ -382,7 +382,7 @@ const DATA_SET: {
     name: "せり田山隊長(カマキリ)",
     type: "bred",
     values: {
-      health: 5060.0,
+      health: 5060.3,
       stamina: 975.0,
       oxygen: 720.0,
       food: 5616.0,
@@ -403,24 +403,56 @@ const DATA_SET: {
       torpidity: { wild: 265, mut: 0, dom: 0 },
     },
   },
-  // {
-  //   name: "",
-  //     type: "wild",
-  //     values: {
-  //     },
-  //     withDom: false,
-  //     totalLevel: 0,
-  // imprinting: Math.random(), // bred 以外であればインプリントは関係ないはず
-  //   levels: {
-  //     health: { wild: , mut: 0, dom: 0 },
-  //     stamina: { wild: , mut: 0, dom: 0 },
-  //     oxygen: { wild: , mut: 0, dom: 0 },
-  //     food: { wild: , mut: 0, dom: 0 },
-  //     weight: { wild: , mut: 0, dom: 0 },
-  //     meleeDamageMultiplier: { wild: , mut: 0, dom: 0 },
-  //     torpidity: { wild: , mut: 0, dom: 0 },
-  //   },
-  // },
+  {
+    name: "ポイズンワイバーン",
+    type: "bred",
+    values: {
+      health: 8694.4,
+      stamina: 2701.1,
+      oxygen: 570.0,
+      food: 8640.0,
+      weight: 758.4,
+      meleeDamageMultiplier: 2.811,
+      torpidity: 9953.3,
+    },
+    withDom: true,
+    totalLevel: 225,
+    imprinting: 1.0,
+    levels: {
+      health: { wild: 34, mut: 0, dom: 0 },
+      stamina: { wild: 29, mut: 0, dom: 50 },
+      oxygen: { wild: 28, mut: 0, dom: 0 },
+      food: { wild: 30, mut: 0, dom: 0 },
+      weight: { wild: 29, mut: 0, dom: 0 },
+      meleeDamageMultiplier: { wild: 24, mut: 0, dom: 0 },
+      torpidity: { wild: 174, mut: 0, dom: 0 },
+    },
+  },
+  {
+    name: "ンリング・ドレイクリン",
+    type: "dom",
+    values: {
+      health: 1110.1,
+      stamina: 735.0,
+      oxygen: 555.0,
+      food: 4300.0,
+      weight: 109.2,
+      meleeDamageMultiplier: 2.904,
+      torpidity: 1258.5,
+    },
+    withDom: false,
+    totalLevel: 194,
+    imprinting: Math.random(), // bred 以外であればインプリントは関係ないはず
+    levels: {
+      health: { wild: 32, mut: 0, dom: 0 },
+      stamina: { wild: 39, mut: 0, dom: 0 },
+      oxygen: { wild: 27, mut: 0, dom: 0 },
+      food: { wild: 33, mut: 0, dom: 0 },
+      weight: { wild: 34, mut: 0, dom: 0 },
+      meleeDamageMultiplier: { wild: 28, mut: 0, dom: 0 },
+      torpidity: { wild: 193, mut: 0, dom: 0 },
+    },
+  },
 ] as const;
 
 describe("calculateLevel", () => {
