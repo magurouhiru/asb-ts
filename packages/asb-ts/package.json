@@ -21,6 +21,7 @@
     "license:gen": "bun x license-checker-rseidelsohn > ./THIRD_PARTY_LICENSES.txt"
   },
   "dependencies": {
+    "@napi-rs/canvas": "^1.0.1",
     "fuse.js": "catalog:",
     "remeda": "catalog:",
     "tesseract.js": "^7.0.0",

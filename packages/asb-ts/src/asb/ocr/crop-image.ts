@@ -1,68 +1,59 @@
+import type { Canvas } from "@napi-rs/canvas";
 import * as R from "remeda";
 import { ASBTSErrorCommon } from "../types/error.js";
-import type {
-  CroppedImageRecord,
-  CropRect,
-  OcrCroppedImageRecord,
-  OcrCropRectRecord,
+import {
+  type CroppedImageRecord,
+  type CropRect,
+  OCR_LABELS,
+  type OcrCroppedImageRecord,
+  type OcrCropRectRecord,
 } from "../types/index.js";
+import { createOcrCanvas } from "./canvas.js";
 
-export function cropOcrImages(
-  sourceImg: HTMLImageElement,
+export async function cropOcrImages(
+  source: Canvas,
   threshold: number,
   cropRects: OcrCropRectRecord,
-): OcrCroppedImageRecord {
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-  if (!ctx) {
-    throw new ASBTSErrorCommon(
-      "Canvas要素のコンテキスト取得に失敗しました。",
-      "cropOcrImages",
-      { sourceImg, threshold, cropRects },
-    );
-  }
-  canvas.width = sourceImg.width;
-  canvas.height = sourceImg.height;
-  ctx.drawImage(sourceImg, 0, 0);
-
-  return R.mapValues(cropRects, (value) =>
-    cropImages(canvas, threshold, value),
+): Promise<OcrCroppedImageRecord> {
+  return Promise.all(
+    R.pipe(
+      cropRects,
+      R.entries(),
+      R.map(async ([label, cropRect]) => {
+        const croppedImages = await cropImages(source, threshold, cropRect);
+        return [label, croppedImages] as const;
+      }),
+    ),
+  ).then((croppedImagesEntries) =>
+    R.fromKeys(OCR_LABELS, (ol) => {
+      const found = croppedImagesEntries.find(([label]) => label === ol)?.[1];
+      if (!found) {
+        throw new ASBTSErrorCommon(
+          "OCRラベルに対応する切り取り画像が見つかりませんでした。",
+          "cropOcrImages",
+          { source, threshold, cropRects },
+        );
+      }
+      return found;
+    }),
   );
 }
 
-function cropImages(
-  sourceCanvas: HTMLCanvasElement,
+async function cropImages(
+  source: Canvas,
   threshold: number,
   cropRect: CropRect,
-): CroppedImageRecord {
+): Promise<CroppedImageRecord> {
   const { x, y, width, height } = cropRect;
   const scale = 3; //拡大倍率
   const padding = 20; //余白
 
   const targetWidth = width * scale + padding * 2;
   const targetHeight = height * scale + padding * 2;
-  // 1. 各Canvas要素と2Dコンテキストを作成する共通処理
-  const createTargetCanvas = (): [
-    HTMLCanvasElement,
-    CanvasRenderingContext2D,
-  ] => {
-    const canvas = document.createElement("canvas");
-    canvas.width = targetWidth;
-    canvas.height = targetHeight;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
-      throw new ASBTSErrorCommon(
-        "Canvas要素のコンテキスト取得に失敗しました。",
-        "cropImages",
-        { sourceCanvas, threshold, cropRect },
-      );
-    }
-    return [canvas, ctx];
-  };
 
-  const [original, oCtx] = createTargetCanvas(); // 切り取り用 (original)
-  const [grayscale, gCtx] = createTargetCanvas(); // グレースケール用
-  const [binary, bCtx] = createTargetCanvas(); // 二値化用
+  const [original, oCtx] = createOcrCanvas(targetWidth, targetHeight); // 切り取り用 (original)
+  const [grayscale, gCtx] = createOcrCanvas(targetWidth, targetHeight); // グレースケール用
+  const [binary, bCtx] = createOcrCanvas(targetWidth, targetHeight); // 二値化用
 
   // 塗りつぶして余白にする
   oCtx.fillStyle = "#000000";
@@ -70,7 +61,7 @@ function cropImages(
 
   // 2. 元のCanvasから指定された範囲を「a (original)」に切り取って描画
   oCtx.drawImage(
-    sourceCanvas,
+    source,
     x,
     y,
     // 元画像からの切り出し範囲
@@ -111,7 +102,7 @@ function cropImages(
       throw new ASBTSErrorCommon(
         "Canvas要素のコンテキスト取得に失敗しました。",
         "cropImages",
-        { sourceCanvas, threshold, cropRect },
+        { source, threshold, cropRect },
         { dataLength: data.length, r, g, b, orininalVal },
       );
     }
@@ -141,9 +132,13 @@ function cropImages(
   bCtx.putImageData(binaryImgData, 0, 0);
 
   // 7. 指定されたフォーマットのオブジェクトで返す
-  return {
-    original,
-    grayscale,
-    binary,
-  };
+  return Promise.all([
+    original.convertToBlob(),
+    grayscale.convertToBlob(),
+    binary.convertToBlob(),
+  ]).then(([originalBlob, grayscaleBlob, binaryBlob]) => ({
+    original: originalBlob,
+    grayscale: grayscaleBlob,
+    binary: binaryBlob,
+  }));
 }

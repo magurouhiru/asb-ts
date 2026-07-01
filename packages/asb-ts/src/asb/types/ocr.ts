@@ -103,7 +103,7 @@ export interface CropRect {
 /////////////////////////////////////////////////////////
 
 export type OcrCroppedImageRecord = OcrRecord<CroppedImageRecord>;
-export type CroppedImageRecord = ImageRecord<HTMLCanvasElement>;
+export type CroppedImageRecord = ImageRecord<Blob>;
 
 /////////////////////////////////////////////////////////
 

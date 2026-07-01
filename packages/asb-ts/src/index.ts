@@ -3,7 +3,7 @@ import {
   calculateLevelController,
   calculateValueController,
 } from "./asb/calculator.js";
-import { cropOcrImages } from "./asb/ocr/crop.browser.js";
+import { cropOcrImages } from "./asb/ocr/crop-image.js";
 import { calcCropRects } from "./asb/ocr/crop-rect.js";
 import {
   extractOcrPromiseTexts,
@@ -25,6 +25,9 @@ import {
   DEFAULT_SETTINGS,
   DEFAULT_THRESHOLD,
   isASBTSErrorCommon,
+  type OcrCroppedImageRecord,
+  type OcrCropRectRecord,
+  type OcrExtractedTextRecord,
   type Settings,
   SettingsSchema,
 } from "./asb/types/index.js";
@@ -95,6 +98,7 @@ export function calculateValue(
   }
 }
 
+import { toOcrCanvas } from "./asb/ocr/canvas.js";
 import { normalizeTexts } from "./asb/ocr/normalize.js";
 export function calculateLevel(
   ip: CalculateLevelInputPackUnsafe,
@@ -112,17 +116,15 @@ export function calculateLevel(
 }
 
 export type ExtractTextsOutput = {
-  result: {
-    cropRects: ReturnType<typeof calcCropRects>;
-    croppedImages: ReturnType<typeof cropOcrImages>;
-    extractedPromiseTexs: ReturnType<typeof extractOcrPromiseTexts>;
-  };
-  resultPromise: Promise<ReturnType<typeof normalizeTexts>>;
+  cropRects: Promise<OcrCropRectRecord>;
+  croppedImages: Promise<OcrCroppedImageRecord>;
+  extractedTexs: Promise<OcrExtractedTextRecord>;
+  result: Promise<ReturnType<typeof normalizeTexts>>;
 };
 
 export function extractTexts(
   manager: OcrQueueManager,
-  sourceImg: HTMLImageElement,
+  sourceFile: File,
   ymNL = DEFAULT_CROP_RECT_OPTION.ymNL,
   dlmNL = DEFAULT_CROP_RECT_OPTION.dlmNL,
   drmNL = DEFAULT_CROP_RECT_OPTION.drmNL,
@@ -134,34 +136,40 @@ export function extractTexts(
   threshold = DEFAULT_THRESHOLD,
 ): ASBResult<ExtractTextsOutput> {
   try {
-    const cropRects = calcCropRects(
-      sourceImg.width,
-      sourceImg.height,
-      ymNL,
-      dlmNL,
-      drmNL,
-      dhmNL,
-      ymS,
-      dlmS,
-      drmS,
-      dhmS,
-    );
-    const croppedImages = cropOcrImages(sourceImg, threshold, cropRects);
-    const extractedPromiseTexs = extractOcrPromiseTexts(manager, croppedImages);
+    const sourceCanvas = toOcrCanvas(sourceFile);
 
-    const resultPromise = extractOcrTexts(extractedPromiseTexs).then(
-      (extractedTexs) => normalizeTexts(extractedTexs),
+    const cropRects = sourceCanvas.then((sc) =>
+      calcCropRects(
+        sc.width,
+        sc.height,
+        ymNL,
+        dlmNL,
+        drmNL,
+        dhmNL,
+        ymS,
+        dlmS,
+        drmS,
+        dhmS,
+      ),
+    );
+    const croppedImages = Promise.all([sourceCanvas, cropRects]).then(
+      ([sc, cr]) => cropOcrImages(sc, threshold, cr),
+    );
+    const extractedTexs = croppedImages
+      .then((ci) => extractOcrPromiseTexts(manager, ci))
+      .then(extractOcrTexts);
+
+    const result = extractedTexs.then((extractedTexs) =>
+      normalizeTexts(extractedTexs),
     );
 
     return {
       isSuccess: true,
       result: {
-        result: {
-          cropRects,
-          croppedImages,
-          extractedPromiseTexs,
-        },
-        resultPromise,
+        cropRects,
+        croppedImages,
+        extractedTexs,
+        result,
       },
     };
   } catch (e) {
