@@ -1,3 +1,4 @@
+import type { ImageLike } from "tesseract.js";
 import type * as v from "valibot";
 import type { Imprinting, StatsType, TotalLevel } from "./calculator.js";
 import type { PositiveNumber } from "./common.js";
@@ -103,7 +104,7 @@ export interface CropRect {
 /////////////////////////////////////////////////////////
 
 export type OcrCroppedImageRecord = OcrRecord<CroppedImageRecord>;
-export type CroppedImageRecord = ImageRecord<Blob>;
+export type CroppedImageRecord = ImageRecord<ImageLike>;
 
 /////////////////////////////////////////////////////////
 

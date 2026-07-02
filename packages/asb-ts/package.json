@@ -12,6 +12,7 @@
   "scripts": {
     "build": "tsc -b",
     "watch": "tsc -b -w",
+    "test": "bun test src",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe .",
     "tools": "bun run tools:create-values && bun run tools:create-name-dict && bun run tools:create-variants-default-unselected",

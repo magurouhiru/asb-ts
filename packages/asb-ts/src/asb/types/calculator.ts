@@ -42,6 +42,7 @@ export const TameEffectivenessSchema = v.pipe(
   v.brand("" as "TameEffectivenessSchema"), // 単品で使いそうなので、v.brandする
 );
 
+export type ImprintingUnsafe = v.InferInput<typeof ImprintingSchema>;
 export type Imprinting = v.InferOutput<typeof ImprintingSchema>;
 export const IMP_MIN = 0 as PositiveNumber;
 export const IMP_MAX = 1 as PositiveNumber;
@@ -51,6 +52,7 @@ export const ImprintingSchema = v.pipe(
   v.brand("" as "ImprintingSchema"), // 単品で使いそうなので、v.brandする
 );
 
+export type TotalLevelUnsafe = v.InferInput<typeof TotalLevelSchema>;
 export type TotalLevel = v.InferOutput<typeof TotalLevelSchema>;
 export const TL_MIN = 0;
 export const TotalLevelSchema = v.pipe(

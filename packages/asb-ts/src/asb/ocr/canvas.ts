@@ -22,13 +22,10 @@ export function createOcrCanvas(
   return [canvas, ctx];
 }
 
-export async function toOcrCanvas(file: File) {
-  return file
-    .arrayBuffer()
-    .then((buffer) => loadImage(buffer))
-    .then((image) => {
-      const [canvas, ctx] = createOcrCanvas(image.width, image.height);
-      ctx.drawImage(image, 0, 0);
-      return canvas;
-    });
+export async function toOcrCanvas(source: Uint8Array) {
+  return loadImage(source).then((image) => {
+    const [canvas, ctx] = createOcrCanvas(image.width, image.height);
+    ctx.drawImage(image, 0, 0);
+    return canvas;
+  });
 }

@@ -133,9 +133,9 @@ async function cropImages(
 
   // 7. 指定されたフォーマットのオブジェクトで返す
   return Promise.all([
-    original.convertToBlob(),
-    grayscale.convertToBlob(),
-    binary.convertToBlob(),
+    original.encode("png"),
+    grayscale.encode("png"),
+    binary.encode("png"),
   ]).then(([originalBlob, grayscaleBlob, binaryBlob]) => ({
     original: originalBlob,
     grayscale: grayscaleBlob,

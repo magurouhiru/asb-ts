@@ -124,7 +124,7 @@ export type ExtractTextsOutput = {
 
 export function extractTexts(
   manager: OcrQueueManager,
-  sourceFile: File,
+  source: Uint8Array,
   ymNL = DEFAULT_CROP_RECT_OPTION.ymNL,
   dlmNL = DEFAULT_CROP_RECT_OPTION.dlmNL,
   drmNL = DEFAULT_CROP_RECT_OPTION.drmNL,
@@ -136,7 +136,7 @@ export function extractTexts(
   threshold = DEFAULT_THRESHOLD,
 ): ASBResult<ExtractTextsOutput> {
   try {
-    const sourceCanvas = toOcrCanvas(sourceFile);
+    const sourceCanvas = toOcrCanvas(source);
 
     const cropRects = sourceCanvas.then((sc) =>
       calcCropRects(

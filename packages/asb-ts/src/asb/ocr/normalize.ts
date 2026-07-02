@@ -4,8 +4,8 @@ import {
   ASBTSErrorCommon,
   DISPLAY_STAT_NAME_LABELS,
   type ExtractType,
-  type Imprinting,
   ImprintingSchema,
+  type ImprintingUnsafe,
   type LogDetail,
   type NormalizeResult,
   type NormalizeType,
@@ -26,17 +26,22 @@ import {
   type StatsType,
   type StatValuesUnsafe,
   TotalLevelSchema,
+  type TotalLevelUnsafe,
   WILD_IMP,
 } from "../types/index.js";
 import * as c from "./normalize.core.js";
 
 export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
   normalizedTexts: OcrNormalizedTextRecord;
-  type: StatsType;
   withDom: NormalizeResult<"withDom">;
   withDomLog: LogDetail[];
-  values: StatValuesUnsafe;
-  imprinting: Imprinting;
+  ip: {
+    type: StatsType;
+    values: StatValuesUnsafe;
+    withDom: boolean;
+    totalLevel: TotalLevelUnsafe;
+    imprinting: ImprintingUnsafe;
+  };
   logs: OcrNormalizeLogRecord;
 } {
   const logs: OcrNormalizeLogRecord = R.fromKeys(OCR_LABELS, () => []);
@@ -245,7 +250,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
         ocrStatValues,
         R.entries(),
         R.find(([_, v]) => v.type === sn),
-      )?.[1].text ?? 0,
+      )?.[1].text ?? undefined,
   );
 
   return {
@@ -256,11 +261,15 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
       ...ocrStatNames,
       ...ocrStatValues,
     },
-    type,
     withDom,
     withDomLog,
-    values,
-    imprinting,
+    ip: {
+      type,
+      values,
+      withDom: withDom.text ?? false,
+      imprinting,
+      totalLevel: level.text ?? 0,
+    },
     logs,
   };
 }
