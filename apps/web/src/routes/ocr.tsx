@@ -96,8 +96,8 @@ function OcrComponent() {
           image.onload = () => {
             setImg(image);
           };
-          image.src = URL.createObjectURL(files[0]);
-          setFileName(files[0].name);
+          image.src = URL.createObjectURL(file);
+          setFileName(file.name);
         } else {
           toast.danger("画像ファイルを指定してください");
         }
