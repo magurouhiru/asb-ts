@@ -9,9 +9,11 @@ import { ASBTSErrorCommon } from "../types/error.js";
 import {
   type CroppedImageRecordBun,
   type CropRect,
+  type ImageRecord,
   OCR_LABELS,
   type OcrCroppedImageRecordBun,
   type OcrCropRectRecord,
+  type OcrRecord,
 } from "../types/index.js";
 import { getTargetWH, setImageData } from "./crop-image.core.js";
 

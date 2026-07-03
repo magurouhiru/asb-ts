@@ -2,6 +2,7 @@ import type * as v from "valibot";
 import type { Imprinting, StatsType, TotalLevel } from "./calculator.js";
 import type { PositiveNumber } from "./common.js";
 import { STAT_LABELS, type StatLabel } from "./stat-name.js";
+import type { ImageLike } from "tesseract.js";
 
 /////////////////////////////////////////////////////////
 
@@ -103,6 +104,9 @@ export interface CropRect {
 }
 
 /////////////////////////////////////////////////////////
+
+export type OcrCroppedImageRecord = OcrRecord<CroppedImageRecord>;
+export type CroppedImageRecord = ImageRecord<ImageLike>;
 
 export type OcrCroppedImageRecordBun = OcrRecord<CroppedImageRecordBun>;
 export type CroppedImageRecordBun = ImageRecord<Buffer>;
