@@ -507,6 +507,7 @@ function cL(
             : TARGET_WILD_MUT;
   for (let dom = 0; dom < target.d; dom++) {
     for (let mut = 0; mut < target.m; mut++) {
+      let previosDiff = Number.MAX_SAFE_INTEGER;
       for (let wild = 1; wild < target.w; wild++) {
         const ld = { wild, mut, dom } as LevelDetail;
         const fnCV = (te: TameEffectiveness) =>
@@ -534,6 +535,10 @@ function cL(
         } else if (Math.abs(diffTmp) === Math.abs(diffBuff)) {
           resultBuff.push({ ld, teRange: teRangeTmp, diff: diffTmp });
         }
+        if (Math.abs(previosDiff) <= Math.abs(diffTmp)) {
+          break;
+        }
+        previosDiff = diffTmp;
       }
     }
   }
