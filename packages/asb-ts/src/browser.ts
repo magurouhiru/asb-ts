@@ -1,4 +1,7 @@
-import { cropOcrImages } from "./asb/ocr/crop-image.browser.js";
+import {
+  cropOcrImages,
+  type OcrCroppedImageRecordBrowser,
+} from "./asb/ocr/crop-image.browser.js";
 import { calcCropRects } from "./asb/ocr/crop-rect.js";
 import {
   extractOcrPromiseTexts,
@@ -12,7 +15,6 @@ import {
   DEFAULT_SCALE,
   DEFAULT_THRESHOLD,
   type ExtractTextsOutput,
-  type OcrCroppedImageRecordBrowser,
   type OcrQueueManager,
   toASBResultFailure,
 } from "./common.js";

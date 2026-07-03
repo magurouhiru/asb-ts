@@ -17,8 +17,6 @@ import {
   type CalculateValueOutputPack,
   DEFAULT_SETTINGS,
   isASBTSErrorCommon,
-  type OcrCroppedImageRecordBrowser,
-  type OcrCroppedImageRecordBun,
   type OcrCropRectRecord,
   type OcrExtractedTextRecord,
   type Settings,
@@ -105,9 +103,7 @@ export function calculateLevel(
   }
 }
 
-export type ExtractTextsOutput<
-  T extends OcrCroppedImageRecordBrowser | OcrCroppedImageRecordBun,
-> = {
+export type ExtractTextsOutput<T> = {
   cropRects: Promise<OcrCropRectRecord>;
   croppedImages: Promise<T>;
   extractedTexs: Promise<OcrExtractedTextRecord>;

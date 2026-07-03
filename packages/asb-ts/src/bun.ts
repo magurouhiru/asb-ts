@@ -1,4 +1,8 @@
-import { cropOcrImages, toOcrCanvas } from "./asb/ocr/crop-image.bun.js";
+import {
+  cropOcrImages,
+  type OcrCroppedImageRecordBun,
+  toOcrCanvas,
+} from "./asb/ocr/crop-image.bun.js";
 import { calcCropRects } from "./asb/ocr/crop-rect.js";
 import {
   extractOcrPromiseTexts,
@@ -12,7 +16,6 @@ import {
   DEFAULT_SCALE,
   DEFAULT_THRESHOLD,
   type ExtractTextsOutput,
-  type OcrCroppedImageRecordBun,
   type OcrQueueManager,
   toASBResultFailure,
 } from "./common.js";

@@ -7,13 +7,16 @@ import {
 import * as R from "remeda";
 import { ASBTSErrorCommon } from "../types/error.js";
 import {
-  type CroppedImageRecordBun,
   type CropRect,
+  type ImageRecord,
   OCR_LABELS,
-  type OcrCroppedImageRecordBun,
   type OcrCropRectRecord,
+  type OcrRecord,
 } from "../types/index.js";
 import { getTargetWH, setImageData } from "./crop-image.core.js";
+
+export type OcrCroppedImageRecordBun = OcrRecord<CroppedImageRecordBun>;
+export type CroppedImageRecordBun = ImageRecord<Buffer>;
 
 function createOcrCanvas(
   width: number,
@@ -42,7 +45,7 @@ export async function toOcrCanvas(source: Blob): Promise<Canvas> {
     });
 }
 
-async function toImageLike(canvas: Canvas): Promise<Uint8Array> {
+async function toImageLike(canvas: Canvas): Promise<Buffer> {
   return canvas.encode("png");
 }
 

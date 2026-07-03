@@ -108,12 +108,6 @@ export interface CropRect {
 export type OcrCroppedImageRecord = OcrRecord<CroppedImageRecord>;
 export type CroppedImageRecord = ImageRecord<ImageLike>;
 
-export type OcrCroppedImageRecordBun = OcrRecord<CroppedImageRecordBun>;
-export type CroppedImageRecordBun = ImageRecord<Uint8Array>;
-
-export type OcrCroppedImageRecordBrowser = OcrRecord<CroppedImageRecordBrowser>;
-export type CroppedImageRecordBrowser = ImageRecord<Blob>;
-
 /////////////////////////////////////////////////////////
 
 export const WHITE_LIST = {
