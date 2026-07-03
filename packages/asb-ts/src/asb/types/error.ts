@@ -29,17 +29,26 @@ export interface ASBTSErrorUnknownObject {
 }
 
 export class ASBTSErrorCommon extends Error implements ASBTSErrorCommonObject {
-  public readonly _tag = "ASBTSError";
-  public readonly type = "common";
+  readonly _tag = "ASBTSError";
+  readonly type = "common";
+
+  readonly message;
+  readonly functionName;
+  readonly input;
+  readonly context;
 
   constructor(
-    readonly message: string,
-    public readonly functionName: string,
-    public readonly input: object,
-    public readonly context?: object | undefined,
+    message: string,
+    functionName: string,
+    input: object,
+    context?: object | undefined,
   ) {
     super(message);
     this.name = "ASBTSErrorCommon";
+    this.message = message;
+    this.functionName = functionName;
+    this.input = input;
+    this.context = context;
   }
 
   toObject(): ASBTSErrorCommonObject {

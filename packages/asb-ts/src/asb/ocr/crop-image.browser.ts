@@ -3,11 +3,9 @@ import { ASBTSErrorCommon } from "../types/error.js";
 import {
   type CroppedImageRecordBrowser,
   type CropRect,
-  type ImageRecord,
   OCR_LABELS,
   type OcrCroppedImageRecordBrowser,
   type OcrCropRectRecord,
-  type OcrRecord,
 } from "../types/index.js";
 import { getTargetWH, setImageData } from "./crop-image.core.js";
 

@@ -9,11 +9,9 @@ import { ASBTSErrorCommon } from "../types/error.js";
 import {
   type CroppedImageRecordBun,
   type CropRect,
-  type ImageRecord,
   OCR_LABELS,
   type OcrCroppedImageRecordBun,
   type OcrCropRectRecord,
-  type OcrRecord,
 } from "../types/index.js";
 import { getTargetWH, setImageData } from "./crop-image.core.js";
 
@@ -44,7 +42,7 @@ export async function toOcrCanvas(source: Blob): Promise<Canvas> {
     });
 }
 
-async function toImageLike(canvas: Canvas): Promise<Buffer> {
+async function toImageLike(canvas: Canvas): Promise<Uint8Array> {
   return canvas.encode("png");
 }
 
