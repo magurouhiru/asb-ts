@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/devcontainers/base:trixie
 # 定数の定義
 ARG USERNAME=vscode \
     WORKSPACE=/home/${USERNAME}/app \
-    BUN_VERSION="1.3.3"
+    BUN_VERSION="1.3.14"
 
 RUN apt-get update && \
     apt-get upgrade -y
