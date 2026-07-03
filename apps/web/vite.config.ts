@@ -23,8 +23,20 @@ export default defineConfig({
   ],
   build: {
     license: true,
-    // asb-ts が大きいのでごまかす
-    chunkSizeWarningLimit: 700,
+    // @asb-ts/core が大きいのでごまかす
+    chunkSizeWarningLimit: 900,
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [
+            {
+              name: "@asb-ts/core",
+              test: /node_modules/,
+            },
+          ],
+        },
+      },
+    },
   },
   server: {
     host: true,
