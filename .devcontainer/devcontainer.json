@@ -30,7 +30,9 @@
       "type": "volume"
     }
   ],
-  // "features": {},
+  "features": {
+    "ghcr.io/devcontainers/features/git-lfs:1": {}
+  },
   // "overrideFeatureInstallOrder": [],
   "customizations": {
     "vscode": {

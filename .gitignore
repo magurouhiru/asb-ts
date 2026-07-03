@@ -27,5 +27,3 @@ dist-ssr
 .tanstack
 dotnet
 *.traineddata
-*.png
-*.jpeg
