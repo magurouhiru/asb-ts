@@ -1,4 +1,3 @@
-import path from "node:path";
 import { describe, expect, it } from "bun:test";
 import * as R from "remeda";
 import { searchSpecies } from "../asb/species.js";
@@ -518,20 +517,7 @@ describe("calculateLevel", () => {
 
 describe("extractTexts", () => {
   const dataSetWithImg = DATA_SET.filter((d) => d.img);
-  const packageRootDir = path.join(import.meta.dir, "..", "..");
-  const corePath = path.join(
-    packageRootDir,
-    "node_modules",
-    "tesseract.js",
-    "src",
-    "worker-script",
-    "node",
-    "index.js",
-  );
-  const langPath = path.join(packageRootDir, "assets", "tesseract");
-  const manager = new OcrQueueManager(undefined, undefined, {
-    langPath,
-  });
+  const manager = new OcrQueueManager();
 
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
     const pathPrefix = new URL("./__fixtures__/", import.meta.url).pathname;
