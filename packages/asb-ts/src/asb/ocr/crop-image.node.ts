@@ -1,26 +1,70 @@
-import type { Canvas } from "@napi-rs/canvas";
+import {
+  type Canvas,
+  createCanvas,
+  loadImage,
+  type SKRSContext2D,
+} from "@napi-rs/canvas";
 import * as R from "remeda";
 import { ASBTSErrorCommon } from "../types/error.js";
 import {
-  type CroppedImageRecord,
+  type CroppedImageRecordNode,
   type CropRect,
   OCR_LABELS,
-  type OcrCroppedImageRecord,
+  type OcrCroppedImageRecordNode,
   type OcrCropRectRecord,
 } from "../types/index.js";
-import { createOcrCanvas } from "./canvas.js";
+import { getTargetWH, setImageData } from "./crop-image.core.js";
+
+function createOcrCanvas(
+  width: number,
+  height: number,
+): [canvas: Canvas, ctx: SKRSContext2D] {
+  const canvas = createCanvas(width, height);
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    throw new ASBTSErrorCommon(
+      "Canvas要素のコンテキスト取得に失敗しました。",
+      "createOcrCanvas",
+      { width, height },
+    );
+  }
+  return [canvas, ctx];
+}
+
+export async function toOcrCanvas(source: Blob): Promise<Canvas> {
+  return source
+    .bytes()
+    .then((bytes) => loadImage(bytes))
+    .then((image) => {
+      const [canvas, ctx] = createOcrCanvas(image.width, image.height);
+      ctx.drawImage(image, 0, 0);
+      return canvas;
+    });
+}
+
+async function toImageLike(canvas: Canvas): Promise<Buffer> {
+  return canvas.encode("png");
+}
 
 export async function cropOcrImages(
   source: Canvas,
   threshold: number,
   cropRects: OcrCropRectRecord,
-): Promise<OcrCroppedImageRecord> {
+  scale: number,
+  padding: number,
+): Promise<OcrCroppedImageRecordNode> {
   return Promise.all(
     R.pipe(
       cropRects,
       R.entries(),
       R.map(async ([label, cropRect]) => {
-        const croppedImages = await cropImages(source, threshold, cropRect);
+        const croppedImages = await cropImages(
+          source,
+          threshold,
+          cropRect,
+          scale,
+          padding,
+        );
         return [label, croppedImages] as const;
       }),
     ),
@@ -43,13 +87,12 @@ async function cropImages(
   source: Canvas,
   threshold: number,
   cropRect: CropRect,
-): Promise<CroppedImageRecord> {
+  scale: number,
+  padding: number,
+): Promise<CroppedImageRecordNode> {
   const { x, y, width, height } = cropRect;
-  const scale = 3; //拡大倍率
-  const padding = 20; //余白
 
-  const targetWidth = width * scale + padding * 2;
-  const targetHeight = height * scale + padding * 2;
+  const { targetWidth, targetHeight } = getTargetWH(cropRect, scale, padding);
 
   const [original, oCtx] = createOcrCanvas(targetWidth, targetHeight); // 切り取り用 (original)
   const [grayscale, gCtx] = createOcrCanvas(targetWidth, targetHeight); // グレースケール用
@@ -76,66 +119,26 @@ async function cropImages(
   );
 
   // 3. 画像処理のために「sourceCanvas」のピクセルデータを取得
-  const imgData = oCtx.getImageData(0, 0, targetWidth, targetHeight);
-  const data = imgData.data;
+  const oImgData = oCtx.getImageData(0, 0, targetWidth, targetHeight);
+  const oData = oImgData.data;
 
   // 4. グレースケール用と二値化用の ImageData 領域を新しく用意
   const grayImgData = gCtx.createImageData(targetWidth, targetHeight);
   const binaryImgData = bCtx.createImageData(targetWidth, targetHeight);
 
-  const grayData = grayImgData.data;
-  const binaryData = binaryImgData.data;
+  const gData = grayImgData.data;
+  const bData = binaryImgData.data;
 
-  // 5. ピクセルデータをループ処理（1回のループで両方計算して高速化）
-  for (let i = 0; i < data.length; i += 4) {
-    const r = data[i]; // 赤
-    const g = data[i + 1]; // 緑
-    const b = data[i + 2]; // 青
-    const orininalVal = data[i + 3]; // 透明度
+  setImageData(oData, gData, bData, threshold, cropRect);
 
-    if (
-      r === undefined ||
-      g === undefined ||
-      b === undefined ||
-      orininalVal === undefined
-    ) {
-      throw new ASBTSErrorCommon(
-        "Canvas要素のコンテキスト取得に失敗しました。",
-        "cropImages",
-        { source, threshold, cropRect },
-        { dataLength: data.length, r, g, b, orininalVal },
-      );
-    }
-
-    // 輝度（グレースケール値）の計算 (BT.601)
-    const tmpV = 0.299 * r + 0.587 * g + 0.114 * b;
-
-    // 白黒反転させる
-    const v = 255 - tmpV;
-
-    // グレースケールデータの書き込み
-    grayData[i] = v;
-    grayData[i + 1] = v;
-    grayData[i + 2] = v;
-    grayData[i + 3] = orininalVal; // 元の透明度を維持
-
-    // 二値化データの書き込み（しきい値より大きければ白:255、小さければ黒:0）
-    const bVal = v >= threshold ? 255 : 0;
-    binaryData[i] = bVal;
-    binaryData[i + 1] = bVal;
-    binaryData[i + 2] = bVal;
-    binaryData[i + 3] = orininalVal; // 元の透明度を維持
-  }
-
-  // 6. 計算したピクセルデータをそれぞれのCanvasに書き戻す
+  // 計算したピクセルデータをそれぞれのCanvasに書き戻す
   gCtx.putImageData(grayImgData, 0, 0);
   bCtx.putImageData(binaryImgData, 0, 0);
 
-  // 7. 指定されたフォーマットのオブジェクトで返す
   return Promise.all([
-    original.encode("png"),
-    grayscale.encode("png"),
-    binary.encode("png"),
+    toImageLike(original),
+    toImageLike(grayscale),
+    toImageLike(binary),
   ]).then(([originalBlob, grayscaleBlob, binaryBlob]) => ({
     original: originalBlob,
     grayscale: grayscaleBlob,

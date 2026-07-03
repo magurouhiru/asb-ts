@@ -4,14 +4,13 @@
   "license": "MIT",
   "type": "module",
   "private": true,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "exports": {
+    ".": {
+      "bun": "./src/bun.ts",
+      "browser": "./src/browser.ts"
+    }
+  },
   "scripts": {
-    "build": "tsc -b",
-    "watch": "tsc -b -w",
     "test": "bun test src",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe .",

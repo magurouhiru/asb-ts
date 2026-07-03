@@ -3,13 +3,6 @@ import {
   calculateLevelController,
   calculateValueController,
 } from "./asb/calculator.js";
-import { cropOcrImages } from "./asb/ocr/crop-image.js";
-import { calcCropRects } from "./asb/ocr/crop-rect.js";
-import {
-  extractOcrPromiseTexts,
-  extractOcrTexts,
-} from "./asb/ocr/extract-text.js";
-import type { OcrQueueManager } from "./asb/ocr/manager.js";
 import {
   type ASBTSErrorCommonObject,
   type ASBTSErrorObject,
@@ -21,16 +14,16 @@ import {
   CalculateValueInputPackSchema,
   type CalculateValueInputPackUnsafe,
   type CalculateValueOutputPack,
-  DEFAULT_CROP_RECT_OPTION,
   DEFAULT_SETTINGS,
-  DEFAULT_THRESHOLD,
   isASBTSErrorCommon,
-  type OcrCroppedImageRecord,
+  type OcrCroppedImageRecordBrowser,
+  type OcrCroppedImageRecordNode,
   type OcrCropRectRecord,
   type OcrExtractedTextRecord,
   type Settings,
   SettingsSchema,
 } from "./asb/types/index.js";
+import type { normalizeTexts } from "./common.js";
 
 export * from "./asb/types/index.js";
 
@@ -53,7 +46,7 @@ export type ASBResultFailure = {
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: 型判定のためなんでも受け取れるようにanyにする
-function toASBResultFailure(e: any): ASBResultFailure {
+export function toASBResultFailure(e: any): ASBResultFailure {
   if (v.isValiError(e)) {
     return {
       isSuccess: false,
@@ -98,8 +91,6 @@ export function calculateValue(
   }
 }
 
-import { toOcrCanvas } from "./asb/ocr/canvas.js";
-import { normalizeTexts } from "./asb/ocr/normalize.js";
 export function calculateLevel(
   ip: CalculateLevelInputPackUnsafe,
 ): ASBResult<CalculateLevelOutputPack> {
@@ -115,64 +106,11 @@ export function calculateLevel(
   }
 }
 
-export type ExtractTextsOutput = {
+export type ExtractTextsOutput<
+  T extends OcrCroppedImageRecordBrowser | OcrCroppedImageRecordNode,
+> = {
   cropRects: Promise<OcrCropRectRecord>;
-  croppedImages: Promise<OcrCroppedImageRecord>;
+  croppedImages: Promise<T>;
   extractedTexs: Promise<OcrExtractedTextRecord>;
-  result: Promise<ReturnType<typeof normalizeTexts>>;
+  normalized: Promise<ReturnType<typeof normalizeTexts>>;
 };
-
-export function extractTexts(
-  manager: OcrQueueManager,
-  source: Uint8Array,
-  ymNL = DEFAULT_CROP_RECT_OPTION.ymNL,
-  dlmNL = DEFAULT_CROP_RECT_OPTION.dlmNL,
-  drmNL = DEFAULT_CROP_RECT_OPTION.drmNL,
-  dhmNL = DEFAULT_CROP_RECT_OPTION.dhmNL,
-  ymS = DEFAULT_CROP_RECT_OPTION.ymS,
-  dlmS = DEFAULT_CROP_RECT_OPTION.dlmS,
-  drmS = DEFAULT_CROP_RECT_OPTION.drmS,
-  dhmS = DEFAULT_CROP_RECT_OPTION.dhmS,
-  threshold = DEFAULT_THRESHOLD,
-): ASBResult<ExtractTextsOutput> {
-  try {
-    const sourceCanvas = toOcrCanvas(source);
-
-    const cropRects = sourceCanvas.then((sc) =>
-      calcCropRects(
-        sc.width,
-        sc.height,
-        ymNL,
-        dlmNL,
-        drmNL,
-        dhmNL,
-        ymS,
-        dlmS,
-        drmS,
-        dhmS,
-      ),
-    );
-    const croppedImages = Promise.all([sourceCanvas, cropRects]).then(
-      ([sc, cr]) => cropOcrImages(sc, threshold, cr),
-    );
-    const extractedTexs = croppedImages
-      .then((ci) => extractOcrPromiseTexts(manager, ci))
-      .then(extractOcrTexts);
-
-    const result = extractedTexs.then((extractedTexs) =>
-      normalizeTexts(extractedTexs),
-    );
-
-    return {
-      isSuccess: true,
-      result: {
-        cropRects,
-        croppedImages,
-        extractedTexs,
-        result,
-      },
-    };
-  } catch (e) {
-    return toASBResultFailure(e);
-  }
-}

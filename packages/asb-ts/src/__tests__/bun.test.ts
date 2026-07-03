@@ -12,7 +12,7 @@ import {
   type StatLevelsUnsafe,
   type StatsType,
   type StatValuesUnsafe,
-} from "../index.js";
+} from "../bun.js";
 
 describe("createSettings", () => {
   it("引数なしでデフォルト値が返る", () => {
@@ -520,14 +520,14 @@ describe("extractTexts", () => {
 
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
     const pathPrefix = new URL("./__fixtures__/", import.meta.url).pathname;
-    const fileBytes = await Bun.file(`${pathPrefix}${data.img}`).bytes();
+    const file = Bun.file(`${pathPrefix}${data.img}`);
 
-    const r = extractTexts(manager, fileBytes);
+    const r = extractTexts(manager, file);
     if (!r.isSuccess) {
       throw new Error(JSON.stringify(r.error));
     }
 
-    const result = await r.result.result;
+    const result = await r.result.normalized;
     expect(result.ip.type).toBe(data.type);
     // expect(result.withDom.text).toBe(data.withDom);
     expect(result.ip.imprinting as number).toBe(

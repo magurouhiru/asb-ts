@@ -16,6 +16,7 @@ import {
   extractTexts,
   type ImageLabel,
   type OcrLabel,
+  OCR_LABELS,
 } from "asb-ts";
 import {
   type ReactNode,
@@ -37,6 +38,7 @@ const allowedFileTypes = ["image/png", "image/jpeg"];
 function OcrComponent() {
   const [_fileName, setFileName] = useState<string>("");
   const [img, setImg] = useState<HTMLImageElement | null>(null);
+  const [bytes, setBytes] = useState<Uint8Array | null>(null);
   const canvasReff = useRef<HTMLCanvasElement | null>(null);
 
   const [ymNL, setYmNL] = useState<number>(DEFAULT_CROP_RECT_OPTION.ymNL);
@@ -75,6 +77,9 @@ function OcrComponent() {
     if (file) {
       ocrQueue.cansel().then(() => {
         if (allowedFileTypes.includes(file.type)) {
+          files[0].bytes().then((bytes) => {
+            setBytes(bytes);
+          });
           const image = new Image();
           image.onload = () => {
             setImg(image);
@@ -94,10 +99,10 @@ function OcrComponent() {
   };
 
   useEffect(() => {
-    if (img && canvasReff.current) {
+    if (img && bytes && canvasReff.current) {
       const result = extractTexts(
         ocrQueue,
-        img,
+        bytes,
         ymNL,
         dlmNL,
         drmNL,
@@ -109,30 +114,30 @@ function OcrComponent() {
       );
       if (result.isSuccess) {
         setOcrResult(result.result);
-        const canvas = canvasReff.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
+        result.result.cropRects.then((cropRects) => {
+          const canvas = canvasReff.current;
+          if (!canvas) return;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) return;
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
 
-        // 切り取り範囲
-        const strokeRect = ({ x, y, width, height }: CropRect) => {
-          ctx.strokeStyle = "red";
-          ctx.lineWidth = 5;
-          ctx.strokeRect(x, y, width, height);
-        };
-        Object.entries(result.result.result.cropRects).forEach(
-          ([_, cropRect]) => {
+          // 切り取り範囲
+          const strokeRect = ({ x, y, width, height }: CropRect) => {
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 5;
+            ctx.strokeRect(x, y, width, height);
+          };
+          Object.entries(cropRects).forEach(([_, cropRect]) => {
             strokeRect(cropRect);
-          },
-        );
+          });
+        });
       } else {
         setError(result.error);
       }
     }
-  }, [ocrQueue, img, ymNL, dlmNL, drmNL, dhmNL, ymS, dlmS, drmS, dhmS]);
+  }, [ocrQueue, img, bytes, ymNL, dlmNL, drmNL, dhmNL, ymS, dlmS, drmS, dhmS]);
 
   return (
     <div className="grid grid-cols-1 gap-2">
@@ -236,75 +241,70 @@ function OcrComponent() {
                     {showLog && <Table.Column>log</Table.Column>}
                   </Table.Header>
                   <Table.Body>
-                    {R.entries(ocrResult.result.croppedImages).map(
-                      ([ol, images]) => (
-                        <Table.Row key={ol}>
-                          <Table.Cell>{ol}</Table.Cell>
-                          {R.entries(images).map(([il, img]) => (
-                            <Table.Cell key={il}>
-                              <div>
-                                <img
-                                  src={img.toDataURL()}
-                                  aria-label="cropped image"
+                    {OCR_LABELS.map((ol) => (
+                      <Table.Row key={ol}>
+                        <Table.Cell>{ol}</Table.Cell>
+                        {R.entries(images).map(([il, img]) => (
+                          <Table.Cell key={il}>
+                            <div>
+                              <img
+                                src={img.toDataURL()}
+                                aria-label="cropped image"
+                              />
+                            </div>
+                            {R.keys(
+                              ocrResult.result.extractedPromiseTexs[ol],
+                            ).map((et, i, array) => (
+                              <>
+                                <div className="flex gap-2">
+                                  <span>{et}:</span>
+                                  <CustomSuspense>
+                                    <ShowExtractedText
+                                      key={et}
+                                      ocrResult={ocrResult}
+                                      ol={ol}
+                                      et={et}
+                                      il={il}
+                                    />
+                                  </CustomSuspense>
+                                </div>
+                                {i + 1 !== array.length && <Separator />}
+                              </>
+                            ))}
+                          </Table.Cell>
+                        ))}
+                        <Table.Cell>
+                          <CustomSuspense>
+                            <ShowNormalizedText ocrResult={ocrResult} ol={ol} />
+                          </CustomSuspense>
+                          {ol === "stat_name_0" && (
+                            <>
+                              <Separator />
+                              <CustomSuspense>
+                                <ShowNormalizedTextWithDom
+                                  ocrResult={ocrResult}
                                 />
-                              </div>
-                              {R.keys(
-                                ocrResult.result.extractedPromiseTexs[ol],
-                              ).map((et, i, array) => (
-                                <>
-                                  <div className="flex gap-2">
-                                    <span>{et}:</span>
-                                    <CustomSuspense>
-                                      <ShowExtractedText
-                                        key={et}
-                                        ocrResult={ocrResult}
-                                        ol={ol}
-                                        et={et}
-                                        il={il}
-                                      />
-                                    </CustomSuspense>
-                                  </div>
-                                  {i + 1 !== array.length && <Separator />}
-                                </>
-                              ))}
-                            </Table.Cell>
-                          ))}
+                              </CustomSuspense>
+                            </>
+                          )}
+                        </Table.Cell>
+                        {showLog && (
                           <Table.Cell>
                             <CustomSuspense>
-                              <ShowNormalizedText
-                                ocrResult={ocrResult}
-                                ol={ol}
-                              />
+                              <ShowLog ocrResult={ocrResult} ol={ol} />
                             </CustomSuspense>
                             {ol === "stat_name_0" && (
                               <>
                                 <Separator />
                                 <CustomSuspense>
-                                  <ShowNormalizedTextWithDom
-                                    ocrResult={ocrResult}
-                                  />
+                                  <ShowLogWithDom ocrResult={ocrResult} />
                                 </CustomSuspense>
                               </>
                             )}
                           </Table.Cell>
-                          {showLog && (
-                            <Table.Cell>
-                              <CustomSuspense>
-                                <ShowLog ocrResult={ocrResult} ol={ol} />
-                              </CustomSuspense>
-                              {ol === "stat_name_0" && (
-                                <>
-                                  <Separator />
-                                  <CustomSuspense>
-                                    <ShowLogWithDom ocrResult={ocrResult} />
-                                  </CustomSuspense>
-                                </>
-                              )}
-                            </Table.Cell>
-                          )}
-                        </Table.Row>
-                      ),
-                    )}
+                        )}
+                      </Table.Row>
+                    ))}
                   </Table.Body>
                 </Table.Content>
               </Table.ScrollContainer>
@@ -319,6 +319,20 @@ function OcrComponent() {
 
 function CustomSuspense({ children }: { children: ReactNode }) {
   return <Suspense fallback={<div>待機中...</div>}>{children}</Suspense>;
+}
+
+function ShowCroppedImage({
+  ocrResult,
+  ol,
+  il,
+}: {
+  ocrResult: ExtractTextsOutput;
+  ol: OcrLabel;
+  il: ImageLabel;
+}) {
+  const data = use(ocrResult.croppedImages);
+  const d = data[ol][il];
+  return <div>{text}</div>;
 }
 
 function ShowExtractedText({
