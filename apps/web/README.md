@@ -1,7 +1,7 @@
 **Acknowledgments**  
 このプロジェクトは、素晴らしいデスクトップアプリケーションである [ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor)（作者: cadon様）のWebベースのリライト版です。
 
-# asb-web
+# @asb-ts/web
 
 [ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor) の一部機能をweb で実行できるように移植したものです。
 
@@ -39,11 +39,6 @@ vscode とdevcontainer の使用を前提としています。
     - `./src/routes`配下にコンポーネントを作成してください。
     - 作成時は`createFileRoute`でコンパイルエラーになりますが、`bun dev`コマンドで`./src/routeTree.gen.ts`が自動生成・更新されたら解消します。
     - **`./src/routeTree.gen.ts`は触らないでください**
-- [MediaPipe ソリューション](https://ai.google.dev/edge/mediapipe/solutions/guide)
-  - アプリケーションで人工知能（AI）と機械学習（ML）の手法を迅速に適用するためのライブラリとツールのスイートを提供します。
-  - これが使いたかった。
-  - [MediaPipe Hand Landmarker](https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker)
-    - 画像から手のランドマーク(関節部)の座標を提供します。
 - [VITE](https://vite.dev/)
   - フロントエンドのビルドツール。
   - 爆速なので採用。

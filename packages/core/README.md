@@ -1,7 +1,7 @@
 **Acknowledgments**  
 このプロジェクトは、素晴らしいデスクトップアプリケーションである [ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor)（作者: cadon様）のWebベースのリライト版です。
 
-# asb-ts
+# @asb-ts/core
 
 このパッケージは、[ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor) の一部機能をTypeScriptで再実装したものです。
 
