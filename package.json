@@ -1,9 +1,10 @@
 {
-  "name": "asb-web-workspace",
+  "name": "@asb-ts/workspace",
   "license": "MIT",
   "private": true,
   "workspaces": {
     "packages": [
+      "apps/*",
       "packages/*"
     ],
     "catalog": {
@@ -16,10 +17,10 @@
     }
   },
   "scripts": {
-    "build": "bun build:asb-web",
-    "build:asb-web": "bun --filter asb-web build",
-    "test": "bun test:asb-ts",
-    "test:asb-ts": "bun --filter asb-ts test",
+    "build": "bun build:apps",
+    "build:apps": "bun --filter apps/* build",
+    "test": "bun test:packages",
+    "test:packages": "bun --filter packages/* test",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe ."
   },

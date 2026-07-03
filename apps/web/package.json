@@ -1,5 +1,5 @@
 {
-  "name": "asb-web",
+  "name": "@asb-ts/web",
   "private": true,
   "version": "0.1.0",
   "license": "MIT",
@@ -17,6 +17,7 @@
     "license:gen": "bun x license-checker-rseidelsohn --production > ./THIRD_PARTY_LICENSES.txt"
   },
   "dependencies": {
+    "@asb-ts/core": "workspace:*",
     "@heroui/react": "^3.0.2",
     "@heroui/styles": "^3.0.2",
     "@lingui/core": "^5.9.4",
@@ -28,7 +29,6 @@
     "@tanstack/react-query": "^5.101.0",
     "@tanstack/react-router": "^1.168.10",
     "@tanstack/react-router-devtools": "^1.166.11",
-    "asb-ts": "workspace:*",
     "fuse.js": "catalog:",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
