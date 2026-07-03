@@ -516,7 +516,7 @@ describe("calculateLevel", () => {
 
 describe("extractTexts", () => {
   const dataSetWithImg = DATA_SET.filter((d) => d.img);
-  const manager = new OcrQueueManager(undefined, undefined, undefined, 2);
+  const manager = new OcrQueueManager(undefined, undefined, undefined, 1);
 
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
     const pathPrefix = new URL("./__fixtures__/", import.meta.url).pathname;
