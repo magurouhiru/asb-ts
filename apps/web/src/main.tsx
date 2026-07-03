@@ -9,19 +9,10 @@ import ReactDOM from "react-dom/client";
 import { routeTree } from "./routeTree.gen";
 import "./index.css";
 import { Toast } from "@heroui/react";
-import { i18n } from "@lingui/core";
-import { I18nProvider } from "@lingui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import NotFound from "./components/404";
 import { OcrProvider } from "./contexts";
-// biome-ignore lint/suspicious/noTsIgnore: vita でビルド時に作成されるので無視する
-// @ts-ignore
-import { messages } from "./locales/ja/messages";
-
-// デフォルトは日本語
-i18n.load("ja", messages);
-i18n.activate("ja");
 
 // Set up a Router instance
 const router = createRouter({
@@ -47,17 +38,12 @@ if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <I18nProvider i18n={i18n}>
-        <Toast.Provider />
-        <QueryClientProvider client={queryClient}>
-          <OcrProvider>
-            <RouterProvider
-              router={router}
-              defaultNotFoundComponent={NotFound}
-            />
-          </OcrProvider>
-        </QueryClientProvider>
-      </I18nProvider>
+      <Toast.Provider />
+      <QueryClientProvider client={queryClient}>
+        <OcrProvider>
+          <RouterProvider router={router} defaultNotFoundComponent={NotFound} />
+        </OcrProvider>
+      </QueryClientProvider>
     </StrictMode>,
   );
 } else {
