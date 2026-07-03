@@ -1,7 +1,7 @@
 // https://containers.dev/implementors/json_reference/
 {
   // https://containers.dev/implementors/json_reference/#general-properties
-  "name": "ASB-web-devcontainer",
+  "name": "ASB-ts-devcontainer",
   "forwardPorts": [5174],
   "portsAttributes": {
     "5174": {
@@ -25,7 +25,7 @@
   "mounts": [
     {
       // node_modulesをホストと分離
-      "source": "ASB-web-devcontainer__node_modules",
+      "source": "ASB-ts-devcontainer__node_modules",
       "target": "/home/vscode/app/node_modules",
       "type": "volume"
     }
@@ -113,7 +113,6 @@
     // 権限問題を回避
     "chown": "sudo chown -R vscode:vscode /home/vscode/app",
     "bun ci": "bun ci",
-    "build asb-ts": "bun build:asb-ts",
     "ollama pull gemma4": "curl http://ollama:11434/api/pull -d '{\"model\": \"gemma4:e4b\", \"stream\": false}'"
   }
   // "postAttachCommand": [],
