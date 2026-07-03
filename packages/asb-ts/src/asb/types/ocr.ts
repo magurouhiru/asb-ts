@@ -1,3 +1,4 @@
+import type { ImageLike } from "tesseract.js";
 import type * as v from "valibot";
 import type { Imprinting, StatsType, TotalLevel } from "./calculator.js";
 import type { PositiveNumber } from "./common.js";
@@ -74,6 +75,8 @@ export const DISPLAY_STAT_NAME_RECORD: Record<DisplayStatNameLabel, string[]> =
 /////////////////////////////////////////////////////////
 
 export const DEFAULT_THRESHOLD = 128;
+export const DEFAULT_SCALE = 3;
+export const DEFAULT_PADDING = 20;
 
 export const Status = ["Not initialized", "Suspended", "Running"] as const;
 export type OcrQueueManagerStatus = (typeof Status)[number];
@@ -103,7 +106,7 @@ export interface CropRect {
 /////////////////////////////////////////////////////////
 
 export type OcrCroppedImageRecord = OcrRecord<CroppedImageRecord>;
-export type CroppedImageRecord = ImageRecord<HTMLCanvasElement>;
+export type CroppedImageRecord = ImageRecord<ImageLike>;
 
 /////////////////////////////////////////////////////////
 
@@ -164,7 +167,7 @@ export type NormalizeType<T extends NormalizeTypeLabel> = T extends "name"
 
 export type NormalizeResult<T extends NormalizeTypeLabel> = {
   type: T;
-  text: NormalizeType<T> | null;
+  value: NormalizeType<T> | null;
 };
 
 export type OcrNormalizedTextRecord = {

@@ -4,8 +4,8 @@ import {
   ASBTSErrorCommon,
   DISPLAY_STAT_NAME_LABELS,
   type ExtractType,
-  type Imprinting,
   ImprintingSchema,
+  type ImprintingUnsafe,
   type LogDetail,
   type NormalizeResult,
   type NormalizeType,
@@ -26,17 +26,23 @@ import {
   type StatsType,
   type StatValuesUnsafe,
   TotalLevelSchema,
+  type TotalLevelUnsafe,
   WILD_IMP,
 } from "../types/index.js";
 import * as c from "./normalize.core.js";
 
 export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
   normalizedTexts: OcrNormalizedTextRecord;
-  type: StatsType;
   withDom: NormalizeResult<"withDom">;
   withDomLog: LogDetail[];
-  values: StatValuesUnsafe;
-  imprinting: Imprinting;
+  ip: {
+    name: string;
+    type: StatsType;
+    values: StatValuesUnsafe;
+    withDom: boolean;
+    totalLevel: TotalLevelUnsafe;
+    imprinting: ImprintingUnsafe;
+  };
   logs: OcrNormalizeLogRecord;
 } {
   const logs: OcrNormalizeLogRecord = R.fromKeys(OCR_LABELS, () => []);
@@ -134,8 +140,8 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
             ImprintingSchema,
           ),
         );
-        if (tmpImp.text !== null) {
-          imprinting = tmpImp.text;
+        if (tmpImp.value !== null) {
+          imprinting = tmpImp.value;
         }
         return tmpImp;
       }
@@ -213,7 +219,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
   const withDomLog: LogDetail[] = [];
   const withDom =
     type === "wild"
-      ? { type: "withDom" as const, text: null }
+      ? { type: "withDom" as const, value: null }
       : normalizeText(
           ocrTexts.stat_name_0,
           withDomLog,
@@ -245,7 +251,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
         ocrStatValues,
         R.entries(),
         R.find(([_, v]) => v.type === sn),
-      )?.[1].text ?? 0,
+      )?.[1].value ?? undefined,
   );
 
   return {
@@ -256,11 +262,16 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
       ...ocrStatNames,
       ...ocrStatValues,
     },
-    type,
     withDom,
     withDomLog,
-    values,
-    imprinting,
+    ip: {
+      name: name.value ?? "",
+      type,
+      values,
+      withDom: withDom.value ?? false,
+      imprinting,
+      totalLevel: level.value ?? 0,
+    },
     logs,
   };
 }
@@ -277,7 +288,7 @@ function normalizeText<T extends NormalizeTypeLabel>(
       texts: texts[extractType],
     });
     if (result.success) {
-      return { type, text: result.output };
+      return { type, value: result.output };
     } else {
       const flatError = v.flatten(result.issues);
       log.push({
@@ -285,10 +296,10 @@ function normalizeText<T extends NormalizeTypeLabel>(
         action: "valibot safeParse",
         flatError,
       });
-      return { type, text: null };
+      return { type, value: null };
     }
   } else {
-    return { type, text: null };
+    return { type, value: null };
   }
 }
 
@@ -301,7 +312,7 @@ function selectStatsPositionCombinationName(
       R.entries(),
       R.map(
         ([ol, dl]) =>
-          ocrStatNames[ol].text === dl || ocrStatNames[ol].text === null,
+          ocrStatNames[ol].value === dl || ocrStatNames[ol].value === null,
       ),
       R.reduce((acc, v) => acc && v, true),
     ),

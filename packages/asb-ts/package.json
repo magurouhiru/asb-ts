@@ -4,14 +4,14 @@
   "license": "MIT",
   "type": "module",
   "private": true,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "exports": {
+    ".": {
+      "bun": "./src/bun.ts",
+      "browser": "./src/browser.ts"
+    }
+  },
   "scripts": {
-    "build": "tsc -b",
-    "watch": "tsc -b -w",
+    "test": "bun test src",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe .",
     "tools": "bun run tools:create-values && bun run tools:create-name-dict && bun run tools:create-variants-default-unselected",
@@ -21,6 +21,7 @@
     "license:gen": "bun x license-checker-rseidelsohn > ./THIRD_PARTY_LICENSES.txt"
   },
   "dependencies": {
+    "@napi-rs/canvas": "^1.0.1",
     "fuse.js": "catalog:",
     "remeda": "catalog:",
     "tesseract.js": "^7.0.0",

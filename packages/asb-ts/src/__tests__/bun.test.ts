@@ -1,16 +1,18 @@
 import { describe, expect, it } from "bun:test";
 import * as R from "remeda";
-import { searchSpecies } from "./asb/species.js";
+import { searchSpecies } from "../asb/species.js";
 import {
   type CalculateLevelInputPackUnsafe,
   calculateLevel,
   createSettings,
   createSpeciesList,
   DEFAULT_SETTINGS,
+  extractTexts,
+  OcrQueueManager,
   type StatLevelsUnsafe,
   type StatsType,
   type StatValuesUnsafe,
-} from "./index.js";
+} from "../bun.js";
 
 describe("createSettings", () => {
   it("引数なしでデフォルト値が返る", () => {
@@ -27,6 +29,7 @@ const DATA_SET: {
   totalLevel: number;
   imprinting: number;
   levels: StatLevelsUnsafe;
+  img?: string;
 }[] = [
   {
     name: "ハキリノサウルス",
@@ -102,6 +105,7 @@ const DATA_SET: {
       meleeDamageMultiplier: { wild: 30, mut: 0, dom: 0 },
       torpidity: { wild: 144, mut: 0, dom: 0 },
     },
+    img: "001.png",
   },
   {
     name: "マナガルム",
@@ -453,6 +457,33 @@ const DATA_SET: {
       meleeDamageMultiplier: { wild: 28, mut: 0, dom: 0 },
       torpidity: { wild: 193, mut: 0, dom: 0 },
     },
+    img: "002.png",
+  },
+  {
+    name: "ステゴサウルス",
+    type: "dom",
+    values: {
+      health: 14251.6,
+      stamina: 1500.0,
+      oxygen: 585.0,
+      food: 28800.0,
+      weight: 990.0,
+      meleeDamageMultiplier: 3.551,
+      torpidity: 7190.5,
+    },
+    withDom: true,
+    totalLevel: 267,
+    imprinting: Math.random(), // bred 以外であればインプリントは関係ないはず
+    levels: {
+      health: { wild: 28, mut: 0, dom: 43 },
+      stamina: { wild: 40, mut: 0, dom: 0 },
+      oxygen: { wild: 29, mut: 0, dom: 0 },
+      food: { wild: 38, mut: 0, dom: 0 },
+      weight: { wild: 49, mut: 0, dom: 0 },
+      meleeDamageMultiplier: { wild: 39, mut: 0, dom: 0 },
+      torpidity: { wild: 223, mut: 0, dom: 0 },
+    },
+    img: "003.png",
   },
 ] as const;
 
@@ -479,6 +510,31 @@ describe("calculateLevel", () => {
       expect(v?.wild as number | undefined).toBe(data.levels[k]?.wild);
       expect(v?.mut as number | undefined).toBe(data.levels[k]?.mut);
       expect(v?.dom as number | undefined).toBe(data.levels[k]?.dom);
+    });
+  });
+});
+
+describe("extractTexts", () => {
+  const dataSetWithImg = DATA_SET.filter((d) => d.img);
+  const manager = new OcrQueueManager();
+
+  it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
+    const pathPrefix = new URL("./__fixtures__/", import.meta.url).pathname;
+    const file = Bun.file(`${pathPrefix}${data.img}`);
+
+    const r = extractTexts(manager, file);
+    if (!r.isSuccess) {
+      throw new Error(JSON.stringify(r.error));
+    }
+
+    const result = await r.result.normalized;
+    expect(result.ip.type).toBe(data.type);
+    // expect(result.withDom.text).toBe(data.withDom);
+    expect(result.ip.imprinting as number).toBe(
+      data.type === "bred" ? data.imprinting : 0,
+    );
+    R.forEachObj(result.ip.values, (v, k) => {
+      expect(v).toBe(data.values[k]);
     });
   });
 });
