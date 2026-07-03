@@ -94,12 +94,12 @@ function createConstTs(values: ValueSpecies[], outputPath: string) {
 
 function main() {
   const species = extractValues(
-    "./ARKStatsExtractor/ARKBreedingStats/json/values/values.json",
+    "../../submodule/ARKStatsExtractor/ARKBreedingStats/json/values/values.json",
   );
   createConstTs(species, "./src/asb/migration/values/values.ts");
 
   const ASA_species = extractValues(
-    "./ARKStatsExtractor/ARKBreedingStats/json/values/ASA-values.json",
+    "../../submodule/ARKStatsExtractor/ARKBreedingStats/json/values/ASA-values.json",
   );
   createConstTs(ASA_species, "./src/asb/migration/values/ASA-values.ts");
 }

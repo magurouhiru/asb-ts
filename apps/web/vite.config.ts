@@ -6,13 +6,11 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/ASB-web/",
   resolve: {
     alias: {
       // 相対パスが嫌なので、 "@/..." で src 以下を参照できるようにする
       // tsconfig.json にも書いてるけど、それだけだと vite で動かないのでこっちにも必要
       "@": path.resolve(__dirname, "./src"),
-      "asb-wasm": path.resolve(__dirname, "../asb-wasm"),
     },
   },
   plugins: [

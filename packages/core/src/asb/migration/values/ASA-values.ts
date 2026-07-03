@@ -4,6 +4,25 @@ import type { ValueSpecies } from "./types.js";
 
 export const VALUE_SPECIES: ValueSpecies[] = [
   {
+    name: "Acrocanthosaurus",
+    blueprintPath:
+      "/Game/ASA/Dinos/Acrocanthosaurus/Acrocanthosaurus_Character_BP.Acrocanthosaurus_Character_BP",
+    fullStatsRaw: [
+      [1300, 0.2, 0.27, 0.5, 0],
+      [400, 0.1, 0.1, 0, 0],
+      [800, 0.06, 0, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [3000, 0.1, 0.1, 0, 0],
+      null,
+      null,
+      [600, 0.02, 0.04, 0, 0],
+      [1, 0.05, 0.1, 0.5, 0.4],
+      [1, 0, 0.01, 0, 0],
+      null,
+      null,
+    ],
+  },
+  {
     name: "Archelon",
     blueprintPath:
       "/Game/ASA/Dinos/Archelon/Dinos/Archelon_Character_BP_ASA.Archelon_Character_BP_ASA",
@@ -631,6 +650,25 @@ export const VALUE_SPECIES: ValueSpecies[] = [
       null,
       null,
       [100, 0.02, 0.04, 0, 0],
+      [1, 0.05, 0.1, 0.5, 0.4],
+      [1, 0, 0.01, 0, 0],
+      null,
+      null,
+    ],
+  },
+  {
+    name: "Burrowbuck",
+    blueprintPath:
+      "/Game/ASA/Dinos/Jackalope/Jackalope_Character_BP.Jackalope_Character_BP",
+    fullStatsRaw: [
+      [550, 0.2, 0.27, 0.5, 0],
+      [500, 0.1, 0.1, 0, 0],
+      [650, 0.06, 0, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [2000, 0.1, 0.1, 0, 0],
+      null,
+      null,
+      [350, 0.02, 0.04, 0, 0],
       [1, 0.05, 0.1, 0.5, 0.4],
       [1, 0, 0.01, 0, 0],
       null,
@@ -2099,6 +2137,20 @@ export const VALUE_SPECIES: ValueSpecies[] = [
   {
     blueprintPath:
       "/Game/Genesis2/Dinos/Summoner/SummonedDinos/SpiderS_Character_BP_Summoned.SpiderS_Character_BP_Summoned",
+    fullStatsRaw: [
+      [200, 0.2, 0.135, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [80, 0.06, 0, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [1200, 0.1, 0.1, 0, 0],
+      null,
+      null,
+      [150, 0.02, 0.08, 0, 0],
+      [1, 0.05, 0.1, 0.5, 0.4],
+      [1, 0, 0.01, 0.67, 0],
+      null,
+      null,
+    ],
   },
   {
     blueprintPath:
@@ -6523,7 +6575,7 @@ export const VALUE_SPECIES: ValueSpecies[] = [
     name: "Armadoggo",
     blueprintPath:
       "/Game/Packs/Wasteland/Dinos/Doggo/Doggo_Character_BP.Doggo_Character_BP",
-    variants: ["Compantion", "Wasteland"],
+    variants: ["Companion", "Wasteland"],
     fullStatsRaw: [
       [200, 0.2, 0.27, 0.66, 0],
       [260, 0.1, 0.1, 0, 0],
@@ -7552,36 +7604,106 @@ export const VALUE_SPECIES: ValueSpecies[] = [
   {
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Small/SpiderS_Character_BP.SpiderS_Character_BP",
+    fullStatsRaw: [
+      [200, 0.2, 0.135, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [80, 0.06, 0, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [1200, 0.1, 0.1, 0, 0],
+      null,
+      null,
+      [150, 0.02, 0.08, 0, 0],
+      [1, 0.05, 0.1, 0.5, 0.4],
+      [1, 0, 0.01, 0.67, 0],
+      null,
+      null,
+    ],
   },
   {
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Small/SpiderS_Character_BP_Aberrant.SpiderS_Character_BP_Aberrant",
+    fullStatsRaw: [
+      [200, 0.2, 0.135, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [80, 0.06, 0, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [1200, 0.1, 0.1, 0, 0],
+      null,
+      null,
+      [150, 0.02, 0.08, 0, 0],
+      [1, 0.05, 0.1, 0.5, 0.4],
+      [1, 0, 0.01, 0.67, 0],
+      null,
+      null,
+    ],
   },
   {
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Small/SpiderS_Character_BP_Aggressive.SpiderS_Character_BP_Aggressive",
+    fullStatsRaw: [
+      [200, 0.2, 0.135, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [80, 0.06, 0, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [1200, 0.1, 0.1, 0, 0],
+      null,
+      null,
+      [150, 0.02, 0.08, 0, 0],
+      [1, 0.05, 0.1, 0.5, 0.4],
+      [1, 0, 0.01, 0.67, 0],
+      null,
+      null,
+    ],
   },
   {
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Small/SpiderS_Character_BP_Aggressive_Hard.SpiderS_Character_BP_Aggressive_Hard",
+    fullStatsRaw: [
+      [450, 0.2, 0.135, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [80, 0.06, 0, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [1200, 0.1, 0.1, 0, 0],
+      null,
+      null,
+      [150, 0.02, 0.08, 0, 0],
+      [1, 0.05, 0.1, 0.5, 0.4],
+      [1, 0, 0.01, 0.67, 0],
+      null,
+      null,
+    ],
   },
   {
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Small/SpiderS_Character_BP_Aggressive_Med.SpiderS_Character_BP_Aggressive_Med",
+    fullStatsRaw: [
+      [300, 0.2, 0.135, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [80, 0.06, 0, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
+      [1200, 0.1, 0.1, 0, 0],
+      null,
+      null,
+      [150, 0.02, 0.08, 0, 0],
+      [1, 0.05, 0.1, 0.5, 0.4],
+      [1, 0, 0.01, 0.67, 0],
+      null,
+      null,
+    ],
   },
   {
     name: "Araneo",
     blueprintPath:
       "/Game/PrimalEarth/Dinos/Spider-Small/SpiderS_Character_BP_Juvenile.SpiderS_Character_BP_Juvenile",
     fullStatsRaw: [
-      [150, 0.2, 0.135, 0.5, 0],
-      [100, 0.1, 0.1, 0, 0],
+      [200, 0.2, 0.135, 0.5, 0],
+      [150, 0.1, 0.1, 0, 0],
       [80, 0.06, 0, 0.5, 0],
       [150, 0.1, 0.1, 0, 0],
-      [900, 0.1, 0.1, 0, 0],
+      [1200, 0.1, 0.1, 0, 0],
       null,
       null,
-      [100, 0.02, 0.08, 0, 0],
+      [150, 0.02, 0.08, 0, 0],
       [1, 0.05, 0.1, 0.5, 0.4],
       [1, 0, 0.01, 0.67, 0],
       null,

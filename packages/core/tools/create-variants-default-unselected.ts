@@ -27,7 +27,7 @@ function createConstTs(variants: string[], outputPath: string) {
 
 function main() {
   const variants = extractValues(
-    "./ARKStatsExtractor/ARKBreedingStats/json/variantsDefaultUnselected.txt",
+    "../../submodule/ARKStatsExtractor/ARKBreedingStats/json/variantsDefaultUnselected.txt",
   );
   createConstTs(variants, "./src/asb/migration/variants/default-unselected.ts");
 }
