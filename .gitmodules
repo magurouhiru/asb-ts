@@ -1,3 +1,0 @@
-[submodule "packages/asb-ts/ARKStatsExtractor"]
-	path = packages/asb-ts/ARKStatsExtractor
-	url = https://github.com/cadon/ARKStatsExtractor.git
