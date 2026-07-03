@@ -1,9 +1,7 @@
 import path from "node:path";
-import { lingui } from "@lingui/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
-import react from "@vitejs/plugin-react-swc";
-import license from "rollup-plugin-license";
+import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 // https://vite.dev/config/
@@ -22,38 +20,13 @@ export default defineConfig({
       target: "react",
       autoCodeSplitting: true,
     }),
-    react({
-      plugins: [["@lingui/swc-plugin", {}]],
-    }),
-    lingui(),
+    react(),
     tailwindcss(),
-    license({
-      sourcemap: true,
-      thirdParty: {
-        includePrivate: true,
-        multipleVersions: true,
-        output: {
-          file: path.join(__dirname, "dist", "license.txt"),
-          encoding: "utf-8",
-        },
-      },
-    }),
   ],
   build: {
+    license: true,
     // asb-ts が大きいのでごまかす
     chunkSizeWarningLimit: 700,
-    rolldownOptions: {
-      output: {
-        codeSplitting: {
-          groups: [
-            {
-              name: "asb-ts",
-              test: "asb-ts",
-            },
-          ],
-        },
-      },
-    },
   },
   server: {
     host: true,

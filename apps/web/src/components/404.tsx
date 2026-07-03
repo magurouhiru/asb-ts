@@ -1,7 +1,5 @@
-import { Trans } from "@lingui/react/macro";
-
 function NotFound() {
-  return <Trans>404 - Not Found</Trans>;
+  return <span>404 - Not Found</span>;
 }
 
 export default NotFound;

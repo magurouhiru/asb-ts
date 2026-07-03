@@ -12,7 +12,8 @@
     },
 
     // "browser" を優先的に解決するようにする
-    "customConditions": ["browser"]
+    "customConditions": ["browser"],
+    "jsx": "react-jsx"
   },
   "include": ["src"]
 }
