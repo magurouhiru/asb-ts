@@ -349,7 +349,7 @@ function ShowNormalizedText({
   return (
     <div>
       <div>{d.type}</div>
-      <div>{JSON.stringify(d.text)}</div>
+      <div>{JSON.stringify(d.value)}</div>
     </div>
   );
 }
@@ -385,7 +385,7 @@ function ShowLink({ ocrResult }: { ocrResult: ExtractTextsOutputBrowser }) {
       search={{
         mode: "value->level",
         type: d.type,
-        n: data.normalizedTexts.name.text ?? "",
+        n: d.name,
 
         h: d.values.health ?? 0,
         s: d.values.stamina ?? 0,

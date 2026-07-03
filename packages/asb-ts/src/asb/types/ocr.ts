@@ -167,7 +167,7 @@ export type NormalizeType<T extends NormalizeTypeLabel> = T extends "name"
 
 export type NormalizeResult<T extends NormalizeTypeLabel> = {
   type: T;
-  text: NormalizeType<T> | null;
+  value: NormalizeType<T> | null;
 };
 
 export type OcrNormalizedTextRecord = {
