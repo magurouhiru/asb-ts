@@ -1,4 +1,4 @@
-import { OcrQueueManager, type OcrQueueManagerStatus } from "asb-ts";
+import { OcrQueueManager, type OcrQueueManagerStatus } from "@asb-ts/core";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 const OcrContext = createContext<

@@ -18,9 +18,9 @@
   },
   "scripts": {
     "build": "bun build:apps",
-    "build:apps": "bun --filter apps/* build",
+    "build:apps": "bun --filter ./apps/* build",
     "test": "bun test:packages",
-    "test:packages": "bun --filter packages/* test",
+    "test:packages": "bun --filter ./packages/* test",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe ."
   },

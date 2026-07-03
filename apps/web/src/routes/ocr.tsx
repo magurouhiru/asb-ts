@@ -1,13 +1,4 @@
 import {
-  Label,
-  NumberField,
-  Separator,
-  Switch,
-  Table,
-  toast,
-} from "@heroui/react";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import {
   type ASBTSErrorObject,
   type CropRect,
   DEFAULT_CROP_RECT_OPTION,
@@ -17,7 +8,16 @@ import {
   type ImageLabel,
   OCR_LABELS,
   type OcrLabel,
-} from "asb-ts";
+} from "@asb-ts/core";
+import {
+  Label,
+  NumberField,
+  Separator,
+  Switch,
+  Table,
+  toast,
+} from "@heroui/react";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   type ReactNode,
   Suspense,
