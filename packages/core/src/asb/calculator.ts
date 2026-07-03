@@ -14,7 +14,6 @@ import {
   DOM_IMP,
   type Imprinting,
   type LevelDetail,
-  LevelDetailSchema,
   type MutationMultiplier,
   POSITIVE_INTEGER_0,
   type PositiveNumber,
@@ -398,50 +397,9 @@ function toValidTeRange(result: FlatResult): TeRange | null {
 }
 
 // とりあえずレベル100まで計算する。これ以上は現実的に存在しないと思うので。
-const TARGET_LEVEL_DETAIL_LIST_SIZE = 100;
-const TARGET_LEVEL_RANGE_WITHOUT_0 = Array.from(
-  { length: TARGET_LEVEL_DETAIL_LIST_SIZE },
-  (_, i) => i + 1,
-);
-
-const TARGET_LEVEL_DETAIL_LIST_WILD = TARGET_LEVEL_RANGE_WITHOUT_0.map((i) =>
-  v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: 0 }),
-);
-const TARGET_LEVEL_RANGE = Array.from(
-  { length: TARGET_LEVEL_DETAIL_LIST_SIZE + 1 },
-  (_, i) => i,
-);
-const TARGET_LEVEL_DETAIL_LIST_WILD_MUT = TARGET_LEVEL_RANGE_WITHOUT_0.flatMap(
-  (i) =>
-    TARGET_LEVEL_RANGE.map((j) =>
-      v.parse(LevelDetailSchema, { wild: i, mut: j, dom: 0 }),
-    ),
-);
-const TARGET_LEVEL_DETAIL_LIST_WILD_DOM = TARGET_LEVEL_RANGE_WITHOUT_0.flatMap(
-  (i) =>
-    TARGET_LEVEL_RANGE.map((k) =>
-      v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: k }),
-    ),
-);
-const TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM =
-  TARGET_LEVEL_RANGE_WITHOUT_0.flatMap((i) =>
-    TARGET_LEVEL_RANGE.flatMap((j) =>
-      TARGET_LEVEL_RANGE.map((k) =>
-        v.parse(LevelDetailSchema, { wild: i, mut: j, dom: k }),
-      ),
-    ),
-  );
-
+const TARGET_LEVEL_DETAIL_RANGE = 100;
 // 気絶値とりあえずレベル500まで計算する。これ以上は現実的に存在しないと思うので。
-const TARGET_LEVEL_DETAIL_LIST_SIZE_TORPIDITY = 500;
-const TARGET_LEVEL_RANGE_TORPIDITY = Array.from(
-  { length: TARGET_LEVEL_DETAIL_LIST_SIZE_TORPIDITY },
-  (_, i) => i + 1,
-);
-const TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY =
-  TARGET_LEVEL_RANGE_TORPIDITY.map((i) =>
-    v.parse(LevelDetailSchema, { wild: i, mut: 0, dom: 0 }),
-  );
+const TARGET_LEVEL_DETAIL_RANGE_TORPIDITY = 500;
 
 function cLw(
   sl: StatLabel,
@@ -453,9 +411,12 @@ function cLw(
   let buffLd: LevelDetail | null = null;
   let buffDiff = Number.MAX_SAFE_INTEGER;
 
-  for (const ld of sl === "torpidity"
-    ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
-    : TARGET_LEVEL_DETAIL_LIST_WILD) {
+  const target =
+    sl === "torpidity"
+      ? TARGET_LEVEL_DETAIL_RANGE_TORPIDITY
+      : TARGET_LEVEL_DETAIL_RANGE;
+  for (let wild = 1; wild < target; wild++) {
+    const ld = { wild, mut: 0, dom: 0 } as LevelDetail;
     const tmpVw = round(
       cVw(
         sl,
@@ -482,6 +443,36 @@ function cLw(
   return { ld: buffLd, diff: buffDiff };
 }
 
+const TARGET_WILD_TORPIDITY = {
+  w: TARGET_LEVEL_DETAIL_RANGE_TORPIDITY,
+  m: 1,
+  d: 1,
+} as const;
+
+const TARGET_WILD = {
+  w: TARGET_LEVEL_DETAIL_RANGE,
+  m: 1,
+  d: 1,
+} as const;
+
+const TARGET_WILD_DOM = {
+  w: TARGET_LEVEL_DETAIL_RANGE,
+  m: 1,
+  d: TARGET_LEVEL_DETAIL_RANGE,
+} as const;
+
+const TARGET_WILD_MUT = {
+  w: TARGET_LEVEL_DETAIL_RANGE,
+  m: TARGET_LEVEL_DETAIL_RANGE,
+  d: 1,
+} as const;
+
+const TARGET_WILD_MUT_DOM = {
+  w: TARGET_LEVEL_DETAIL_RANGE,
+  m: TARGET_LEVEL_DETAIL_RANGE,
+  d: TARGET_LEVEL_DETAIL_RANGE,
+} as const;
+
 type CLptResultItem = {
   ld: LevelDetail;
   teRange: TeRange;
@@ -500,45 +491,50 @@ function cL(
   let diffBuff = Number.MAX_SAFE_INTEGER;
 
   const mm = (ip.species.mutationMultiplier ?? DEFAULT_MUTATION_MULTIPLIER)[sl];
-  const targetLevel =
+  const target =
     sl === "torpidity"
-      ? TARGET_LEVEL_DETAIL_LIST_WILD_TORPIDITY
+      ? TARGET_WILD_TORPIDITY
       : ip.withDom
         ? ip.type === "dom"
-          ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
+          ? TARGET_WILD_DOM
           : mm === 1
-            ? TARGET_LEVEL_DETAIL_LIST_WILD_DOM
-            : TARGET_LEVEL_DETAIL_LIST_WILD_MUT_DOM
+            ? TARGET_WILD_DOM
+            : TARGET_WILD_MUT_DOM
         : ip.type === "dom"
-          ? TARGET_LEVEL_DETAIL_LIST_WILD
+          ? TARGET_WILD
           : mm === 1
-            ? TARGET_LEVEL_DETAIL_LIST_WILD
-            : TARGET_LEVEL_DETAIL_LIST_WILD_MUT;
-  for (const ld of targetLevel) {
-    const fnCV = (te: TameEffectiveness) =>
-      round(
-        cV(
-          sl,
-          ld,
-          stat,
-          te,
-          ip.type === "dom" ? DOM_IMP : ip.imprinting,
-          ip.species,
-          ip.settings,
-        ),
-        sl,
-      );
-    const [teRangeTmp, diffTmp] = searchTeRange(
-      TE_DIGIT,
-      teRange,
-      fnCV,
-      roundedValue,
-    );
-    if (Math.abs(diffTmp) < Math.abs(diffBuff)) {
-      resultBuff = [{ ld, teRange: teRangeTmp, diff: diffTmp }];
-      diffBuff = diffTmp;
-    } else if (Math.abs(diffTmp) === Math.abs(diffBuff)) {
-      resultBuff.push({ ld, teRange: teRangeTmp, diff: diffTmp });
+            ? TARGET_WILD
+            : TARGET_WILD_MUT;
+  for (let dom = 0; dom < target.d; dom++) {
+    for (let mut = 0; mut < target.m; mut++) {
+      for (let wild = 1; wild < target.w; wild++) {
+        const ld = { wild, mut, dom } as LevelDetail;
+        const fnCV = (te: TameEffectiveness) =>
+          round(
+            cV(
+              sl,
+              ld,
+              stat,
+              te,
+              ip.type === "dom" ? DOM_IMP : ip.imprinting,
+              ip.species,
+              ip.settings,
+            ),
+            sl,
+          );
+        const [teRangeTmp, diffTmp] = searchTeRange(
+          TE_DIGIT,
+          teRange,
+          fnCV,
+          roundedValue,
+        );
+        if (Math.abs(diffTmp) < Math.abs(diffBuff)) {
+          resultBuff = [{ ld, teRange: teRangeTmp, diff: diffTmp }];
+          diffBuff = diffTmp;
+        } else if (Math.abs(diffTmp) === Math.abs(diffBuff)) {
+          resultBuff.push({ ld, teRange: teRangeTmp, diff: diffTmp });
+        }
+      }
     }
   }
   const first = resultBuff[0];

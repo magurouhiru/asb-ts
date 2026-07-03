@@ -9,6 +9,7 @@ import {
   DEFAULT_SETTINGS,
   extractTexts,
   OcrQueueManager,
+  STAT_LABELS,
   type StatLevelsUnsafe,
   type StatsType,
   type StatValuesUnsafe,
@@ -533,8 +534,6 @@ describe("extractTexts", () => {
     expect(result.ip.imprinting as number).toBe(
       data.type === "bred" ? data.imprinting : 0,
     );
-    R.forEachObj(result.ip.values, (v, k) => {
-      expect(v).toBe(data.values[k]);
-    });
+    STAT_LABELS.map((sl) => expect(result.ip.values[sl]).toBe(data.values[sl]));
   });
 });
