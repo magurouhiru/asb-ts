@@ -1,9 +1,10 @@
-import { cropOcrImages, toOcrCanvas } from "./asb/ocr/crop-image.node.js";
+import { cropOcrImages, toOcrCanvas } from "./asb/ocr/crop-image.bun.js";
 import { calcCropRects } from "./asb/ocr/crop-rect.js";
 import {
   extractOcrPromiseTexts,
   extractOcrTexts,
 } from "./asb/ocr/extract-text.js";
+import { normalizeTexts } from "./asb/ocr/normalize.js";
 import {
   type ASBResult,
   DEFAULT_CROP_RECT_OPTION,
@@ -11,13 +12,15 @@ import {
   DEFAULT_SCALE,
   DEFAULT_THRESHOLD,
   type ExtractTextsOutput,
-  normalizeTexts,
-  type OcrCroppedImageRecordNode,
+  type OcrCroppedImageRecordBun,
   type OcrQueueManager,
   toASBResultFailure,
 } from "./common.js";
 
 export * from "./common.js";
+
+export type ExtractTextsOutputBun =
+  ExtractTextsOutput<OcrCroppedImageRecordBun>;
 
 export function extractTexts(
   manager: OcrQueueManager,
@@ -33,7 +36,7 @@ export function extractTexts(
   threshold = DEFAULT_THRESHOLD,
   scale = DEFAULT_SCALE,
   padding = DEFAULT_PADDING,
-): ASBResult<ExtractTextsOutput<OcrCroppedImageRecordNode>> {
+): ASBResult<ExtractTextsOutputBun> {
   try {
     const sourceCanvas = toOcrCanvas(source);
 

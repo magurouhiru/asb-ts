@@ -1,9 +1,10 @@
-import { cropOcrImages, toOcrCanvas } from "./asb/ocr/crop-image.browser.js";
+import { cropOcrImages } from "./asb/ocr/crop-image.browser.js";
 import { calcCropRects } from "./asb/ocr/crop-rect.js";
 import {
   extractOcrPromiseTexts,
   extractOcrTexts,
 } from "./asb/ocr/extract-text.js";
+import { normalizeTexts } from "./asb/ocr/normalize.js";
 import {
   type ASBResult,
   DEFAULT_CROP_RECT_OPTION,
@@ -11,7 +12,6 @@ import {
   DEFAULT_SCALE,
   DEFAULT_THRESHOLD,
   type ExtractTextsOutput,
-  normalizeTexts,
   type OcrCroppedImageRecordBrowser,
   type OcrQueueManager,
   toASBResultFailure,
@@ -19,9 +19,12 @@ import {
 
 export * from "./common.js";
 
+export type ExtractTextsOutputBrowser =
+  ExtractTextsOutput<OcrCroppedImageRecordBrowser>;
+
 export function extractTexts(
   manager: OcrQueueManager,
-  source: Blob,
+  source: OffscreenCanvas,
   ymNL = DEFAULT_CROP_RECT_OPTION.ymNL,
   dlmNL = DEFAULT_CROP_RECT_OPTION.dlmNL,
   drmNL = DEFAULT_CROP_RECT_OPTION.drmNL,
@@ -33,9 +36,9 @@ export function extractTexts(
   threshold = DEFAULT_THRESHOLD,
   scale = DEFAULT_SCALE,
   padding = DEFAULT_PADDING,
-): ASBResult<ExtractTextsOutput<OcrCroppedImageRecordBrowser>> {
+): ASBResult<ExtractTextsOutputBrowser> {
   try {
-    const sourceCanvas = toOcrCanvas(source);
+    const sourceCanvas = Promise.resolve(source);
 
     const cropRects = sourceCanvas.then((sc) =>
       calcCropRects(

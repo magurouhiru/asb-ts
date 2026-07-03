@@ -32,8 +32,8 @@ import {
   type StatLevelsUnsafe,
   type StatsType,
   type StatValuesUnsafe,
+  searchSpecies,
 } from "asb-ts";
-import { searchSpecies } from "asb-ts/dist/asb/species";
 import { useEffect, useState } from "react";
 import * as R from "remeda";
 import * as v from "valibot";

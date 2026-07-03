@@ -3,6 +3,7 @@ import {
   calculateLevelController,
   calculateValueController,
 } from "./asb/calculator.js";
+import type { normalizeTexts } from "./asb/ocr/normalize.js";
 import {
   type ASBTSErrorCommonObject,
   type ASBTSErrorObject,
@@ -17,13 +18,12 @@ import {
   DEFAULT_SETTINGS,
   isASBTSErrorCommon,
   type OcrCroppedImageRecordBrowser,
-  type OcrCroppedImageRecordNode,
+  type OcrCroppedImageRecordBun,
   type OcrCropRectRecord,
   type OcrExtractedTextRecord,
   type Settings,
   SettingsSchema,
 } from "./asb/types/index.js";
-import type { normalizeTexts } from "./common.js";
 
 export * from "./asb/types/index.js";
 
@@ -32,8 +32,7 @@ export function createSettings(settings?: Partial<Settings>): Settings {
 }
 
 export * from "./asb/ocr/manager.js";
-export * from "./asb/ocr/normalize.js";
-export { createSpeciesList } from "./asb/species.js";
+export * from "./asb/species.js";
 
 export type ASBResult<T> = ASBResultSuccess<T> | ASBResultFailure;
 export type ASBResultSuccess<T> = {
@@ -107,7 +106,7 @@ export function calculateLevel(
 }
 
 export type ExtractTextsOutput<
-  T extends OcrCroppedImageRecordBrowser | OcrCroppedImageRecordNode,
+  T extends OcrCroppedImageRecordBrowser | OcrCroppedImageRecordBun,
 > = {
   cropRects: Promise<OcrCropRectRecord>;
   croppedImages: Promise<T>;

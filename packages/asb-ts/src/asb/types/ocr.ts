@@ -104,11 +104,11 @@ export interface CropRect {
 
 /////////////////////////////////////////////////////////
 
-export type OcrCroppedImageRecordNode = OcrRecord<CroppedImageRecordNode>;
-export type CroppedImageRecordNode = ImageRecord<Buffer>;
+export type OcrCroppedImageRecordBun = OcrRecord<CroppedImageRecordBun>;
+export type CroppedImageRecordBun = ImageRecord<Buffer>;
 
 export type OcrCroppedImageRecordBrowser = OcrRecord<CroppedImageRecordBrowser>;
-export type CroppedImageRecordBrowser = ImageRecord<OffscreenCanvas>;
+export type CroppedImageRecordBrowser = ImageRecord<Blob>;
 
 /////////////////////////////////////////////////////////
 

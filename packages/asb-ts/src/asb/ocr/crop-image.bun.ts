@@ -7,10 +7,10 @@ import {
 import * as R from "remeda";
 import { ASBTSErrorCommon } from "../types/error.js";
 import {
-  type CroppedImageRecordNode,
+  type CroppedImageRecordBun,
   type CropRect,
   OCR_LABELS,
-  type OcrCroppedImageRecordNode,
+  type OcrCroppedImageRecordBun,
   type OcrCropRectRecord,
 } from "../types/index.js";
 import { getTargetWH, setImageData } from "./crop-image.core.js";
@@ -52,7 +52,7 @@ export async function cropOcrImages(
   cropRects: OcrCropRectRecord,
   scale: number,
   padding: number,
-): Promise<OcrCroppedImageRecordNode> {
+): Promise<OcrCroppedImageRecordBun> {
   return Promise.all(
     R.pipe(
       cropRects,
@@ -89,7 +89,7 @@ async function cropImages(
   cropRect: CropRect,
   scale: number,
   padding: number,
-): Promise<CroppedImageRecordNode> {
+): Promise<CroppedImageRecordBun> {
   const { x, y, width, height } = cropRect;
 
   const { targetWidth, targetHeight } = getTargetWH(cropRect, scale, padding);

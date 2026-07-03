@@ -32,8 +32,8 @@ export async function toOcrCanvas(source: Blob): Promise<OffscreenCanvas> {
   return canvas;
 }
 
-async function toImageLike(canvas: OffscreenCanvas): Promise<OffscreenCanvas> {
-  return Promise.resolve(canvas);
+async function toImageLike(canvas: OffscreenCanvas): Promise<Blob> {
+  return canvas.convertToBlob({ type: "image/png" });
 }
 
 export async function cropOcrImages(
