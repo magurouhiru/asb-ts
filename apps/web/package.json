@@ -16,7 +16,6 @@
     "@asb-ts/core": "workspace:*",
     "@heroui/react": "^3.0.2",
     "@heroui/styles": "^3.0.2",
-    "@mediapipe/tasks-vision": "^0.10.34",
     "@tanstack/react-devtools": "^0.10.1",
     "@tanstack/react-form": "^1.28.6",
     "@tanstack/react-form-devtools": "^0.2.20",
@@ -28,7 +27,6 @@
     "react-dom": "^19.2.0",
     "recharts": "^3.8.1",
     "remeda": "catalog:",
-    "tone": "^15.1.22",
     "valibot": "catalog:"
   },
   "devDependencies": {
