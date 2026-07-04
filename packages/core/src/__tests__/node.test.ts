@@ -459,7 +459,7 @@ const DATA_SET: {
       meleeDamageMultiplier: { wild: 28, mut: 0, dom: 0 },
       torpidity: { wild: 193, mut: 0, dom: 0 },
     },
-    img: "002.png",
+    // img: "002.png",
   },
   {
     name: "ステゴサウルス",
@@ -485,7 +485,7 @@ const DATA_SET: {
       meleeDamageMultiplier: { wild: 39, mut: 0, dom: 0 },
       torpidity: { wild: 223, mut: 0, dom: 0 },
     },
-    img: "003.png",
+    // img: "003.png",
   },
 ] as const;
 
