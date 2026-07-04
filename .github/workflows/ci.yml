@@ -23,6 +23,8 @@ jobs:
         run: bun ci
       - name: check
         run: bun biome
+      - name: get tesseract assets
+        run: bash ./get_tesseract_assets.sh
       - name: test
         run: bun test
       - name: build
