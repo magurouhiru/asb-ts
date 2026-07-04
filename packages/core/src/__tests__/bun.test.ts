@@ -1,3 +1,4 @@
+import path from "node:path";
 import { describe, expect, it } from "bun:test";
 import * as R from "remeda";
 import { searchSpecies } from "../asb/species.js";
@@ -517,7 +518,20 @@ describe("calculateLevel", () => {
 
 describe("extractTexts", () => {
   const dataSetWithImg = DATA_SET.filter((d) => d.img);
-  const manager = new OcrQueueManager();
+  const workspaceRoot = path.join(
+    import.meta.url.slice(5),
+    "..",
+    "..",
+    "..",
+    "..",
+    "..",
+  );
+  const langPath = path.join(workspaceRoot, "tesseract-assets");
+  const manager = new OcrQueueManager("jpn", undefined, {
+    langPath,
+    gzip: false,
+    cachePath: langPath,
+  });
 
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
     const pathPrefix = new URL("./__fixtures__/", import.meta.url).pathname;
