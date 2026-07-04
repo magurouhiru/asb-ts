@@ -1,5 +1,6 @@
 import * as R from "remeda";
 import * as v from "valibot";
+import { round } from "../calculator.js";
 import {
   ASBTSErrorCommon,
   DISPLAY_STAT_NAME_LABELS,
@@ -21,7 +22,6 @@ import {
   type OcrStatValueLabel,
   PositiveNumberSchema,
   STAT_LABELS,
-  type StatLabel,
   STATS_POSITION_NAME_COMBINATIONS,
   type StatsPositionCombinationValue,
   type StatsType,
@@ -31,7 +31,6 @@ import {
   WILD_IMP,
 } from "../types/index.js";
 import * as c from "./normalize.core.js";
-import { round } from "../calculator.js";
 
 export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
   normalizedTexts: OcrNormalizedTextRecord;
