@@ -33,7 +33,7 @@ jobs:
         run: pnpm exec biome
 
       - name: test
-        run: pnpm test
+        run: pnpm test -- --threads=false --reporter verbose
 
       - name: build
         run: pnpm run build
