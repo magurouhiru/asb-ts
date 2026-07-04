@@ -14,10 +14,10 @@
     "test": "bun test src",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe .",
-    "tools": "npm run tools:create-values && npm run tools:create-name-dict && npm run tools:create-variants-default-unselected && npm run biome:fix",
-    "tools:create-values": "tsx ./tools/create-values.ts",
-    "tools:create-name-dict": "tsx ./tools/create-name-dict.ts",
-    "tools:create-variants-default-unselected": "tsx ./tools/create-variants-default-unselected.ts"
+    "tools": "pnpm tools:create-values && pnpm tools:create-name-dict && pnpm tools:create-variants-default-unselected",
+    "tools:create-values": "tsx ./tools/create-values.ts && pnpm biome:fix",
+    "tools:create-name-dict": "tsx ./tools/create-name-dict.ts && pnpm biome:fix",
+    "tools:create-variants-default-unselected": "tsx ./tools/create-variants-default-unselected.ts && pnpm biome:fix"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.1",
@@ -30,6 +30,7 @@
     "@biomejs/biome": "catalog:",
     "@types/bun": "catalog:",
     "tsx": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }
