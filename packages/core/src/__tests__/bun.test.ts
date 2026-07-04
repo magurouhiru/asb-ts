@@ -529,8 +529,9 @@ describe("extractTexts", () => {
   const langPath = path.join(workspaceRoot, "tesseract-assets");
   const manager = new OcrQueueManager("jpn", undefined, {
     langPath,
-    gzip: false,
     cachePath: langPath,
+    gzip: false,
+    workerBlobURL: false,
   });
 
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
