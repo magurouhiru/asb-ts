@@ -2,14 +2,19 @@ packages:
   - "apps/*"
   - "packages/*"
 
+allowBuilds:
+  esbuild: set this to true or false
+  tesseract.js: set this to true or false
+
 # 💡 ここにカタログ（バージョン一覧）を定義します
 catalogs:
   default:
     "@biomejs/biome": "2.4.15"
     "@types/bun": "^1.3.14"
     "fuse.js": "^7.2.0"
+    "tsx": "^4.22.4"
     "typescript": "~6.0.2"
     "valibot": "^1.3.0"
     "remeda": "^2.38.0"
 
-minimumReleaseAge: 10080  # 1週間は遅らせる
+minimumReleaseAge: 10080 # 1週間は遅らせる

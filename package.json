@@ -9,10 +9,10 @@
     ]
   },
   "scripts": {
-    "build": "bun build:apps",
-    "build:apps": "bun --filter ./apps/* build",
-    "test": "bun test:packages",
-    "test:packages": "bun --filter ./packages/* test",
+    "build": "pnpm build:apps",
+    "build:apps": "pnpm --filter ./apps/* build",
+    "test": "pnpm test:packages",
+    "test:packages": "pnpm --filter ./packages/* test",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe ."
   },
