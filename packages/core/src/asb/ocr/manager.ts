@@ -143,14 +143,11 @@ export class OcrQueueManager {
     return response.data.text.trim();
   }
 
-  async terminate() {
-    if (this.initPromise) {
-      const workers = this.initPromise;
-      for (const worker of workers) {
-        const w = await worker;
-        w.terminate;
-      }
-      this.initPromise = null;
-    }
+  async terminate(): Promise<boolean> {
+    return Promise.all(
+      (this.initPromise ?? []).map((p) =>
+        p.then((worker) => worker.terminate()),
+      ),
+    ).then(() => true);
   }
 }

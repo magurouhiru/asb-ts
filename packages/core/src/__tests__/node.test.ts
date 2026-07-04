@@ -518,22 +518,23 @@ describe("calculateLevel", () => {
 
 describe("extractTexts", () => {
   const dataSetWithImg = DATA_SET.filter((d) => d.img);
-  // const workspaceRoot = path.join(
-  //   import.meta.url.slice(5),
-  //   "..",
-  //   "..",
-  //   "..",
-  //   "..",
-  //   "..",
-  // );
-  // const langPath = path.join(workspaceRoot, "tesseract-assets");
-  const manager = new OcrQueueManager("jpn", undefined, {
-    // langPath,
-    // cachePath: langPath,
-    // gzip: false,
-  });
 
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
+    // const workspaceRoot = path.join(
+    //   import.meta.url.slice(5),
+    //   "..",
+    //   "..",
+    //   "..",
+    //   "..",
+    //   "..",
+    // );
+    // const langPath = path.join(workspaceRoot, "tesseract-assets");
+    const manager = new OcrQueueManager("jpn", undefined, {
+      // langPath,
+      // cachePath: langPath,
+      // gzip: false,
+    });
+
     const pathPrefix = new URL("./__fixtures__/", import.meta.url).pathname;
     const file = fs.readFileSync(`${pathPrefix}${data.img}`);
 
@@ -554,5 +555,8 @@ describe("extractTexts", () => {
       data.type === "bred" ? data.imprinting : 0,
     );
     STAT_LABELS.map((sl) => expect(result.ip.values[sl]).toBe(data.values[sl]));
+
+    const isOk = await manager.terminate();
+    expect(isOk).toBe(true);
   });
 });
