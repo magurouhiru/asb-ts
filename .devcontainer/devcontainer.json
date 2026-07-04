@@ -118,7 +118,7 @@
   "postStartCommand": {
     // 権限問題を回避
     "chown": "sudo chown -R node:node /home/node/app",
-    // "bun ci": "bun ci",
+    "pnpm ci": "pnpm i",
     "ollama pull gemma4": "curl http://ollama:11434/api/pull -d '{\"model\": \"gemma4:e4b\", \"stream\": false}'"
   }
   // "postAttachCommand": [],
