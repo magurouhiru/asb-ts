@@ -12,8 +12,8 @@
   // "otherPortsAttributes": {},
   // "containerEnv": {},
   // "remoteEnv": {},
-  "remoteUser": "vscode",
-  "containerUser": "vscode",
+  "remoteUser": "node",
+  "containerUser": "node",
   "updateRemoteUserUID": true,
   // "userEnvProbe": "none",
   // "overrideCommand ": false,
@@ -23,15 +23,16 @@
   // "capAdd": [],
   // "securityOpt": [],
   "mounts": [
-    {
-      // node_modulesをホストと分離
-      "source": "ASB-ts-devcontainer__node_modules",
-      "target": "/home/vscode/app/node_modules",
-      "type": "volume"
-    }
+    // {
+    //   // node_modulesをホストと分離
+    //   "source": "ASB-ts-devcontainer__node_modules",
+    //   "target": "/home/node/app/node_modules",
+    //   "type": "volume"
+    // }
   ],
   "features": {
-    "ghcr.io/devcontainers/features/git-lfs:1": {}
+    "ghcr.io/devcontainers/features/git-lfs:1": {},
+    "ghcr.io/devcontainers/features/node:2": {}
   },
   // "overrideFeatureInstallOrder": [],
   "customizations": {
@@ -41,13 +42,11 @@
         "bradlc.vscode-tailwindcss",
         "github.vscode-github-actions",
         "ms-vscode.makefile-tools",
-        "saoudrizwan.claude-dev",
-        "tamasfe.even-better-toml",
-        "oven.bun-vscode"
+        "saoudrizwan.claude-dev"
       ],
       "settings": {
-        "npm.packageManager": "bun",
-        "npm.scriptRunner": "bun",
+        "npm.packageManager": "pnpm",
+        "npm.scriptRunner": "node",
         // フォーマットはBiome
         "[javascript]": {
           "editor.defaultFormatter": "biomejs.biome"
@@ -103,7 +102,7 @@
   "dockerComposeFile": "docker-compose.yaml",
   "service": "app",
   "runServices": [],
-  "workspaceFolder": "/home/vscode/app",
+  "workspaceFolder": "/home/node/app",
   // https://containers.dev/implementors/json_reference/#lifecycle-scripts
   // "initializeCommand":[],
   // "onCreateCommand": [],
@@ -111,8 +110,8 @@
   // "postCreateCommand": [],
   "postStartCommand": {
     // 権限問題を回避
-    "chown": "sudo chown -R vscode:vscode /home/vscode/app",
-    "bun ci": "bun ci",
+    "chown": "sudo chown -R node:node /home/node/app",
+    // "bun ci": "bun ci",
     "ollama pull gemma4": "curl http://ollama:11434/api/pull -d '{\"model\": \"gemma4:e4b\", \"stream\": false}'"
   }
   // "postAttachCommand": [],
