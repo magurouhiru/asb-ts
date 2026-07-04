@@ -1,7 +1,6 @@
-import { describe, expect, it } from "vitest";
-import path from "node:path";
 import fs from "node:fs";
 import * as R from "remeda";
+import { describe, expect, it } from "vitest";
 import { searchSpecies } from "../asb/species.js";
 import {
   type CalculateLevelInputPackUnsafe,
@@ -519,20 +518,19 @@ describe("calculateLevel", () => {
 
 describe("extractTexts", () => {
   const dataSetWithImg = DATA_SET.filter((d) => d.img);
-  const workspaceRoot = path.join(
-    import.meta.url.slice(5),
-    "..",
-    "..",
-    "..",
-    "..",
-    "..",
-  );
-  const langPath = path.join(workspaceRoot, "tesseract-assets");
+  // const workspaceRoot = path.join(
+  //   import.meta.url.slice(5),
+  //   "..",
+  //   "..",
+  //   "..",
+  //   "..",
+  //   "..",
+  // );
+  // const langPath = path.join(workspaceRoot, "tesseract-assets");
   const manager = new OcrQueueManager("jpn", undefined, {
-    langPath,
-    cachePath: langPath,
-    gzip: false,
-    workerBlobURL: false,
+    // langPath,
+    // cachePath: langPath,
+    // gzip: false,
   });
 
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
