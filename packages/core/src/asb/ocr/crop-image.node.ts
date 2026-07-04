@@ -34,15 +34,12 @@ function createOcrCanvas(
   return [canvas, ctx];
 }
 
-export async function toOcrCanvas(source: Blob): Promise<Canvas> {
-  return source
-    .bytes()
-    .then((bytes) => loadImage(bytes))
-    .then((image) => {
-      const [canvas, ctx] = createOcrCanvas(image.width, image.height);
-      ctx.drawImage(image, 0, 0);
-      return canvas;
-    });
+export async function toOcrCanvas(source: ArrayBuffer): Promise<Canvas> {
+  return loadImage(source).then((image) => {
+    const [canvas, ctx] = createOcrCanvas(image.width, image.height);
+    ctx.drawImage(image, 0, 0);
+    return canvas;
+  });
 }
 
 async function toImageLike(canvas: Canvas): Promise<Buffer> {

@@ -2,7 +2,7 @@ import {
   cropOcrImages,
   type OcrCroppedImageRecordBun,
   toOcrCanvas,
-} from "./asb/ocr/crop-image.bun.js";
+} from "./asb/ocr/crop-image.node.js";
 import { calcCropRects } from "./asb/ocr/crop-rect.js";
 import {
   extractOcrPromiseTexts,
@@ -27,7 +27,7 @@ export type ExtractTextsOutputBun =
 
 export function extractTexts(
   manager: OcrQueueManager,
-  source: Blob,
+  source: ArrayBuffer,
   ymNL = DEFAULT_CROP_RECT_OPTION.ymNL,
   dlmNL = DEFAULT_CROP_RECT_OPTION.dlmNL,
   drmNL = DEFAULT_CROP_RECT_OPTION.drmNL,

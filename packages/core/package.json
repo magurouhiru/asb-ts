@@ -6,12 +6,12 @@
   "private": true,
   "exports": {
     ".": {
-      "bun": "./src/bun.ts",
+      "node": "./src/node.ts",
       "browser": "./src/browser.ts"
     }
   },
   "scripts": {
-    "test": "bun test src",
+    "test": "vitest src",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe .",
     "tools": "pnpm tools:create-values && pnpm tools:create-name-dict && pnpm tools:create-variants-default-unselected",
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
-    "@types/bun": "catalog:",
+    "@types/node": "catalog:",
     "tsx": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

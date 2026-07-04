@@ -48,7 +48,8 @@
         "bradlc.vscode-tailwindcss",
         "github.vscode-github-actions",
         "ms-vscode.makefile-tools",
-        "saoudrizwan.claude-dev"
+        "saoudrizwan.claude-dev",
+        "vitest.explorer"
       ],
       "settings": {
         "npm.packageManager": "pnpm",

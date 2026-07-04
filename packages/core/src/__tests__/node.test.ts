@@ -1,5 +1,6 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it } from "vitest";
 import path from "node:path";
+import fs from "node:fs";
 import * as R from "remeda";
 import { searchSpecies } from "../asb/species.js";
 import {
@@ -14,7 +15,7 @@ import {
   type StatLevelsUnsafe,
   type StatsType,
   type StatValuesUnsafe,
-} from "../bun.js";
+} from "../node.js";
 
 describe("createSettings", () => {
   it("引数なしでデフォルト値が返る", () => {
@@ -536,9 +537,9 @@ describe("extractTexts", () => {
 
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
     const pathPrefix = new URL("./__fixtures__/", import.meta.url).pathname;
-    const file = Bun.file(`${pathPrefix}${data.img}`);
+    const file = fs.readFileSync(`${pathPrefix}${data.img}`);
 
-    const r = extractTexts(manager, file);
+    const r = extractTexts(manager, file.buffer);
     if (!r.isSuccess) {
       throw new Error(JSON.stringify(r.error));
     }
