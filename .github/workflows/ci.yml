@@ -30,10 +30,10 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: check (biome)
-        run: pnpm exec biome
+        run: pnpm run biome
 
       - name: test
-        run: pnpm test -- --threads=false --reporter verbose
+        run: pnpm run test
 
       - name: build
         run: pnpm run build

@@ -542,7 +542,12 @@ describe("extractTexts", () => {
       throw new Error(JSON.stringify(r.error));
     }
 
-    const result = await r.result.normalized;
+    const [result] = await Promise.all([
+      r.result.normalized,
+      r.result.cropRects,
+      r.result.croppedImages,
+      r.result.extractedTexs,
+    ]);
     expect(result.ip.type).toBe(data.type);
     // expect(result.withDom.text).toBe(data.withDom);
     expect(result.ip.imprinting as number).toBe(
