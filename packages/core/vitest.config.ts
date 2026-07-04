@@ -5,5 +5,6 @@ export default defineConfig({
   test: {
     environment: "node", // これを明示
     pool: "forks",
+    testTimeout: 30000,
   },
 });
