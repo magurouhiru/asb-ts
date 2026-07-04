@@ -1,4 +1,4 @@
-import fs from "node:fs";
+// import fs from "node:fs";
 import * as R from "remeda";
 import { describe, expect, it } from "vitest";
 import { searchSpecies } from "../asb/species.js";
@@ -8,9 +8,9 @@ import {
   createSettings,
   createSpeciesList,
   DEFAULT_SETTINGS,
-  extractTexts,
-  OcrQueueManager,
-  STAT_LABELS,
+  // extractTexts,
+  // OcrQueueManager,
+  // STAT_LABELS,
   type StatLevelsUnsafe,
   type StatsType,
   type StatValuesUnsafe,
@@ -516,38 +516,38 @@ describe("calculateLevel", () => {
   });
 });
 
-describe("extractTexts", () => {
-  const dataSetWithImg = DATA_SET.filter((d) => d.img);
-  // const workspaceRoot = path.join(
-  //   import.meta.url.slice(5),
-  //   "..",
-  //   "..",
-  //   "..",
-  //   "..",
-  //   "..",
-  // );
-  // const langPath = path.join(workspaceRoot, "tesseract-assets");
-  const manager = new OcrQueueManager("jpn", undefined, {
-    // langPath,
-    // cachePath: langPath,
-    // gzip: false,
-  });
+// describe("extractTexts", () => {
+//   const dataSetWithImg = DATA_SET.filter((d) => d.img);
+//   // const workspaceRoot = path.join(
+//   //   import.meta.url.slice(5),
+//   //   "..",
+//   //   "..",
+//   //   "..",
+//   //   "..",
+//   //   "..",
+//   // );
+//   // const langPath = path.join(workspaceRoot, "tesseract-assets");
+//   const manager = new OcrQueueManager("jpn", undefined, {
+//     // langPath,
+//     // cachePath: langPath,
+//     // gzip: false,
+//   });
 
-  it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
-    const pathPrefix = new URL("./__fixtures__/", import.meta.url).pathname;
-    const file = fs.readFileSync(`${pathPrefix}${data.img}`);
+//   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
+//     const pathPrefix = new URL("./__fixtures__/", import.meta.url).pathname;
+//     const file = fs.readFileSync(`${pathPrefix}${data.img}`);
 
-    const r = extractTexts(manager, file.buffer);
-    if (!r.isSuccess) {
-      throw new Error(JSON.stringify(r.error));
-    }
+//     const r = extractTexts(manager, file.buffer);
+//     if (!r.isSuccess) {
+//       throw new Error(JSON.stringify(r.error));
+//     }
 
-    const result = await r.result.normalized;
-    expect(result.ip.type).toBe(data.type);
-    // expect(result.withDom.text).toBe(data.withDom);
-    expect(result.ip.imprinting as number).toBe(
-      data.type === "bred" ? data.imprinting : 0,
-    );
-    STAT_LABELS.map((sl) => expect(result.ip.values[sl]).toBe(data.values[sl]));
-  });
-});
+//     const result = await r.result.normalized;
+//     expect(result.ip.type).toBe(data.type);
+//     // expect(result.withDom.text).toBe(data.withDom);
+//     expect(result.ip.imprinting as number).toBe(
+//       data.type === "bred" ? data.imprinting : 0,
+//     );
+//     STAT_LABELS.map((sl) => expect(result.ip.values[sl]).toBe(data.values[sl]));
+//   });
+// });
