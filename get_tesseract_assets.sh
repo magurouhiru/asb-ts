@@ -28,7 +28,7 @@ LANGUAGES=("eng" "jpn" )
 echo "📥 4. 言語データを一括ダウンロード中..."
 for LANG in "${LANGUAGES[@]}"; do
   echo "   -> ${LANG}.traineddata を取得中..."
-  curl -sL "https://github.com/tesseract-ocr/tessdata_fast/raw/refs/heads/main/${LANG}.traineddata" -o "${TARGET_DIR}/${LANG}.traineddata"
+  curl -sL "https://github.com/tesseract-ocr/tessdata_best/raw/refs/heads/main/${LANG}.traineddata" -o "${TARGET_DIR}/${LANG}.traineddata"
 done
 
 echo "✨ すべてのファイルのダウンロードが完了しました！"

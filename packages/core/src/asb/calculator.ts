@@ -97,7 +97,7 @@ const PRECISION_10 = 10;
 const PRECISION_1000 = 1000; // 近接攻撃力は%で表示されるので小数点以下3桁まで表示する。
 const PRECISION_1000_TARGET: StatLabel[] = ["meleeDamageMultiplier"];
 
-function round(num: number, sl: StatLabel): number {
+export function round(num: number, sl: StatLabel): number {
   const precision = PRECISION_1000_TARGET.includes(sl)
     ? PRECISION_1000
     : PRECISION_10;

@@ -21,6 +21,7 @@ import {
   type OcrStatValueLabel,
   PositiveNumberSchema,
   STAT_LABELS,
+  type StatLabel,
   STATS_POSITION_NAME_COMBINATIONS,
   type StatsPositionCombinationValue,
   type StatsType,
@@ -30,6 +31,7 @@ import {
   WILD_IMP,
 } from "../types/index.js";
 import * as c from "./normalize.core.js";
+import { round } from "../calculator.js";
 
 export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
   normalizedTexts: OcrNormalizedTextRecord;
@@ -168,6 +170,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
             c.ToStringSchema,
             v.toNumber(),
             v.transform((input) => input / 100),
+            v.transform((input) => round(input, nt)),
             PositiveNumberSchema,
           ),
         );
@@ -209,6 +212,7 @@ export function normalizeTexts(ocrTexts: OcrExtractedTextRecord): {
             ),
             c.ToStringSchema,
             v.toNumber(),
+            v.transform((input) => round(input, nt)),
             PositiveNumberSchema,
           ),
         );
