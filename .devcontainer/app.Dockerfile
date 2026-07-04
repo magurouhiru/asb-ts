@@ -16,5 +16,6 @@ RUN apt-get update && \
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
-# mount先のnode_modulesディレクトリの作成
-RUN mkdir -p ${WORKSPACE}/node_modules
+# mount先のnode_modules,.pnpm-storeディレクトリの作成
+RUN mkdir -p ${WORKSPACE}/node_modules \
+    mkdir -p ${WORKSPACE}/.pnpm-store

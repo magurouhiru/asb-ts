@@ -23,12 +23,18 @@
   // "capAdd": [],
   // "securityOpt": [],
   "mounts": [
-    // {
-    //   // node_modulesをホストと分離
-    //   "source": "ASB-ts-devcontainer__node_modules",
-    //   "target": "/home/node/app/node_modules",
-    //   "type": "volume"
-    // }
+    {
+      // node_modulesをホストと分離
+      "source": "ASB-ts-devcontainer__node_modules",
+      "target": "/home/node/app/node_modules",
+      "type": "volume"
+    },
+    {
+      // .pnpm-storeをホストと分離
+      "source": "ASB-ts-devcontainer__.pnpm-store",
+      "target": "/home/node/app/.pnpm-store",
+      "type": "volume"
+    }
   ],
   "features": {
     "ghcr.io/devcontainers/features/git-lfs:1": {},
