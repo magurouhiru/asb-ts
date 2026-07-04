@@ -1,12 +1,9 @@
-# 定数の定義
-ARG NODE_VERSION=24
-
 # 公式のDev Containerイメージをベースに使用
-# https://github.com/devcontainers/images/tree/main/src/javascript-node
-FROM mcr.microsoft.com/devcontainers/javascript-node:${NODE_VERSION}-trixie
+# https://github.com/devcontainers/images/tree/main/src/base-debian
+FROM mcr.microsoft.com/devcontainers/base:bookworm
 
 # 定数の定義
-ARG USERNAME=node \
+ARG USERNAME=vscode \
     WORKSPACE=/home/${USERNAME}/app
 
 RUN apt-get update && \

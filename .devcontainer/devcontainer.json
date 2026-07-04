@@ -12,8 +12,8 @@
   // "otherPortsAttributes": {},
   // "containerEnv": {},
   // "remoteEnv": {},
-  "remoteUser": "node",
-  "containerUser": "node",
+  "remoteUser": "vscode",
+  "containerUser": "vscode",
   "updateRemoteUserUID": true,
   // "userEnvProbe": "none",
   // "overrideCommand ": false,
@@ -26,19 +26,24 @@
     {
       // node_modulesをホストと分離
       "source": "ASB-ts-devcontainer__node_modules",
-      "target": "/home/node/app/node_modules",
+      "target": "/home/vscode/app/node_modules",
       "type": "volume"
     },
     {
       // .pnpm-storeをホストと分離
       "source": "ASB-ts-devcontainer__.pnpm-store",
-      "target": "/home/node/app/.pnpm-store",
+      "target": "/home/vscode/app/.pnpm-store",
       "type": "volume"
     }
   ],
   "features": {
     "ghcr.io/devcontainers/features/git-lfs:1": {},
-    "ghcr.io/devcontainers/features/node:2": {}
+    "ghcr.io/devcontainers/features/node:2": {
+      "version": 22,
+      "pnpmVersion": 11
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:4": {}
   },
   // "overrideFeatureInstallOrder": [],
   "customizations": {
@@ -109,7 +114,7 @@
   "dockerComposeFile": "docker-compose.yaml",
   "service": "app",
   "runServices": [],
-  "workspaceFolder": "/home/node/app",
+  "workspaceFolder": "/home/vscode/app",
   // https://containers.dev/implementors/json_reference/#lifecycle-scripts
   // "initializeCommand":[],
   // "onCreateCommand": [],
@@ -117,9 +122,10 @@
   // "postCreateCommand": [],
   "postStartCommand": {
     // 権限問題を回避
-    "chown": "sudo chown -R node:node /home/node/app",
+    "chown": "sudo chown -R vscode:vscode /home/vscode/app",
     "pnpm ci": "pnpm i",
-    "ollama pull gemma4": "curl http://ollama:11434/api/pull -d '{\"model\": \"gemma4:e4b\", \"stream\": false}'"
+    // "ollama pull gemma4": "curl http://ollama:11434/api/pull -d '{\"model\": \"gemma4:e4b\", \"stream\": false}'",
+    "install act via": "gh extension install https://github.com/nektos/gh-act"
   }
   // "postAttachCommand": [],
   // "waitFor": "updateContentCommand"
