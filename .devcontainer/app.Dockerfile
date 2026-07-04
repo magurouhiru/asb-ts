@@ -1,5 +1,5 @@
 # 定数の定義
-ARG NODE_VERSION=22
+ARG NODE_VERSION=24
 
 # 公式のDev Containerイメージをベースに使用
 # https://github.com/devcontainers/images/tree/main/src/javascript-node
