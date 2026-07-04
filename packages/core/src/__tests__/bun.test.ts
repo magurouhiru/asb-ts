@@ -527,17 +527,12 @@ describe("extractTexts", () => {
     "..",
   );
   const langPath = path.join(workspaceRoot, "tesseract-assets");
-  const manager = new OcrQueueManager(
-    "jpn",
-    undefined,
-    {
-      langPath,
-      cachePath: langPath,
-      gzip: false,
-      workerBlobURL: false,
-    },
-    1,
-  );
+  const manager = new OcrQueueManager("jpn", undefined, {
+    langPath,
+    cachePath: langPath,
+    gzip: false,
+    workerBlobURL: false,
+  });
 
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
     const pathPrefix = new URL("./__fixtures__/", import.meta.url).pathname;

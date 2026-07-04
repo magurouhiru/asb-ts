@@ -44,7 +44,7 @@ export class OcrQueueManager {
     langs: string | string[] | Lang[] = ["jpn"],
     oem: OEM = OEM.LSTM_ONLY,
     options: Partial<WorkerOptions> = {},
-    numberOfWorker = 2,
+    numberOfWorker = 1,
     callBack?: (
       status: OcrQueueManagerStatus,
       requestCnt: number,
