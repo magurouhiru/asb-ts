@@ -19,6 +19,7 @@ import {
 } from "@heroui/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
+  memo,
   type ReactNode,
   Suspense,
   use,
@@ -257,7 +258,7 @@ function OcrComponent() {
                           <Table.Cell key={il}>
                             <div>
                               <CustomSuspense>
-                                <ShowCroppedImage
+                                <ShowCroppedImageMemo
                                   ocrResult={ocrResult}
                                   ol={ol}
                                   il={il}
@@ -303,7 +304,7 @@ function CustomSuspense({ children }: { children: ReactNode }) {
   return <Suspense fallback={<div>待機中...</div>}>{children}</Suspense>;
 }
 
-function ShowCroppedImage({
+const ShowCroppedImageMemo = memo(function ShowCroppedImage({
   ocrResult,
   ol,
   il,
@@ -315,7 +316,7 @@ function ShowCroppedImage({
   const data = use(ocrResult.croppedImages);
   const d = data[ol][il];
   return <img src={URL.createObjectURL(d)} aria-label="cropped image" />;
-}
+});
 
 function ShowExtractedText({
   ocrResult,
