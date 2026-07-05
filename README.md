@@ -1,12 +1,12 @@
 **Acknowledgments**  
 このプロジェクトは、素晴らしいデスクトップアプリケーションである [ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor)（作者: cadon様）のWebベースのリライト版です。
 
-# ASB-web
+# asb-ts
 
-このリポジトリは[ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor) の一部機能をTypescript で書き直し、web アプリとして公開するために作成されました。  
+このリポジトリは[ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor) の一部機能をTypescript で作り直し、web アプリとかで公開するために作成されました。
 [ARK Smart Breeding](https://github.com/cadon/ARKStatsExtractor)の方が機能が非常に多く、実績もあるため、興味を持った方は本家を使用することをお勧めします。
 
-[ASB-web を試してみる(GitHub Pages)](https://magurouhiru.github.io/ASB-web/)
+[asb-ts をweb で試してみる(GitHub Pages)](https://magurouhiru.github.io/asb-ts/)
 
 ## 機能
 - [x] レベル→個体値
@@ -24,7 +24,7 @@
   - [x] プレイヤーによるレベル振りあり
   - [x] 変異あり
   - [x] クエリパラメータから値を入力
-  - [ ] OCRで値を入力
+  - [x] OCRで値を入力
 
 ## このアプリについて
 - プライバシー: 本アプリは、入力されたデータや個人情報をサーバーに送信したり、保存したりすることはありません。

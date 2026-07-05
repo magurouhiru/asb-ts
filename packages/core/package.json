@@ -1,0 +1,36 @@
+{
+  "name": "@asb-ts/core",
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": {
+      "node": "./src/node.ts",
+      "browser": "./src/browser.ts"
+    }
+  },
+  "scripts": {
+    "test": "vitest run src",
+    "biome": "biome check .",
+    "biome:fix": "biome check --write --unsafe .",
+    "tools": "pnpm tools:create-values && pnpm tools:create-name-dict && pnpm tools:create-variants-default-unselected",
+    "tools:create-values": "tsx ./tools/create-values.ts && pnpm biome:fix",
+    "tools:create-name-dict": "tsx ./tools/create-name-dict.ts && pnpm biome:fix",
+    "tools:create-variants-default-unselected": "tsx ./tools/create-variants-default-unselected.ts && pnpm biome:fix"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^1.0.1",
+    "fuse.js": "catalog:",
+    "remeda": "catalog:",
+    "tesseract.js": "^7.0.0",
+    "valibot": "catalog:"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

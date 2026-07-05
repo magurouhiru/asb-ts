@@ -1,7 +1,7 @@
 // https://containers.dev/implementors/json_reference/
 {
   // https://containers.dev/implementors/json_reference/#general-properties
-  "name": "ASB-web-devcontainer",
+  "name": "ASB-ts-devcontainer",
   "forwardPorts": [5174],
   "portsAttributes": {
     "5174": {
@@ -25,13 +25,25 @@
   "mounts": [
     {
       // node_modulesをホストと分離
-      "source": "ASB-web-devcontainer__node_modules",
+      "source": "ASB-ts-devcontainer__node_modules",
       "target": "/home/vscode/app/node_modules",
+      "type": "volume"
+    },
+    {
+      // .pnpm-storeをホストと分離
+      "source": "ASB-ts-devcontainer__.pnpm-store",
+      "target": "/home/vscode/app/.pnpm-store",
       "type": "volume"
     }
   ],
   "features": {
-    "ghcr.io/devcontainers/features/git-lfs:1": {}
+    "ghcr.io/devcontainers/features/git-lfs:1": {},
+    "ghcr.io/devcontainers/features/node:2": {
+      "version": 22,
+      "pnpmVersion": 11
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:4": {}
   },
   // "overrideFeatureInstallOrder": [],
   "customizations": {
@@ -42,12 +54,11 @@
         "github.vscode-github-actions",
         "ms-vscode.makefile-tools",
         "saoudrizwan.claude-dev",
-        "tamasfe.even-better-toml",
-        "oven.bun-vscode"
+        "vitest.explorer"
       ],
       "settings": {
-        "npm.packageManager": "bun",
-        "npm.scriptRunner": "bun",
+        "npm.packageManager": "pnpm",
+        "npm.scriptRunner": "node",
         // フォーマットはBiome
         "[javascript]": {
           "editor.defaultFormatter": "biomejs.biome"
@@ -112,9 +123,9 @@
   "postStartCommand": {
     // 権限問題を回避
     "chown": "sudo chown -R vscode:vscode /home/vscode/app",
-    "bun ci": "bun ci",
-    "build asb-ts": "bun build:asb-ts",
-    "ollama pull gemma4": "curl http://ollama:11434/api/pull -d '{\"model\": \"gemma4:e4b\", \"stream\": false}'"
+    "pnpm ci": "pnpm i",
+    // "ollama pull gemma4": "curl http://ollama:11434/api/pull -d '{\"model\": \"gemma4:e4b\", \"stream\": false}'",
+    "install act via": "gh extension install https://github.com/nektos/gh-act"
   }
   // "postAttachCommand": [],
   // "waitFor": "updateContentCommand"
