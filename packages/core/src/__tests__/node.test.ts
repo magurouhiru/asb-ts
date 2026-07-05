@@ -1,6 +1,7 @@
 import fs from "node:fs";
+import path from "node:path";
 import * as R from "remeda";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { searchSpecies } from "../asb/species.js";
 import {
   type CalculateLevelInputPackUnsafe,
@@ -535,8 +536,12 @@ describe("extractTexts", () => {
   });
 
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
-    const pathPrefix = new URL("./__fixtures__/", import.meta.url).pathname;
-    const file = fs.readFileSync(`${pathPrefix}${data.img}`);
+    const filePath = path.join(
+      import.meta.dirname,
+      "__fixtures__",
+      data.img ?? "",
+    );
+    const file = fs.readFileSync(filePath);
 
     const r = extractTexts(manager, file.buffer);
     if (!r.isSuccess) {
@@ -555,7 +560,9 @@ describe("extractTexts", () => {
       data.type === "bred" ? data.imprinting : 0,
     );
     STAT_LABELS.map((sl) => expect(result.ip.values[sl]).toBe(data.values[sl]));
+  });
 
+  afterEach(async () => {
     const isOk = await manager.terminate();
     expect(isOk).toBe(true);
   });
