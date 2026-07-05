@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@asb-ts/core": "workspace:*",
+    "discord.js": "^14.26.4",
     "remeda": "catalog:",
     "valibot": "catalog:"
   },
