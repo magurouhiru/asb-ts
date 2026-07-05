@@ -148,6 +148,9 @@ export class OcrQueueManager {
       (this.initPromise ?? []).map((p) =>
         p.then((worker) => worker.terminate()),
       ),
-    ).then(() => true);
+    ).then(() => {
+      this.initPromise = null;
+      return true;
+    });
   }
 }

@@ -519,22 +519,22 @@ describe("calculateLevel", () => {
 describe("extractTexts", () => {
   const dataSetWithImg = DATA_SET.filter((d) => d.img);
 
-  it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
-    // const workspaceRoot = path.join(
-    //   import.meta.url.slice(5),
-    //   "..",
-    //   "..",
-    //   "..",
-    //   "..",
-    //   "..",
-    // );
-    // const langPath = path.join(workspaceRoot, "tesseract-assets");
-    const manager = new OcrQueueManager("jpn", undefined, {
-      // langPath,
-      // cachePath: langPath,
-      // gzip: false,
-    });
+  // const workspaceRoot = path.join(
+  //   import.meta.url.slice(5),
+  //   "..",
+  //   "..",
+  //   "..",
+  //   "..",
+  //   "..",
+  // );
+  // const langPath = path.join(workspaceRoot, "tesseract-assets");
+  const manager = new OcrQueueManager("jpn", undefined, {
+    // langPath,
+    // cachePath: langPath,
+    // gzip: false,
+  });
 
+  it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
     const pathPrefix = new URL("./__fixtures__/", import.meta.url).pathname;
     const file = fs.readFileSync(`${pathPrefix}${data.img}`);
 
