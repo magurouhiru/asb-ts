@@ -8,5 +8,6 @@ export default defineConfig({
     testTimeout: 10000,
     isolate: false,
     maxWorkers: 1,
+    onConsoleLog: () => true,
   },
 });

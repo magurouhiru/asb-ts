@@ -529,12 +529,11 @@ describe("extractTexts", () => {
   //   "..",
   // );
   // const langPath = path.join(workspaceRoot, "tesseract-assets");
-  // const manager = new OcrQueueManager("jpn", undefined, {
-  //   // langPath,
-  //   // cachePath: langPath,
-  //   // gzip: false,
-  // });
-  let manager: OcrQueueManager | null = null;
+  const manager = new OcrQueueManager("jpn", undefined, {
+    //   // langPath,
+    //   // cachePath: langPath,
+    //   // gzip: false,
+  });
 
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
     const filePath = path.join(
@@ -544,7 +543,6 @@ describe("extractTexts", () => {
     );
     const file = fs.readFileSync(filePath);
 
-    manager = new OcrQueueManager();
     const r = extractTexts(manager, file.buffer);
     if (!r.isSuccess) {
       throw new Error(JSON.stringify(r.error));
