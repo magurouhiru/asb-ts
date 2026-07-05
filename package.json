@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "pnpm build:apps",
-    "build:apps": "pnpm --filter ./apps/* build",
+    "build:apps": "pnpm build:apps:web",
+    "build:apps:web": "pnpm --filter ./apps/web build",
     "test": "pnpm test:packages",
     "test:packages": "pnpm --filter ./packages/* test",
     "biome": "biome check .",
