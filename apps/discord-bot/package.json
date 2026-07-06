@@ -5,7 +5,10 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx --env-file .env src/index.ts",
+    "build": "pnpm tsc",
+    "biome": "biome check .",
+    "biome:fix": "biome check --write --unsafe ."
   },
   "dependencies": {
     "@asb-ts/core": "workspace:*",
@@ -15,7 +18,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
-    "typescript": "catalog:",
-    "vite": "catalog:"
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
   }
 }
