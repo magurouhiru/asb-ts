@@ -11,7 +11,7 @@
     }
   },
   "scripts": {
-    "test": "bun test --timeout 10000 src",
+    "test": "bun test --timeout 10000",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe .",
     "tools": "bun run tools:create-values && bun run tools:create-name-dict && bun run tools:create-variants-default-unselected",
