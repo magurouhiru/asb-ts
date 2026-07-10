@@ -22,7 +22,7 @@ jobs:
           lfs: true
 
       - name: install package dependencies
-        run: bun ci
+        run: bun install --frozen-lockfile
 
       - name: check (biome)
         run: bun run biome

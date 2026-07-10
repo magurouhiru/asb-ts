@@ -114,7 +114,7 @@
   "postStartCommand": {
     // 権限問題を回避
     "chown": "sudo chown -R vscode:vscode /home/vscode/app",
-    "bun install": "bun install",
+    "bun install": "bun install --frozen-lockfile",
     // "ollama pull gemma4": "curl http://ollama:11434/api/pull -d '{\"model\": \"gemma4:e4b\", \"stream\": false}'",
     "install act via": "gh extension install https://github.com/nektos/gh-act"
   }
