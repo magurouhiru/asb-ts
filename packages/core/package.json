@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
+    "@tsconfig/bun": "catalog:",
     "@types/bun": "catalog:",
     "typescript": "catalog:"
   }

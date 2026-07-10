@@ -1,8 +1,9 @@
-// import { extractTexts } from "@asb-ts/core";
+import { extractTexts, OcrQueueManager } from "@asb-ts/core";
 import { type Client, Events, MessageFlags } from "discord.js";
 
 const targetChannelName = "ark-レベル算出";
 const targetContentTypes = ["image/png", "image/jpeg"];
+const manager = new OcrQueueManager();
 
 export function setAsbTs(client: Client) {
   client.on(Events.MessageCreate, async (message) => {
@@ -41,6 +42,13 @@ export function setAsbTs(client: Client) {
     }
     const resp = await fetch(firstImgSttachment.url);
     const arrayBuffer = await resp.arrayBuffer();
-    // extractTexts;
+    const resutl = extractTexts(manager, arrayBuffer);
+    if (resutl.isSuccess) {
+      const normalized = await resutl.result.normalized;
+      message.reply({
+        content: JSON.stringify(normalized.ip),
+        flags: [MessageFlags.SuppressNotifications],
+      });
+    }
   });
 }

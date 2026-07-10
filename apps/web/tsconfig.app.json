@@ -1,19 +1,13 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "@tsconfig/vite-react/tsconfig.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "lib": ["ES2023", "DOM", "DOM.Iterable"],
-    "types": ["vite/client"],
-
     // 相対パスが嫌なので、 "@/..." で src 以下を参照できるようにする
     // ここ以外はデフォルト設定のまま
     "paths": {
       "@/*": ["./src/*"]
     },
-
     // "browser" を優先的に解決するようにする
-    "customConditions": ["browser"],
-    "jsx": "react-jsx"
+    "customConditions": ["browser"]
   },
   "include": ["src"]
 }

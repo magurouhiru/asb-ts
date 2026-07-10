@@ -1,7 +1,11 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "@tsconfig/bun/tsconfig.json",
   "compilerOptions": {
-    "types": ["@types/node"]
+    "lib": ["ES2023"],
+    "target": "es2023",
+    "types": ["bun"],
+    // "node" を優先的に解決するようにする
+    "customConditions": ["node"]
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts"]
 }
