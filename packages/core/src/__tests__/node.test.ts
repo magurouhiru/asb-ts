@@ -1,7 +1,7 @@
+import { afterEach, describe, expect, it } from "bun:test";
 import fs from "node:fs";
 import path from "node:path";
 import * as R from "remeda";
-import { afterEach, describe, expect, it } from "vitest";
 import { searchSpecies } from "../asb/species.js";
 import {
   type CalculateLevelInputPackUnsafe,
