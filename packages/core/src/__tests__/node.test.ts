@@ -527,27 +527,9 @@ describe("extractTexts", () => {
     dataSetWithImg = [first];
   }
 
-  // const workspaceRoot = path.join(
-  //   import.meta.url.slice(5),
-  //   "..",
-  //   "..",
-  //   "..",
-  //   "..",
-  //   "..",
-  // );
-  // const langPath = path.join(workspaceRoot, "tesseract-assets");
-  const manager = new OcrQueueManager("jpn", undefined, {
-    //   // langPath,
-    //   // cachePath: langPath,
-    //   // gzip: false,
-  });
-
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
-    const filePath = path.join(
-      import.meta.dirname,
-      "__fixtures__",
-      data.img ?? "",
-    );
+    const manager = new OcrQueueManager();
+    const filePath = path.join(__dirname, "__fixtures__", data.img ?? "");
     const file = fs.readFileSync(filePath);
 
     const r = extractTexts(manager, file.buffer);
@@ -567,9 +549,7 @@ describe("extractTexts", () => {
       data.type === "bred" ? data.imprinting : 0,
     );
     STAT_LABELS.map((sl) => expect(result.ip.values[sl]).toBe(data.values[sl]));
-  });
 
-  afterEach(async () => {
     const isOk = await manager.terminate();
     expect(isOk).toBe(true);
   });
