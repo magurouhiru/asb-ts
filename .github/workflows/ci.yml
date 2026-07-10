@@ -28,7 +28,7 @@ jobs:
         run: bun run biome
 
       - name: test
-        run: bun test
+        run: bun run test
 
       - name: build
         run: bun run build
