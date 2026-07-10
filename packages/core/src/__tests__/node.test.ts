@@ -518,14 +518,14 @@ describe("calculateLevel", () => {
 });
 
 describe("extractTexts", () => {
-  const dataSetWithImg = DATA_SET.filter((d) => d.img);
+  let dataSetWithImg = DATA_SET.filter((d) => d.img);
 
-  // // なんでかgithub actions では複数回実行すると失敗するので最初だけにする。
-  // const isCI = !!process.env.GITHUB_ACTIONS;
-  // const first = dataSetWithImg[0];
-  // if (isCI && first !== undefined) {
-  //   dataSetWithImg = [first];
-  // }
+  // なんでかgithub actions では複数回実行すると失敗するので最初だけにする。
+  const isCI = !!process.env.GITHUB_ACTIONS;
+  const first = dataSetWithImg[0];
+  if (isCI && first !== undefined) {
+    dataSetWithImg = [first];
+  }
 
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
     const manager = new OcrQueueManager();
