@@ -1,9 +1,19 @@
-import { extractTexts, OcrQueueManager } from "@asb-ts/core";
+import {
+  calculateLevel,
+  createSettings,
+  createSpeciesList,
+  extractTexts,
+  OcrQueueManager,
+  searchSpecies,
+} from "@asb-ts/core";
 import { type Client, Events, MessageFlags } from "discord.js";
 
 const targetChannelName = "ark-レベル算出";
 const targetContentTypes = ["image/png", "image/jpeg"];
 const manager = new OcrQueueManager();
+const targetUrl = process.env.TARGET_URL;
+const settings = createSettings();
+const speciesList = createSpeciesList(settings);
 
 export function setAsbTs(client: Client) {
   client.on(Events.MessageCreate, async (message) => {
@@ -42,11 +52,50 @@ export function setAsbTs(client: Client) {
     }
     const resp = await fetch(firstImgSttachment.url);
     const arrayBuffer = await resp.arrayBuffer();
-    const resutl = extractTexts(manager, arrayBuffer);
-    if (resutl.isSuccess) {
-      const normalized = await resutl.result.normalized;
+    const ocrResutl = extractTexts(manager, arrayBuffer);
+    if (ocrResutl.isSuccess) {
+      const normalized = await ocrResutl.result.normalized;
+      const queryParams = [
+        `type=${normalized.ip.type}`,
+        `n=${normalized.ip.name}`,
+        `level=${normalized.ip.totalLevel}`,
+        `withDom=${normalized.ip.withDom}`,
+        `h=${normalized.ip.values.health}`,
+        `s=${normalized.ip.values.stamina}`,
+        `o=${normalized.ip.values.oxygen}`,
+        `f=${normalized.ip.values.food}`,
+        `w=${normalized.ip.values.weight}`,
+        `m=${normalized.ip.values.meleeDamageMultiplier}`,
+        `t=${normalized.ip.values.torpidity}`,
+        `i=${normalized.ip.imprinting}`,
+      ].join("&");
       message.reply({
-        content: JSON.stringify(normalized.ip),
+        content: `${targetUrl}?${queryParams}`,
+        flags: [MessageFlags.SuppressNotifications],
+      });
+
+      const species = searchSpecies(speciesList, normalized.ip.name, settings);
+
+      const calcResult = calculateLevel({
+        ...normalized.ip,
+        species,
+        settings,
+      });
+
+      if (calcResult.isSuccess) {
+        message.reply({
+          content: JSON.stringify(calcResult.result.levels),
+          flags: [MessageFlags.SuppressNotifications],
+        });
+      } else {
+        message.reply({
+          content: JSON.stringify(calcResult.error),
+          flags: [MessageFlags.SuppressNotifications],
+        });
+      }
+    } else {
+      message.reply({
+        content: JSON.stringify(ocrResutl.error),
         flags: [MessageFlags.SuppressNotifications],
       });
     }
