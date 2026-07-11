@@ -83,5 +83,5 @@ jobs:
 
       - name: build and push discord bot image
         run: |
-          docker build -t ${REGISTRY}/${IMAGE_NAME}:latest -t ${REGISTRY}/${IMAGE_NAME}::$(date +%Y%m%d) -f discord-bot.Dockerfile .
+          docker build -t ${REGISTRY}/${IMAGE_NAME}:latest -t ${REGISTRY}/${IMAGE_NAME}:$(date +%Y%m%d) -f discord-bot.Dockerfile .
           docker push -a ${REGISTRY}/${IMAGE_NAME}
