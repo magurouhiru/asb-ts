@@ -4,8 +4,8 @@
     "lib": ["ES2023"],
     "target": "es2023",
     "types": ["bun"],
-    // "node" を優先的に解決するようにする
-    "customConditions": ["node"]
+    // "bun" を優先的に解決するようにする
+    "customConditions": ["bun"]
   },
   "include": ["src/**/*.ts"]
 }

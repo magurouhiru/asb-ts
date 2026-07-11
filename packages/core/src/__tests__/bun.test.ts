@@ -2,7 +2,7 @@ import { describe, expect, it } from "bun:test";
 import fs from "node:fs";
 import path from "node:path";
 import * as R from "remeda";
-import { searchSpecies } from "../asb/species.js";
+import { searchSpecies } from "../asb/species";
 import {
   type CalculateLevelInputPackUnsafe,
   calculateLevel,
@@ -15,7 +15,7 @@ import {
   type StatLevelsUnsafe,
   type StatsType,
   type StatValuesUnsafe,
-} from "../node.js";
+} from "../bun";
 
 describe("createSettings", () => {
   it("引数なしでデフォルト値が返る", () => {

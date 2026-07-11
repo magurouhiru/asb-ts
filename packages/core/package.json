@@ -6,7 +6,7 @@
   "private": true,
   "exports": {
     ".": {
-      "node": "./src/node.ts",
+      "bun": "./src/bun.ts",
       "browser": "./src/browser.ts"
     }
   },
