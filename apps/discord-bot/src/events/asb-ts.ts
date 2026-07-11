@@ -6,12 +6,13 @@ import {
   OcrQueueManager,
   searchSpecies,
 } from "@asb-ts/core";
-import { type Client, Events, MessageFlags } from "discord.js";
+import { type Client, EmbedBuilder, Events, MessageFlags } from "discord.js";
+import * as R from "remeda";
 
 const targetChannelName = "ark-レベル算出";
 const targetContentTypes = ["image/png", "image/jpeg"];
 const manager = new OcrQueueManager();
-const targetUrl = process.env.TARGET_URL;
+const targetUrl = process.env.TARGET_URL?.replaceAll('"', "");
 const settings = createSettings();
 const speciesList = createSpeciesList(settings);
 
@@ -69,8 +70,9 @@ export function setAsbTs(client: Client) {
         `t=${normalized.ip.values.torpidity}`,
         `i=${normalized.ip.imprinting}`,
       ].join("&");
+      const link = `${targetUrl}?${queryParams}`;
       message.reply({
-        content: `${targetUrl}?${queryParams}`,
+        content: link,
         flags: [MessageFlags.SuppressNotifications],
       });
 
@@ -83,8 +85,24 @@ export function setAsbTs(client: Client) {
       });
 
       if (calcResult.isSuccess) {
+        const embed = new EmbedBuilder({
+          title: species.name,
+          url: link,
+          fields: [
+            { name: "variants", value: JSON.stringify(species.variants) },
+            { name: "mod", value: species.mod ?? "" },
+            ...R.pipe(
+              R.pickBy(calcResult.result.levels, R.isDefined),
+              R.entries(),
+              R.map(([name, { wild, mut, dom }]) => ({
+                name,
+                value: `wild: ${wild}, mut: ${mut}, dom: ${dom}`,
+              })),
+            ),
+          ],
+        });
         message.reply({
-          content: JSON.stringify(calcResult.result.levels),
+          embeds: [embed],
           flags: [MessageFlags.SuppressNotifications],
         });
       } else {
