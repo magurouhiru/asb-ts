@@ -1,5 +1,0 @@
-services:
-  app:
-    image: ast_ts__discord_bot:latest
-    env_file:
-      - ./apps/discord-bot/.env
