@@ -69,7 +69,7 @@ jobs:
     if: github.event_name == 'push'
     env:
       REGISTRY: ghcr.io
-      IMAGE_NAME: asb-ts_discord-bot
+      IMAGE_NAME: ${{ github.repository }}_discord-bot
     steps:
       - name: checkout code
         uses: actions/checkout@v5
