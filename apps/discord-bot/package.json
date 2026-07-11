@@ -5,8 +5,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "start": "bun run ./src/index.ts",
     "dev": "bun run --watch ./src/index.ts",
-    "build": "pnpm tsc",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe ."
   },

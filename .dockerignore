@@ -1,0 +1,45 @@
+# ========================================================
+# WARNING: このファイルは .gitignore から自動生成されています。
+# 直接編集せず、.gitignore または build.sh を修正してください。
+# ========================================================
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+.pnpm-store
+node_modules
+dist
+dist-ssr
+*.local
+
+.env
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# なんか気づいたらできてたので追加
+.tanstack
+dotnet
+*.traineddata
+
+# --------------------------------------------------------
+# Docker 専用の追加除外設定
+# --------------------------------------------------------
+.git
+.gitignore
+.dockerignore
+build.sh
