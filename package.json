@@ -21,8 +21,6 @@
     }
   },
   "scripts": {
-    "build": "bun build:apps",
-    "build:apps": "bun build:apps:web",
     "build:apps:web": "bun --filter ./apps/web build",
     "test": "bun test:packages",
     "test:packages": "bun --filter ./packages/* test",
