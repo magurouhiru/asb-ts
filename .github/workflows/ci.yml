@@ -33,6 +33,9 @@ jobs:
       - name: build web
         run: bun run build:apps:web
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: build discord bot image
         uses: docker/build-push-action@v6
         with:
