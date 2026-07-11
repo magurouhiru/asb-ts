@@ -2,7 +2,7 @@ import {
   cropOcrImages,
   type OcrCroppedImageRecordBun,
   toOcrCanvas,
-} from "./asb/ocr/crop-image.node.js";
+} from "./asb/ocr/crop-image.bun.js";
 import { calcCropRects } from "./asb/ocr/crop-rect.js";
 import {
   extractOcrPromiseTexts,

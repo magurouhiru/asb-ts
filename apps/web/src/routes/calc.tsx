@@ -57,7 +57,6 @@ const DISPLAY_STAT_LABEL_LIST = [
   "torpidity",
 ] satisfies StatLabel[];
 
-const toTrue = ["true", "True", "TRUE", "1", "on", "On", "ON"];
 const searchSchema = v.pipe(
   v.object({
     mode: v.fallback(v.picklist(MODE_LIST), "value->level"),
@@ -81,13 +80,7 @@ const searchSchema = v.pipe(
 
     i: v.fallback(v.number(), 0),
     level: v.fallback(v.number(), 0),
-    withDom: v.fallback(
-      v.pipe(
-        v.string(),
-        v.transform((input) => toTrue.includes(input)),
-      ),
-      false,
-    ),
+    withDom: v.fallback(v.pipe(v.string(), v.parseBoolean()), false),
   }),
 );
 
@@ -288,8 +281,10 @@ function CalcComponent() {
       {form.state.values.mode === "value->level" &&
         form.state.values.type === "dom" &&
         clop !== null &&
-        R.values(clop.levels).reduce((acc, ld) => acc + ld.mut + ld.dom, 0) !==
-          0 && (
+        R.values(clop.levels).reduce(
+          (acc, ld) => (ld === undefined ? acc : acc + ld.mut + ld.dom),
+          0,
+        ) !== 0 && (
           <Alert status="warning">
             <Alert.Indicator />
             <Alert.Content>

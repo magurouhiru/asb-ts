@@ -6,18 +6,28 @@
     "packages": [
       "apps/*",
       "packages/*"
-    ]
+    ],
+    "catalog": {
+      "@biomejs/biome": "2.4.15",
+      "@tsconfig/bun": "^1.0.10",
+      "@tsconfig/vite-react": "^8.0.6",
+      "@types/bun": "^1.3.14",
+      "fuse.js": "^7.2.0",
+      "remeda": "^2.38.0",
+      "tsx": "^4.22.4",
+      "typescript": "~6.0.2",
+      "valibot": "^1.3.0",
+      "vite": "^8.0.3"
+    }
   },
   "scripts": {
-    "build": "pnpm build:apps",
-    "build:apps": "pnpm --filter ./apps/* build",
-    "test": "pnpm test:packages",
-    "test:packages": "pnpm --filter ./packages/* test",
+    "build:apps:web": "bun --filter ./apps/web build",
+    "test": "bun test:packages",
+    "test:packages": "bun --filter ./packages/* test",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe ."
   },
   "devDependencies": {
-    "@biomejs/biome": "catalog:",
-    "vitest": "catalog:"
+    "@biomejs/biome": "catalog:"
   }
 }

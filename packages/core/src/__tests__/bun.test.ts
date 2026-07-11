@@ -1,8 +1,8 @@
+import { describe, expect, it } from "bun:test";
 import fs from "node:fs";
 import path from "node:path";
 import * as R from "remeda";
-import { afterEach, describe, expect, it } from "vitest";
-import { searchSpecies } from "../asb/species.js";
+import { searchSpecies } from "../asb/species";
 import {
   type CalculateLevelInputPackUnsafe,
   calculateLevel,
@@ -15,7 +15,7 @@ import {
   type StatLevelsUnsafe,
   type StatsType,
   type StatValuesUnsafe,
-} from "../node.js";
+} from "../bun";
 
 describe("createSettings", () => {
   it("引数なしでデフォルト値が返る", () => {
@@ -527,27 +527,9 @@ describe("extractTexts", () => {
     dataSetWithImg = [first];
   }
 
-  // const workspaceRoot = path.join(
-  //   import.meta.url.slice(5),
-  //   "..",
-  //   "..",
-  //   "..",
-  //   "..",
-  //   "..",
-  // );
-  // const langPath = path.join(workspaceRoot, "tesseract-assets");
-  const manager = new OcrQueueManager("jpn", undefined, {
-    //   // langPath,
-    //   // cachePath: langPath,
-    //   // gzip: false,
-  });
-
   it.each(dataSetWithImg)("extractTexts - $type - $name", async (data) => {
-    const filePath = path.join(
-      import.meta.dirname,
-      "__fixtures__",
-      data.img ?? "",
-    );
+    const manager = new OcrQueueManager();
+    const filePath = path.join(__dirname, "__fixtures__", data.img ?? "");
     const file = fs.readFileSync(filePath);
 
     const r = extractTexts(manager, file.buffer);
@@ -567,9 +549,7 @@ describe("extractTexts", () => {
       data.type === "bred" ? data.imprinting : 0,
     );
     STAT_LABELS.map((sl) => expect(result.ip.values[sl]).toBe(data.values[sl]));
-  });
 
-  afterEach(async () => {
     const isOk = await manager.terminate();
     expect(isOk).toBe(true);
   });

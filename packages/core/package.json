@@ -6,18 +6,18 @@
   "private": true,
   "exports": {
     ".": {
-      "node": "./src/node.ts",
+      "bun": "./src/bun.ts",
       "browser": "./src/browser.ts"
     }
   },
   "scripts": {
-    "test": "vitest run src",
+    "test": "bun test --timeout 10000",
     "biome": "biome check .",
     "biome:fix": "biome check --write --unsafe .",
-    "tools": "pnpm tools:create-values && pnpm tools:create-name-dict && pnpm tools:create-variants-default-unselected",
-    "tools:create-values": "tsx ./tools/create-values.ts && pnpm biome:fix",
-    "tools:create-name-dict": "tsx ./tools/create-name-dict.ts && pnpm biome:fix",
-    "tools:create-variants-default-unselected": "tsx ./tools/create-variants-default-unselected.ts && pnpm biome:fix"
+    "tools": "bun run tools:create-values && bun run tools:create-name-dict && bun run tools:create-variants-default-unselected",
+    "tools:create-values": "bun run ./tools/create-values.ts && bun run biome:fix",
+    "tools:create-name-dict": "bun run ./tools/create-name-dict.ts && bun run biome:fix",
+    "tools:create-variants-default-unselected": "bun run ./tools/create-variants-default-unselected.ts && bun run biome:fix"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.1",
@@ -28,9 +28,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
-    "@types/node": "catalog:",
-    "tsx": "catalog:",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
+    "@tsconfig/bun": "catalog:",
+    "@types/bun": "catalog:",
+    "typescript": "catalog:"
   }
 }

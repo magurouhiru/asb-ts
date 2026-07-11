@@ -1,0 +1,25 @@
+{
+  "name": "@asb-ts/discord-bot",
+  "private": true,
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "bun run ./src/index.ts",
+    "dev": "bun run --watch ./src/index.ts",
+    "biome": "biome check .",
+    "biome:fix": "biome check --write --unsafe ."
+  },
+  "dependencies": {
+    "@asb-ts/core": "workspace:*",
+    "discord.js": "^14.26.4",
+    "remeda": "catalog:",
+    "valibot": "catalog:"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@tsconfig/bun": "catalog:",
+    "@types/bun": "catalog:",
+    "typescript": "catalog:"
+  }
+}

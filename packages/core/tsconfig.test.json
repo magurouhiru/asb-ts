@@ -5,5 +5,5 @@
     "target": "es2023",
     "types": ["bun"]
   },
-  "include": ["tools/**/*.ts"]
+  "include": ["src/**/*.ts"]
 }
