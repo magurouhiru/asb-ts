@@ -40,7 +40,7 @@ jobs:
         with:
           path: apps/web/dist/
 
-  deploy:
+  deploy-pages:
     permissions:
       contents: read
       pages: write
@@ -55,3 +55,27 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  push-discord-bot-image:
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      REGISTRY: ghcr.io
+      IMAGE_NAME: ${{ github.repository }}
+    # if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v6
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ${REGISTRY}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push the Docker image
+        run: |
+          docker build -t ${REGISTRY}/${IMAGE_NAME,,}_discord-bot:$(date +%Y%m%d) -t ${REGISTRY}/${IMAGE_NAME,,}_discord-bot:latest -f discord-bot.Dockerfile .
+          docker push -a ${REGISTRY}/${IMAGE_NAME,,}_discord-bot
