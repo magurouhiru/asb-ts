@@ -89,4 +89,4 @@ jobs:
         run: docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.date.outputs.CURRENT_DATE }} -f discord-bot.Dockerfile .
 
       - name: push discord bot image
-        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        run: docker push -a ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
