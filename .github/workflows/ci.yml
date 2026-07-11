@@ -81,11 +81,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get current date
-        id: date
-        run: echo "CURRENT_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-
       - name: build and push discord bot image
         run: |
-          docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.date.outputs.CURRENT_DATE }} -f discord-bot.Dockerfile .
-          docker push -a ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          docker build -t ${REGISTRY}/${IMAGE_NAME}:latest -t ${REGISTRY}/${IMAGE_NAME}::$(date +%Y%m%d) -f discord-bot.Dockerfile .
+          docker push -a ${REGISTRY}/${IMAGE_NAME}
